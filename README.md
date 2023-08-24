@@ -24,12 +24,21 @@ Sound Oasis 는 날씨와 더불어 유저가 처한 상황 (운동, 기분)에 
 
 ## 👥 팀원 소개
 
-| <center>이름</center> | <center>이인우</center> | <center>진종환</center> |<center>김진현</center> |<center>전수은</center> | <center>나수현</center> |<center>임석현</center> |
-| --- | ---- | ---- | ---- | ---- | ---- | ---- |
-| <center>이미지</center> | <center> <img width="100px" height="100px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfMjY4/MDAxNjkyODg3NTcwNzM1.dYqxNglixkgWam9ypMWcbaWcw9j5Ag0L6E1ns3uQqHAg.lT9TYlRaRFdvWNg8ZSiPjFRl0XTplHQ9Dg6zYVjQcugg.JPEG.dkdnmju/66.jpg?type=w773"> </center> | <center> <img width="100px" height="100px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfMjE2/MDAxNjkyODg3NTcwNjg0.uBAF7ILjWC_T26Y9MDEiK4zUi8HPXIocDAMHwG_RkZ4g.h8vY9wIRQVGkAddB-wXp0NoU1FTQgTwS_8gljwpLgVAg.JPEG.dkdnmju/11.jpg?type=w773"> </center> | <center> <img width="100px" height="100px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfMTg0/MDAxNjkyODg3NTcwNzEx.DfYFxVeQ2fkxNp3tUSrlxN2YFved1v9un7MHbeSO4AUg.AgGYctYw4QcDft626zRq7FJ8x72cnA37RJXMUbpgEmcg.JPEG.dkdnmju/55.jpg?type=w773"> </center> |<center> <img width="100px" height="100px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfNTMg/MDAxNjkyODg3NTcwNjk5.kwVtZ_IN_3TR26bPNrePcrCZxEqPG1JmsQ7jgVaiOFQg.moYYI6YiJPHn2OxA9ix2hVrN9WK5t4Pzk-AzjulyO0Ig.JPEG.dkdnmju/33.jpg?type=w773"> </center> | <center> <img width="100px" height="100px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfMjc1/MDAxNjkyODg3NTcwNjE2.lV76-4SwWJNn3PxKOd8_PAJuTQmKuWYx1vzz5prRknUg.IJzpFSNx96RbTwFGW2A1sUywlHN0S24uUjSebm5-r_sg.JPEG.dkdnmju/44.jpg?type=w773"> </center> | <center> <img width="100px" height="100px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfODIg/MDAxNjkyODg3NTcwNzAz.LeEzdgRNx_h28yFqfn9ro0U4PV-ajKW3yIQat-SHv8Eg.KumfmtSpBfebgJQOOqUjpZXvF3jYjNzbUgisEJH8Zhcg.JPEG.dkdnmju/22.jpg?type=w773"> </center> |
-| <center>깃허브</center> | <center>[@dpftlel21](https://github.com/dpftlel21) </center> | <center>[@MSbtff](https://github.com/MSbtff)</center> |<center><small>[@RunnerJinHyeon](https://github.com/RunnerJinHyeon)</small> </center> |<center> [@jsue98](https://github.com/jsue98)</center> | <center>[occcasion](https://github.com/occcasion)</center> |<center>[ssklim](https://github.com/ssklim)</center> |
-| <center>역할</center> | <center>팀장</center> | <center>FE 팀원</center> |<center>FE 팀원</center> |<center>BE 팀장</center> | <center>BE 팀원</center> |<center>BE 팀원</center> |
-| 구현 | ㅎㅇ | ㅎㅇ |ㅎㅇ |ㅎㅇ | ㅎㅇ |ㅎㅇ |
+### 😀 프론트
+| <center>이인우</center> | <center>진종환</center> |<center>김진현</center> |
+| ---- | ---- | ---- | 
+| <center> <img width="130px" height="130px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfMjY4/MDAxNjkyODg3NTcwNzM1.dYqxNglixkgWam9ypMWcbaWcw9j5Ag0L6E1ns3uQqHAg.lT9TYlRaRFdvWNg8ZSiPjFRl0XTplHQ9Dg6zYVjQcugg.JPEG.dkdnmju/66.jpg?type=w773"> </center> | <center> <img width="130px" height="130px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfMjE2/MDAxNjkyODg3NTcwNjg0.uBAF7ILjWC_T26Y9MDEiK4zUi8HPXIocDAMHwG_RkZ4g.h8vY9wIRQVGkAddB-wXp0NoU1FTQgTwS_8gljwpLgVAg.JPEG.dkdnmju/11.jpg?type=w773"> </center> | <center> <img width="130px" height="130px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfMTg0/MDAxNjkyODg3NTcwNzEx.DfYFxVeQ2fkxNp3tUSrlxN2YFved1v9un7MHbeSO4AUg.AgGYctYw4QcDft626zRq7FJ8x72cnA37RJXMUbpgEmcg.JPEG.dkdnmju/55.jpg?type=w773"> </center> |
+| <center>[@dpftlel21](https://github.com/dpftlel21) </center> | <center>[@MSbtff](https://github.com/MSbtff)</center> |<center><small>[@RunnerJinHyeon](https://github.com/RunnerJinHyeon)</small> </center> | 
+| <center>팀장</center> | <center>FE 팀원</center> |<center>FE 팀원</center> |
+| ㅎㅇ | ㅎㅇ |ㅎㅇ |
+
+### 😀 백엔드
+|<center>전수은</center> | <center>나수현</center> |<center>임석현</center> |
+| ---- | ---- | ---- |
+|<center> <img width="130px" height="130px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfNTMg/MDAxNjkyODg3NTcwNjk5.kwVtZ_IN_3TR26bPNrePcrCZxEqPG1JmsQ7jgVaiOFQg.moYYI6YiJPHn2OxA9ix2hVrN9WK5t4Pzk-AzjulyO0Ig.JPEG.dkdnmju/33.jpg?type=w773"> </center> | <center> <img width="130px" height="130px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfMjc1/MDAxNjkyODg3NTcwNjE2.lV76-4SwWJNn3PxKOd8_PAJuTQmKuWYx1vzz5prRknUg.IJzpFSNx96RbTwFGW2A1sUywlHN0S24uUjSebm5-r_sg.JPEG.dkdnmju/44.jpg?type=w773"> </center> | <center> <img width="130px" height="130px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfODIg/MDAxNjkyODg3NTcwNzAz.LeEzdgRNx_h28yFqfn9ro0U4PV-ajKW3yIQat-SHv8Eg.KumfmtSpBfebgJQOOqUjpZXvF3jYjNzbUgisEJH8Zhcg.JPEG.dkdnmju/22.jpg?type=w773"> </center> | 
+|<center> [@jsue98](https://github.com/jsue98)</center> | <center>[occcasion](https://github.com/occcasion)</center> |<center>[ssklim](https://github.com/ssklim)</center> | 
+| <center>BE 팀장</center> | <center>BE 팀원</center> |<center>BE 팀원</center> |
+|ㅎㅇ | ㅎㅇ |ㅎㅇ |
 
 
 <br>
