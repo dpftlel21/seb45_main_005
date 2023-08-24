@@ -36,8 +36,8 @@ Sound Oasis 는 날씨와 더불어 유저가 처한 상황 (운동, 기분)에 
 |<center>전수은</center> | <center>나수현</center> |<center>임석현</center> |
 | ---- | ---- | ---- |
 |<center> <img width="130px" height="130px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfNTMg/MDAxNjkyODg3NTcwNjk5.kwVtZ_IN_3TR26bPNrePcrCZxEqPG1JmsQ7jgVaiOFQg.moYYI6YiJPHn2OxA9ix2hVrN9WK5t4Pzk-AzjulyO0Ig.JPEG.dkdnmju/33.jpg?type=w773"> </center> | <center> <img width="130px" height="130px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfMjc1/MDAxNjkyODg3NTcwNjE2.lV76-4SwWJNn3PxKOd8_PAJuTQmKuWYx1vzz5prRknUg.IJzpFSNx96RbTwFGW2A1sUywlHN0S24uUjSebm5-r_sg.JPEG.dkdnmju/44.jpg?type=w773"> </center> | <center> <img width="130px" height="130px" src =  "https://postfiles.pstatic.net/MjAyMzA4MjRfODIg/MDAxNjkyODg3NTcwNzAz.LeEzdgRNx_h28yFqfn9ro0U4PV-ajKW3yIQat-SHv8Eg.KumfmtSpBfebgJQOOqUjpZXvF3jYjNzbUgisEJH8Zhcg.JPEG.dkdnmju/22.jpg?type=w773"> </center> | 
-|<center> [@jsue98](https://github.com/jsue98)</center> | <center>[occcasion](https://github.com/occcasion)</center> |<center>[ssklim](https://github.com/ssklim)</center> | 
-| <center>BE 팀장</center> | <center>BE 팀원</center> |<center>BE 팀원</center> |
+|<center> [@jsue98](https://github.com/jsue98)</center> | <center>[@occcasion](https://github.com/occcasion)</center> |<center>[@ssklim](https://github.com/ssklim)</center> | 
+| <center>BE 팀장(부팀장)</center> | <center>BE 팀원</center> |<center>BE 팀원</center> |
 |ㅎㅇ | ㅎㅇ |ㅎㅇ |
 
 
