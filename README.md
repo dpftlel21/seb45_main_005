@@ -10,15 +10,15 @@ Sound Oasis 는 날씨와 더불어 유저가 처한 상황 (운동, 기분)에 
 
 ## 📝 자료
 
-#### ✔️  **[Figma]()**
+#### ✔️  **[Figma](https://www.figma.com/file/RXDA1Zvfl7sjb7owNxb7VA/Sound-Oasis?type=design&node-id=0-1&mode=design&t=WUWxwmaabthRoGLn-0)**
 
 #### ✔️ **[요구사항명세서](https://docs.google.com/spreadsheets/d/1tMNL7fW6n4lfJNCL9hmjVsViEf8JIWUlEQq5WvfVh1Q/edit#gid=0)**
 
-#### ✔️ **[API 명세서]()**
+#### ✔️ **[API 명세서](https://docs.google.com/spreadsheets/d/1tMNL7fW6n4lfJNCL9hmjVsViEf8JIWUlEQq5WvfVh1Q/edit#gid=0)**
 
 #### ✔️ **[Notion](https://www.notion.so/f38c8d3112c4453cbf61539906b4160c?v=5badf6b0ebc64f9f9f41834af8a552a2)**
 
-#### ✔️ **[Git Repository]()**
+#### ✔️ **[Git Repository](https://github.com/codestates-seb/seb45_main_005/tree/feDev)**
 
 ---
 
