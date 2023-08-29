@@ -20,6 +20,7 @@ module.exports = {
   ignorePatterns: ['node_modules/', 'tsconfig.json'],
   rules: {
     // console 사용 허용
+    '@typescript-eslint/no-non-null-assertion': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/prefer-default-export': 'off',
     'no-explicit-any': 'off',
