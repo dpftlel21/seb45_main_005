@@ -7,7 +7,6 @@ const Header = () => {
       <h1 className="text-2xl font-bold">title</h1>
       <p className="text-sm">subtitle</p>
       <img src={Logo} alt="Header Image" />
-      <button>buttonText</button>
     </header>
   );
 };
