@@ -1,13 +1,19 @@
 import React from 'react';
 import './App.css';
-import Header from './components/Header';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import WeatherRecommend from './pages/WeatherRecommend';
+import { RouteConst } from './interface/RouteConst';
 
 const App = () => {
   return (
-    <div>
-      <Header />
-      Hello Typescript
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path={RouteConst.WeatherRecommend}
+          element={<WeatherRecommend />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
