@@ -1,8 +1,14 @@
 import React from 'react';
 import './App.css';
+import Header from './components/Header';
 
-const App: React.FC = () => {
-  return <div>Hello Typescript</div>;
+const App = () => {
+  return (
+    <div>
+      <Header />
+      Hello Typescript
+    </div>
+  );
 };
 
 export default App;
