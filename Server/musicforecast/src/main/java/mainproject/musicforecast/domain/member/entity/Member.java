@@ -16,5 +16,31 @@ public class Member {
     private Long memberId;
 
     @Column
+    private Long questionId;
+
+    @Column
+    private String Id;
+
+    @Column
     private String email;
+
+    @Column
+    private String nickname;
+
+    @Column
+    private String password;
+
+    @Column
+    private Long birthdate;
+
+    @Column
+    private String auth_answer;
+
+    @Column
+    private String intro;
+
+    @Column
+    private String image;
+
+
 }
