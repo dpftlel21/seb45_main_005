@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import WeatherRecommend from './pages/WeatherRecommend';
+// import WeatherRecommend from './pages/WeatherRecommend';
 import { RouteConst } from './interface/RouteConst';
 import Mypage from './pages/Mypage';
 import Community from './pages/Community';

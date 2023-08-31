@@ -26,6 +26,7 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-explicit-any': 'off',
     'no-console': 'off',
+    'no-param-reassign': 'off',
     'prettier/prettier': [
       'error',
       {
