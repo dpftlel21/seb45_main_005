@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import modalSlice from './slice/ModalSlice';
-import SongListsSlice from './slice/SongListsSlice';
+import modalReducer from './Slice/ModalSlice';
 
 const store = configureStore({
   reducer: {
-    modal: modalSlice.reducer,
-    songLists: SongListsSlice.reducer,
+    modal: modalReducer,
   },
 });
 
