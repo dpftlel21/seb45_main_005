@@ -25,6 +25,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-explicit-any': 'off',
     'no-console': 'off',
+    'no-param-reassign': 'off',
     'prettier/prettier': [
       'error',
       {
