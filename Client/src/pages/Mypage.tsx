@@ -2,6 +2,7 @@ import { useState } from 'react';
 import MyPlayList from '../components/MyPlayList';
 import Profile from '../components/Profile';
 import MyCommunity from '../components/MyCommunity';
+import Header from '../components/Header';
 
 const Mypage = () => {
   const [selectedButton, setSelectedButton] = useState<number>(0);
@@ -19,31 +20,34 @@ const Mypage = () => {
   };
   return (
     <>
-      <div className="flex w-full bg-[#D5E5F0] h-[800px]">
-        <div className="flex flex-col w-[200px] items-center mt-20 ml-10">
-          <button
-            className={buttonClasses(0)}
-            onClick={() => handleButtonClick(0)}
-          >
-            Profile
-          </button>
-          <button
-            className={buttonClasses(1)}
-            onClick={() => handleButtonClick(1)}
-          >
-            My PlayList
-          </button>
-          <button
-            className={buttonClasses(2)}
-            onClick={() => handleButtonClick(2)}
-          >
-            내가 쓴 게시글
-          </button>
-        </div>
-        <div className="flex mt-10 w-full ">
-          {selectedComponent === 0 && <Profile />}
-          {selectedComponent === 1 && <MyPlayList />}
-          {selectedComponent === 2 && <MyCommunity />}
+      <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed]">
+        <Header />
+        <div className="flex w-full h-[800px]">
+          <div className="flex flex-col w-[200px] items-center mt-20 ml-10">
+            <button
+              className={buttonClasses(0)}
+              onClick={() => handleButtonClick(0)}
+            >
+              Profile
+            </button>
+            <button
+              className={buttonClasses(1)}
+              onClick={() => handleButtonClick(1)}
+            >
+              My PlayList
+            </button>
+            <button
+              className={buttonClasses(2)}
+              onClick={() => handleButtonClick(2)}
+            >
+              내가 쓴 게시글
+            </button>
+          </div>
+          <div className="flex mt-10 w-full ">
+            {selectedComponent === 0 && <Profile />}
+            {selectedComponent === 1 && <MyPlayList />}
+            {selectedComponent === 2 && <MyCommunity />}
+          </div>
         </div>
       </div>
     </>
