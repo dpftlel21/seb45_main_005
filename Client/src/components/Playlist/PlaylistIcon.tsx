@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { openModal } from '../../redux/Slice/ModalSlice';
+import { openModal } from '../../redux/slice/ModalSlice';
 import SongLists from './SongLists';
 import playIcon from '../../assets/images/playicon.png';
 import PlaylistModal from '../Modal/PlaylistModal';

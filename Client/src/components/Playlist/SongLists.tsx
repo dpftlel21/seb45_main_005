@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { closeSongLists } from '../../redux/Slice/SongListsSlice';
+import { closeSongLists } from '../../redux/slice/SongListsSlice';
 import xbtn from '../../assets/images/xbtn.svg';
 import Album from '../../assets/images/Album.png';
 import Logo from '../../assets/images/logo.png';
