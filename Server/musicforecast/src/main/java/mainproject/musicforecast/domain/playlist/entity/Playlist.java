@@ -9,6 +9,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -34,9 +35,14 @@ public class Playlist {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "playlist")
+    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
     private List<PlaylistLike> playlistLikes;
 
     @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
     private List<PlaylistTag> playlistTags;
+
+    public void updateTags(Set<PlaylistTag> newTags) {
+        this.playlistTags.clear();
+        this.playlistTags.addAll(newTags);
+    }
 }

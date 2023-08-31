@@ -60,16 +60,27 @@ public class PlaylistController {
         );
     }
 
+//    @PatchMapping("/{playlist-id}")
+//    public ResponseEntity patchPlaylist(@PathVariable("playlist-id") @Positive long playlistId,
+//                                        @Valid @RequestBody PlaylistDto.Patch playlistPatchDto) {
+//        playlistPatchDto.setPlaylistId(playlistId);
+//
+//        Playlist playlist = playlistService.updatePlaylist(mapper.playlistPatchDtoToPlaylist(playlistPatchDto));
+//
+//        return new ResponseEntity<>(
+//                new Utils.SingleResponseDto<>(mapper.playlistToPlaylistResponseDto(playlist)), HttpStatus.OK
+//        );
+//    }
+
     @PatchMapping("/{playlist-id}")
-    public ResponseEntity patchPlaylist(@PathVariable("playlist-id") @Positive long playlistId,
-                                        @Valid @RequestBody PlaylistDto.Patch playlistPatchDto) {
+    public ResponseEntity patchPlaylistWithTags(@PathVariable("playlist-id") long playlistId,
+                                                         @RequestBody PlaylistDto.PatchTag playlistPatchDto) {
         playlistPatchDto.setPlaylistId(playlistId);
-
-        Playlist playlist = playlistService.updatePlaylist(mapper.playlistPatchDtoToPlaylist(playlistPatchDto));
-
+        Playlist playlist = playlistService.updatePlaylistWithTags(playlistPatchDto);
         return new ResponseEntity<>(
                 new Utils.SingleResponseDto<>(mapper.playlistToPlaylistResponseDto(playlist)), HttpStatus.OK
         );
+
     }
 
     @DeleteMapping("/{playlist-id}")

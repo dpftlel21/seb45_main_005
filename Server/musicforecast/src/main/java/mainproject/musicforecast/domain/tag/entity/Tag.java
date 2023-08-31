@@ -1,6 +1,8 @@
 package mainproject.musicforecast.domain.tag.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mainproject.musicforecast.domain.playlistTag.entity.PlaylistTag;
 
@@ -8,7 +10,9 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Tag {
 
     @Id
@@ -18,6 +22,10 @@ public class Tag {
     @Column(nullable = false)
     private String tagName;
 
-    @OneToMany(mappedBy = "playlist")
+    @OneToMany(mappedBy = "tag")
     private List<PlaylistTag> playlistTags;
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
 }

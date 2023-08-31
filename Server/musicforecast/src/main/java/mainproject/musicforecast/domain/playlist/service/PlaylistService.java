@@ -1,9 +1,12 @@
 package mainproject.musicforecast.domain.playlist.service;
 
+import mainproject.musicforecast.domain.playlist.dto.PlaylistDto;
 import mainproject.musicforecast.domain.playlist.entity.Playlist;
 import mainproject.musicforecast.domain.playlist.repository.PlaylistRepository;
 import mainproject.musicforecast.domain.playlistTag.entity.PlaylistTag;
+import mainproject.musicforecast.domain.playlistTag.service.PlaylistTagService;
 import mainproject.musicforecast.domain.tag.entity.Tag;
+import mainproject.musicforecast.domain.tag.repository.TagRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -13,18 +16,20 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.swing.text.html.Option;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
 public class PlaylistService {
 
     private final PlaylistRepository playlistRepository;
+    private final TagRepository tagRepository;
+    private final PlaylistTagService playlistTagService;
 
-    public PlaylistService(PlaylistRepository playlistRepository) {
+    public PlaylistService(PlaylistRepository playlistRepository, TagRepository tagRepository, PlaylistTagService playlistTagService) {
         this.playlistRepository = playlistRepository;
+        this.tagRepository = tagRepository;
+        this.playlistTagService = playlistTagService;
     }
 
     public Playlist createPlaylist(Playlist playlist) {
@@ -58,19 +63,38 @@ public class PlaylistService {
         return playlistRepository.save(findPlaylist);
     }
 
-    private PlaylistTag findPlaylistTagByTag(Playlist playlist, Tag tag) {
-        for (PlaylistTag playlistTag : playlist.getPlaylistTags()) {
-            if (playlistTag.getTag().equals(tag)) {
-                return playlistTag;
-            }
-        }
-        return null;
-    }
-
     private Playlist findVerifiedPlaylist(long playlistId) {
         Optional<Playlist> optionalPlaylist = playlistRepository.findById(playlistId);
         Playlist findPlaylist = optionalPlaylist.orElseThrow(() -> new NullPointerException());
         return findPlaylist;
+    }
+
+    public Playlist updatePlaylistWithTags(PlaylistDto.PatchTag playlistPatchDto) {
+        Playlist playlist = playlistRepository.findById(playlistPatchDto.getPlaylistId()).orElse(null);
+
+
+        Optional.ofNullable(playlistPatchDto.getPlaylistId()).ifPresent(playlistId -> playlist.setPlaylistId(playlistId));
+        Optional.ofNullable(playlistPatchDto.getTitle()).ifPresent(title -> playlist.setTitle(title));
+        Optional.ofNullable(playlistPatchDto.isPublic()).ifPresent(isPublic -> playlist.setPublic(isPublic));
+
+        if (playlist != null) {
+            playlistTagService.clearPlaylistTag(playlist);
+            playlist.getPlaylistTags().clear();
+
+            Set<PlaylistTag> newTags = new HashSet<>();
+            for (String tags : playlistPatchDto.getTag()) {
+                Tag tag = tagRepository.findByTagName(tags).orElse(null);
+                if (tag != null) {
+                    PlaylistTag playlistTag = new PlaylistTag();
+                    playlistTag.setPlaylist(playlist);
+                    playlistTag.setTag(tag);
+                    newTags.add(playlistTag);
+                }
+            }
+
+            playlist.updateTags(newTags);
+        }
+        return playlistRepository.save(playlist);
     }
 
     public void deletePlaylist(long playlistId) {

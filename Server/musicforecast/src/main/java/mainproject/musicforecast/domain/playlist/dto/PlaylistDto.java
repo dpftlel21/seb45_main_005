@@ -25,7 +25,16 @@ public class PlaylistDto {
         private long playlistId;
         private String title;
         private boolean isPublic;
-        private List<PlaylistTag> playlistTags;
+//        private List<PlaylistTag> playlistTags;
+    }
+
+    @Builder
+    @Getter @Setter
+    public static class PatchTag {
+        private long playlistId;
+        private String title;
+        private boolean isPublic;
+        private List<String> tag;
     }
 
     /*

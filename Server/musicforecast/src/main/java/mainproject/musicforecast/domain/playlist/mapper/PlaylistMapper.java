@@ -32,7 +32,19 @@ public interface PlaylistMapper {
 
     Playlist playlistPatchDtoToPlaylist(PlaylistDto.Patch playlistPatchDto);
 
-    Playlist playlistLikeDtoToPlaylist(PlaylistDto.Like playlistLikeDto);
+//    default Playlist playlistPatchDtoToPlaylist(PlaylistDto.PatchTag playlistPatchDto) {
+//        Playlist playlist = new Playlist();
+//
+//        playlist.setPlaylistId(playlistPatchDto.getPlaylistId());
+//        playlist.setTitle(playlistPatchDto.getTitle());
+//        playlist.setPublic(playlistPatchDto.isPublic());
+//
+//        List<Tag> tags = new ArrayList<>();
+//
+//        playlistPatchDto.getTag().stream().forEach(tag -> tags.add(tag));
+//
+//        playlist.setPlaylistTags(tags);
+//    }
 
     default PlaylistDto.DetailResponse playlistToPlaylistResponseDto(Playlist playlist) {
         PlaylistDto.DetailResponse response = PlaylistDto.DetailResponse.builder()
