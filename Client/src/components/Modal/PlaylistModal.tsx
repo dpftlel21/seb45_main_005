@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { openSongLists } from '../../redux/Slice/SongListsSlice';
-import { closeModal } from '../../redux/Slice/ModalSlice';
+import { openSongLists } from '../../redux/slice/SongListsSlice';
+import { closeModal } from '../../redux/slice/ModalSlice';
 import xbtn from '../../assets/images/xbtn.svg';
 import Album from '../../assets/images/Album.png';
 import 'animate.css';
