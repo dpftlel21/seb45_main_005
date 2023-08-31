@@ -10,7 +10,7 @@ const ContentBox = () => {
           <img
             src={Today}
             alt="TodayMusic"
-            className="w-[500px] h-[200px] mt-12"
+            className="w-[300px] h-[150px] mt-12"
           />
         </div>
       </div>
