@@ -1,28 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// 상태 타입 정의
-interface ModalState {
-  isOpen: boolean;
-}
-
-// 초기 상태
-const initialState: ModalState = {
-  isOpen: false,
-};
-
-const modalSlice = createSlice({
+const ModalSlice = createSlice({
   name: 'modal',
-  initialState,
+  initialState: { isOpen: false },
   reducers: {
-    openModal: (state, action) => {
-      state.isOpen = action.payload;
+    openModal: (state) => {
+      state.isOpen = true;
     },
-    closeModal: (state, action) => {
-      state.isOpen = action.payload;
+    closeModal: (state) => {
+      state.isOpen = false;
     },
   },
 });
 
-// 액션 및 리듀서 내보내기
-export const { openModal, closeModal } = modalSlice.actions;
-export default modalSlice.reducer;
+export default ModalSlice;
+
+export const { openModal, closeModal } = ModalSlice.actions;
