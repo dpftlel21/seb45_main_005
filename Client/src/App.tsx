@@ -6,6 +6,8 @@ import { RouteConst } from './interface/RouteConst';
 import Mypage from './pages/Mypage';
 import Community from './pages/Community';
 import SongLists from './components/Playlist/SongLists';
+import Write from './pages/Write';
+import CommunityDetail from './pages/CommunityDetail';
 
 const App = () => {
   return (
@@ -18,9 +20,13 @@ const App = () => {
         <Route path={RouteConst.MyPage} element={<Mypage />} />
         <Route path={RouteConst.Community} element={<Community />} />
         <Route path={RouteConst.SongLists} element={<SongLists />} />
+        <Route path={RouteConst.Write} element={<Write />} />
+        <Route path={RouteConst.Detail} element={<CommunityDetail />} />
       </Routes>
     </BrowserRouter>
   );
 };
 
 export default App;
+
+// ss
