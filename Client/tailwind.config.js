@@ -50,6 +50,7 @@ module.exports = {
       'fadeInBottomRight-fast':
         'fadeInBottomRight 2s cubic-bezier(0.42, 0, 0.02, 0.96)',
       'bounceIn': 'bounceIn 500ms ease-in-out',
+      'pulse': 'pulse 1s ease-in-out infinite',
     },
   },
   plugins: [],

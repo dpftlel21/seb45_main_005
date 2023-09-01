@@ -1,13 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { openModal } from '../../redux/slice/ModalSlice';
-import SongLists from './SongLists';
 import playIcon from '../../assets/images/playicon.png';
 import PlaylistModal from '../Modal/PlaylistModal';
 
 const playlistIcon = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state: any) => state.modal.isOpen);
-  const isSongOpen = useSelector((state: any) => state.songLists.isOpen);
 
   const handleOpenModal = () => {
     dispatch(openModal());
@@ -23,7 +21,6 @@ const playlistIcon = () => {
         />
       </button>
       {isOpen && <PlaylistModal />}
-      {isSongOpen && <SongLists />}
     </>
   );
 };
