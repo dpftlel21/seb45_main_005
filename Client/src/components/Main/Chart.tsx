@@ -4,8 +4,8 @@ import album from '../../assets/images/chart.png';
 
 const Chart = () => {
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="text-white">About Chart!!</div>
+    <div className="flex flex-col justify-center items-center mt-6">
+      <div className="text-white font-sigmar-one text-8xl">HOT Chart 100</div>
       <div className="hover:bg-gray-custom-2">
         <div className="w-[1200px] h-10 text-white bg-slate-950 flex flex-row items-center p-6 ">
           <div className=" w-10">#</div>

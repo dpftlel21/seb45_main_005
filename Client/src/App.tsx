@@ -8,6 +8,7 @@ import Community from './pages/Community';
 import SongLists from './components/Playlist/SongLists';
 import Write from './pages/Write';
 import CommunityDetail from './pages/CommunityDetail';
+import Main from './components/Main/Main';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path={RouteConst.SongLists} element={<SongLists />} />
         <Route path={RouteConst.Write} element={<Write />} />
         <Route path={RouteConst.Detail} element={<CommunityDetail />} />
+        <Route path={RouteConst.Main} element={<Main />} />
       </Routes>
     </BrowserRouter>
   );

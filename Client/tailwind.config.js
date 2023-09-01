@@ -2,9 +2,12 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        'sigmar-one': ['Sigmar One', 'cursive'],
+      },
       width: {
-        '1040px': '1040px',
-        '1200px': '1200px',
+        '1040': '1040px',
+        '1200': '1200px',
         '400': '400px',
         '485': '485px',
         '500px': '500px',
