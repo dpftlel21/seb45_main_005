@@ -78,5 +78,12 @@ public interface PlaylistMapper {
         return response;
     }
 
-    List<PlaylistDto.Response> playlistToPlaylistResponseDtos(List<Playlist> playlists);
+    default List<PlaylistDto.Response> playlistToPlaylistResponseDtos(List<Playlist> playlists) {
+        List<PlaylistDto.Response> responses = playlists.stream().map(playlist -> PlaylistDto.Response.builder()
+                                                                                    .playlistId(playlist.getPlaylistId())
+                                                                                    .title(playlist.getTitle())
+                                                                                    .memberId(playlist.getMember().getMemberId())
+                                                                                    .build()).collect(Collectors.toList());
+        return responses;
+    }
 }

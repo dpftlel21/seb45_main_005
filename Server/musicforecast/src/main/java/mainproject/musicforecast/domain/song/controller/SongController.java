@@ -112,9 +112,10 @@ public class SongController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("/{playlistsong-id}/delete")
-    public ResponseEntity deleteSongFromPlaylist(@PathVariable("playlistsong-id") long playlistSongId) {
-        playlistSongService.deleteFromPlaylistSong(playlistSongId);
+    @PatchMapping("/{playlist-id}/{song-id}/delete")
+    public ResponseEntity deleteSongFromPlaylist(@PathVariable("playlist-id") long playlistId,
+                                                 @PathVariable("song-id") long songId) {
+        playlistSongService.deleteFromPlaylistSong(playlistId, songId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
