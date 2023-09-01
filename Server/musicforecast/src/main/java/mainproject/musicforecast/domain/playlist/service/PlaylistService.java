@@ -101,4 +101,8 @@ public class PlaylistService {
         Playlist playlist = findVerifiedPlaylist(playlistId);
         playlistRepository.delete(playlist);
     }
+
+    public Optional<Playlist> findPlaylistById(long playlistId) {
+        return playlistRepository.findById(playlistId);
+    }
 }

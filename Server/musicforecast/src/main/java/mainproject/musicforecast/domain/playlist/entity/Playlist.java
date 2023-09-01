@@ -4,8 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.playlistLike.entity.PlaylistLike;
+import mainproject.musicforecast.domain.playlistSong.entity.PlaylistSong;
 import mainproject.musicforecast.domain.playlistTag.entity.PlaylistTag;
-import org.hibernate.annotations.Cascade;
+import mainproject.musicforecast.domain.song.entity.Song;
 
 import javax.persistence.*;
 import java.util.List;
@@ -40,6 +41,9 @@ public class Playlist {
 
     @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
     private List<PlaylistTag> playlistTags;
+
+    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
+    private List<PlaylistSong> playlistSongs;
 
     public void updateTags(Set<PlaylistTag> newTags) {
         this.playlistTags.clear();

@@ -68,6 +68,7 @@ public class PlaylistDto {
         private int view;
         private long memberId;
         private List<PlaylistTagResponse> playlistTags;
+        private List<PlaylistSongResponse> playlistSongs;
     }
 
     @Builder
@@ -76,6 +77,13 @@ public class PlaylistDto {
         private long playlistTagId;
         private long playlistId;
         private long tagId;
+    }
+
+    @Builder
+    @Getter @Setter
+    public static class PlaylistSongResponse {
+        private long playlistSongId;
+        private long songId;
     }
 
 }

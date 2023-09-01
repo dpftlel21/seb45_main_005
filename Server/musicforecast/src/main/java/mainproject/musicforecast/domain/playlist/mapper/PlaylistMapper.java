@@ -3,6 +3,7 @@ package mainproject.musicforecast.domain.playlist.mapper;
 import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.playlist.dto.PlaylistDto;
 import mainproject.musicforecast.domain.playlist.entity.Playlist;
+import mainproject.musicforecast.domain.playlistSong.entity.PlaylistSong;
 import mainproject.musicforecast.domain.playlistTag.entity.PlaylistTag;
 import mainproject.musicforecast.domain.tag.entity.Tag;
 import org.mapstruct.Mapper;
@@ -56,15 +57,23 @@ public interface PlaylistMapper {
                 .build();
 
         List<PlaylistTag> playlistTags = playlist.getPlaylistTags();
+        List<PlaylistSong> playlistSongs = playlist.getPlaylistSongs();
 
         List<PlaylistDto.PlaylistTagResponse> playlistTagResponses = playlistTags.stream()
-                .map(playlistTag -> PlaylistDto.PlaylistTagResponse.builder()
-                        .playlistTagId(playlistTag.getPlaylistTagId())
-                        .playlistId(playlistTag.getPlaylist().getPlaylistId())
-                        .tagId(playlistTag.getTag().getTagId()).build())
-                .collect(Collectors.toList());
+                        .map(playlistTag -> PlaylistDto.PlaylistTagResponse.builder()
+                                .playlistTagId(playlistTag.getPlaylistTagId())
+                                .playlistId(playlistTag.getPlaylist().getPlaylistId())
+                                .tagId(playlistTag.getTag().getTagId()).build())
+                                .collect(Collectors.toList());
+
+        List<PlaylistDto.PlaylistSongResponse> playlistSongResponses = playlistSongs.stream()
+                        .map(playlistSong -> PlaylistDto.PlaylistSongResponse.builder()
+                                .playlistSongId(playlistSong.getPlaylistSongId())
+                                .songId(playlistSong.getSong().getSongId()).build())
+                                .collect(Collectors.toList());
 
         response.setPlaylistTags(playlistTagResponses);
+        response.setPlaylistSongs(playlistSongResponses);
 
         return response;
     }
