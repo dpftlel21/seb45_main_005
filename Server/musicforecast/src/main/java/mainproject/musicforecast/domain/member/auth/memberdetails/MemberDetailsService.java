@@ -1,4 +1,4 @@
-package mainproject.musicforecast.domain.member.auth;
+package mainproject.musicforecast.domain.member.auth.memberdetails;
 
 import mainproject.musicforecast.domain.member.auth.utils.CustomAuthorityUtils;
 import mainproject.musicforecast.domain.member.entity.Member;
@@ -31,8 +31,47 @@ public class MemberDetailsService implements UserDetailsService {
         Optional<Member> optionalMember = memberRepository.findByEmail(username);
         Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
-        Collection<? extends GrantedAuthority> authorities = authorityUtils.createAuthorities(findMember.getEmail());
+        return new MemberUserDetails(findMember);
+    }
 
-        return new User(findMember.getEmail(), findMember.getPassword(), authorities);
+    private final class MemberUserDetails extends Member implements UserDetails {
+
+        MemberUserDetails(Member member) {
+            setMemberId(member.getMemberId());
+            setEmail(member.getEmail());
+            setPassword(member.getPassword());
+            setRoles(member.getRoles());
+        }
+        @Override
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+            // DB에 저장된 Role 정보로 User 권한 목록 생성
+            return authorityUtils.createAuthorities(this.getRoles());
+        }
+
+        @Override
+        public String getUsername() {
+            return getEmail();
+        }
+
+        @Override
+        public boolean isAccountNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isAccountNonLocked() {
+            return true;
+        }
+
+        @Override
+        public boolean isCredentialsNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isEnabled() {
+            return true;
+        }
+
     }
 }

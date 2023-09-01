@@ -34,6 +34,13 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'//mapper
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'//mapper
+	implementation 'com.google.code.gson:gson:2.8.9'
+
+
+	//jwt 라이브러리
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
 }
 
 tasks.named('test') {

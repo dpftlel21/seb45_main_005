@@ -1,5 +1,6 @@
 package mainproject.musicforecast.domain.member.service;
 
+import mainproject.musicforecast.domain.member.auth.utils.CustomAuthorityUtils;
 import mainproject.musicforecast.domain.member.dto.MemberResponseDto;
 import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.member.repository.MemberRepository;
@@ -10,23 +11,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    public MemberService(MemberRepository memberRepository,PasswordEncoder passwordEncoder) {
+    private final CustomAuthorityUtils customAuthorityUtils;
+    public MemberService(MemberRepository memberRepository,PasswordEncoder passwordEncoder, CustomAuthorityUtils customAuthorityUtils) {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
+        this.customAuthorityUtils = customAuthorityUtils;
     }
     public Member createMember(Member member) {
 
         verifyExistsEmail(member.getEmail());
 
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
-
         member.setPassword(encryptedPassword);
+
+        List<String> roles = customAuthorityUtils.createRoles();
+        member.setRoles(roles);
 
         Member savedMember = memberRepository.save(member);
 
@@ -92,6 +98,5 @@ public class MemberService {
         if(member.isPresent()) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_IS_EXIST);
         }
-
     }
 }

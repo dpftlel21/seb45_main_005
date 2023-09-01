@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,12 +25,13 @@ public class Member {
     private String Id;
 
     @Column
+    @Email
     private String email;
 
     @Column
     private String nickname;
 
-    @Column
+    @Column(length = 100, nullable = false)
     private String password;
 
     @Column
@@ -41,6 +45,9 @@ public class Member {
 
     @Column
     private String image;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
 
 
 }
