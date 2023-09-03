@@ -45,7 +45,7 @@ public class Playlist {
     @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
     private List<PlaylistSong> playlistSongs;
 
-    public void updateTags(Set<PlaylistTag> newTags) {
+    public void updateTags(List<PlaylistTag> newTags) {
         this.playlistTags.clear();
         this.playlistTags.addAll(newTags);
     }

@@ -81,7 +81,7 @@ public class PlaylistService {
             playlistTagService.clearPlaylistTag(playlist);
             playlist.getPlaylistTags().clear();
 
-            Set<PlaylistTag> newTags = new HashSet<>();
+            List<PlaylistTag> newTags = new ArrayList<>();
             for (String tags : playlistPatchDto.getTag()) {
                 Tag tag = tagRepository.findByTagName(tags).orElse(null);
                 if (tag != null) {
