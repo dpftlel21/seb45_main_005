@@ -92,11 +92,27 @@ const CommunityDetail = () => {
               </div>
             </div>
             {/* 게시글내용 */}
-            <div className="flex w-[875px] justify-center">
+            <div className="flex w-[875px] justify-center border-b-[1px] border-solid border-black">
               <span className="w-[800px] mb-10">
                 글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다글내용입니다
               </span>
             </div>
+          </div>
+        </div>
+        <hr />
+        <div>
+          <div className="flex flex-col justify-center items-center">
+            <form action="">
+              <label id="answer">댓글</label>
+              <input
+                type="text"
+                id="answer"
+                className="border-2 border-solid border-black w-[500px] h-[40px]"
+              />
+            </form>
+          </div>
+          <div>
+            <table></table>
           </div>
         </div>
         <PlaylistIcon />
