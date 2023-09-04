@@ -1,10 +1,7 @@
-package mainproject.musicforecast.domain.weather;
-
-import org.springframework.beans.factory.annotation.Value;
+package mainproject.musicforecast.domain.recommend.weather;
 
 public class WeatherUrl {
-
-//    @Value("weather.key")
+    
     public static String WEATHER_API="";
 
     public String accessUrl(String cityId) {

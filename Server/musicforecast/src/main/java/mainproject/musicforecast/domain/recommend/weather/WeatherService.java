@@ -1,4 +1,4 @@
-package mainproject.musicforecast.domain.weather;
+package mainproject.musicforecast.domain.recommend.weather;
 
 import org.springframework.stereotype.Service;
 
