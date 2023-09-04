@@ -3,6 +3,7 @@ package mainproject.musicforecast.global.exception.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import mainproject.musicforecast.global.exception.ExceptionCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 
 import javax.validation.ConstraintViolation;
@@ -37,6 +38,10 @@ public class ErrorResponse {
 
     public static ErrorResponse of(ExceptionCode exceptionCode) {
         return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage());
+    }
+
+    public static ErrorResponse of(HttpStatus httpStatus) {
+        return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase());
     }
 
     @Getter

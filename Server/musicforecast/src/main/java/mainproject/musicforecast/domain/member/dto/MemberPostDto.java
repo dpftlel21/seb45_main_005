@@ -19,6 +19,7 @@ public class MemberPostDto {
     private String password;
     @NotBlank(message = "이름은 공백이 아니어야 합니다.")
     private String nickname;
+    private long birthdate;
     @NotBlank(message = "답변을 작성해 주세요.")
     private String auth_answer;
 }

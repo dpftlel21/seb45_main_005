@@ -3,8 +3,13 @@ package mainproject.musicforecast.domain.member.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mainproject.musicforecast.domain.playlist.entity.Playlist;
+import mainproject.musicforecast.domain.playlistLike.entity.PlaylistLike;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,12 +27,13 @@ public class Member {
     private String Id;
 
     @Column
+    @Email
     private String email;
 
     @Column
     private String nickname;
 
-    @Column
+    @Column(length = 100, nullable = false)
     private String password;
 
     @Column
@@ -42,5 +48,12 @@ public class Member {
     @Column
     private String image;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<Playlist> playlists;
+
+    @OneToMany(mappedBy = "member")
+    private List<PlaylistLike> playlistLikes;
 }
