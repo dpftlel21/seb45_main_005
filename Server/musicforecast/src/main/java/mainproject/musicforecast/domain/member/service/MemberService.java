@@ -1,6 +1,5 @@
 package mainproject.musicforecast.domain.member.service;
 
-import mainproject.musicforecast.domain.member.dto.MemberResponseDto;
 import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.member.repository.MemberRepository;
 import mainproject.musicforecast.global.exception.BusinessLogicException;
@@ -63,4 +62,9 @@ public class MemberService {
 
         return findMember;
     }
+    @Transactional(readOnly = true)
+    public Member findMember(long memberId) {
+        return findVerifiedMember(memberId);
+    }
+
 }
