@@ -2,7 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const ModalSlice = createSlice({
   name: 'modal',
-  initialState: { isOpen: false, isDetailOpen: false, isToastOpen: false },
+  initialState: {
+    isOpen: false,
+    isDetailOpen: false,
+    isToastOpen: false,
+    isAlbumDetailOpen: false,
+  },
   reducers: {
     openModal: (state) => {
       state.isOpen = true;
@@ -22,6 +27,12 @@ const ModalSlice = createSlice({
     closeToastModal: (state) => {
       state.isToastOpen = false;
     },
+    openAlbumDetailModal: (state) => {
+      state.isAlbumDetailOpen = true;
+    },
+    closeAlbumDetailModal: (state) => {
+      state.isAlbumDetailOpen = false;
+    },
   },
 });
 
@@ -34,4 +45,6 @@ export const {
   closeDetailModal,
   openToastModal,
   closeToastModal,
+  openAlbumDetailModal,
+  closeAlbumDetailModal,
 } = ModalSlice.actions;
