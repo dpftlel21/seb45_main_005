@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mainproject.musicforecast.domain.playlist.entity.Playlist;
+import mainproject.musicforecast.domain.playlistLike.entity.PlaylistLike;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -55,6 +56,4 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<PlaylistLike> playlistLikes;
-
-
 }

@@ -99,4 +99,9 @@ public class MemberService {
             throw new BusinessLogicException(ExceptionCode.MEMBER_IS_EXIST);
         }
     }
+    @Transactional(readOnly = true)
+    public Member findMember(long memberId) {
+        return findVerifiedMember(memberId);
+    }
+
 }
