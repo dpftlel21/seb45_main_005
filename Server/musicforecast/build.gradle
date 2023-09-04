@@ -19,6 +19,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven { url "https://jitpack.io" } // spotify
 }
 
 dependencies {
@@ -34,7 +35,7 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'//mapper
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'//mapper
-
+	implementation 'com.github.thelinmichael:spotify-web-api-java:master-SNAPSHOT' // spotify
 }
 
 tasks.named('test') {
