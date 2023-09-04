@@ -1,17 +1,19 @@
 package mainproject.musicforecast.domain.post.mapper;
 
 import mainproject.musicforecast.domain.comment.mapper.CommentMapper;
-import mainproject.musicforecast.domain.post.dto.*;
-import mainproject.musicforecast.domain.post.entity.Post;
 import mainproject.musicforecast.domain.member.dto.MemberResponseDto;
 import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.member.mapper.MemberMapper;
 import mainproject.musicforecast.domain.member.service.MemberService;
+import mainproject.musicforecast.domain.post.dto.PostPatchDto;
+import mainproject.musicforecast.domain.post.dto.PostPostDto;
+import mainproject.musicforecast.domain.post.dto.PostResponseDto;
+import mainproject.musicforecast.domain.post.dto.PostVoteDto;
+import mainproject.musicforecast.domain.post.entity.Post;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,7 +93,6 @@ public interface PostMapper {
         MemberResponseDto response = new MemberResponseDto();
 
         response.setMemberId( member.getMemberId() );
-        response.setEmail( member.getEmail() );
         response.setNickname( member.getNickname() );
 
         return response;
