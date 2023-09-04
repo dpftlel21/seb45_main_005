@@ -63,9 +63,11 @@ public class MemberController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     //회원 플레이리스트 목록 조회 기능
-    @GetMapping("/profile/{memberId}/playlist")
+    @GetMapping("/{memberId}")
     public ResponseEntity getMemberPlaylist(@PathVariable("memberId") @Positive long memberId) {
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        Member response = memberService.findMember(memberId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     //회원 게시글 목록 조회 기능
     @GetMapping("/profile/{memberId}/post")

@@ -25,7 +25,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
         this.authenticationManager = authenticationManager;
-        this. jwtTokenizer = jwtTokenizer;
+        this.jwtTokenizer = jwtTokenizer;
     }
 
     @SneakyThrows
@@ -58,7 +58,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("username", member.getEmail());
+        claims.put("memberId", member.getMemberId());
         claims.put("roles", member.getRoles());
 
         String subject = member.getEmail();
