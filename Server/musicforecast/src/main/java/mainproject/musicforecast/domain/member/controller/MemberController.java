@@ -53,9 +53,12 @@ public class MemberController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     //회원 자기소개글 목록 조회 기능
-    @GetMapping("/profile/{memberId}")
+    @GetMapping("/profile/{memberId}?intro={intro}")
     public ResponseEntity getMemberIntro(@PathVariable("memberId") @Positive long memberId){
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        Member response = memberService.findMemberIntro(memberId);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     //회원 플레이리스트 목록 조회 기능
     @GetMapping("/profile/{memberId}/playlist")
@@ -70,6 +73,9 @@ public class MemberController {
     //회원 탈퇴 기능
     @DeleteMapping("/delete/{memberId}")
     public ResponseEntity deleteMember(@PathVariable("memberId") @Positive long memberId) {
+
+        memberService.deleteMember(memberId);
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
