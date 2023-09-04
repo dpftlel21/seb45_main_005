@@ -44,7 +44,7 @@ public class MemberService {
         Member findMember = findVerifiedMember(member.getMemberId());
 
         //수정하려는 멤버와 로그인된 멤버가 같은지 확인, 다를 경우 권한 없음
-        if(findMember.getMemberId() != 28){
+        if(findMember.getMemberId() != user.getMemberId()){
             throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
         }
 
