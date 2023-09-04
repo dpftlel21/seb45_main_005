@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class WeatherUrl {
 
-    @Value("weather.key")
+//    @Value("weather.key")
     public static String WEATHER_API="";
 
     public String accessUrl(String cityId) {
