@@ -4,6 +4,7 @@ import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.specification.*;
 import com.wrapper.spotify.requests.data.search.simplified.SearchTracksRequest;
 import mainproject.musicforecast.domain.keyword.service.KeywordService;
+import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.playlist.entity.Playlist;
 import mainproject.musicforecast.domain.playlist.service.PlaylistService;
 import mainproject.musicforecast.domain.playlistSong.entity.PlaylistSong;
@@ -18,6 +19,7 @@ import mainproject.musicforecast.domain.spotify.SpotifyService;
 import org.apache.hc.core5.http.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -98,7 +100,8 @@ public class SongController {
 
     @PostMapping("/{song-id}/{playlist-id}/add")
     public ResponseEntity addSongToPlaylist(@PathVariable("song-id") long songId,
-                                            @PathVariable("playlist-id") long playlistId) {
+                                            @PathVariable("playlist-id") long playlistId,
+                                            @AuthenticationPrincipal Member member) {
         Song findSong = songService.findSongById(songId).orElseThrow(() -> new NullPointerException());
         Playlist findPlaylist = playlistService.findPlaylistById(playlistId).orElseThrow(() -> new NullPointerException());
 
@@ -107,15 +110,16 @@ public class SongController {
         playlistSong.setSong(findSong);
         playlistSong.setPlaylist(findPlaylist);
 
-        playlistSongService.addToPlaylistSong(playlistSong);
+        playlistSongService.addToPlaylistSong(playlistSong, member);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping("/{playlist-id}/{song-id}/delete")
     public ResponseEntity deleteSongFromPlaylist(@PathVariable("playlist-id") long playlistId,
-                                                 @PathVariable("song-id") long songId) {
-        playlistSongService.deleteFromPlaylistSong(playlistId, songId);
+                                                 @PathVariable("song-id") long songId,
+                                                 @AuthenticationPrincipal Member member) {
+        playlistSongService.deleteFromPlaylistSong(playlistId, songId, member);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
