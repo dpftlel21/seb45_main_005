@@ -52,7 +52,7 @@ module.exports = {
       'slideOutUp-fast': 'slideOutUp 1s',
       'fadeInBottomRight-fast':
         'fadeInBottomRight 2s cubic-bezier(0.42, 0, 0.02, 0.96)',
-      'bounceIn': 'bounceIn 500ms ease-in-out',
+      'bounceIn': 'bounceIn 1s linear',
       'pulse': 'pulse 1s ease-in-out infinite',
     },
   },

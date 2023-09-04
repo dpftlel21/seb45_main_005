@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import PlaylistIcon from '../components/Playlist/PlaylistIcon';
 
 import plicon from '../assets/images/plicon.png';
 
@@ -59,6 +60,7 @@ const Write = () => {
             </div>
           </div>
         </form>
+        <PlaylistIcon />
       </div>
     </>
   );
