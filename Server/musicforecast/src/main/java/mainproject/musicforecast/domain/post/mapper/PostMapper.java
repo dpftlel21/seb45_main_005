@@ -91,7 +91,6 @@ public interface PostMapper {
         MemberResponseDto response = new MemberResponseDto();
 
         response.setMemberId( member.getMemberId() );
-        response.setEmail( member.getEmail() );
         response.setNickname( member.getNickname() );
 
         return response;
