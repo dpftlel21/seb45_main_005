@@ -3,6 +3,7 @@ import MyPlayList from '../components/MyPlayList';
 import Profile from '../components/Profile';
 import MyCommunity from '../components/MyCommunity';
 import Header from '../components/Header';
+import PlaylistIcon from '../components/Playlist/PlaylistIcon';
 
 const Mypage = () => {
   const [selectedButton, setSelectedButton] = useState<number>(0);
@@ -49,6 +50,7 @@ const Mypage = () => {
             {selectedComponent === 2 && <MyCommunity />}
           </div>
         </div>
+        <PlaylistIcon />
       </div>
     </>
   );

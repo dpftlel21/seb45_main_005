@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from '../components/Header';
 import usericon from '../assets/images/user.png';
 import musicicon from '../assets/images/Rectangle(1).png';
+import PlaylistIcon from '../components/Playlist/PlaylistIcon';
 
 const CommunityDetail = () => {
   const [isLiked, setIsLiked] = useState(false);
@@ -98,6 +99,7 @@ const CommunityDetail = () => {
             </div>
           </div>
         </div>
+        <PlaylistIcon />
       </div>
     </>
   );
