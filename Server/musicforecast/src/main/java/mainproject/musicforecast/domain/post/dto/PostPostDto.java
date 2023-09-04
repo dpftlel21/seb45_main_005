@@ -11,10 +11,10 @@ public class PostPostDto {
     @Positive
     private Long memberId;
 
-    @NotBlank(message = "글을 작성해 주세요.")
+    @NotBlank(message = "글을 작성해주세요.")
     private String title;
 
-    @NotBlank(message = "글을 작성해 주세요.")
+    @NotBlank(message = "글을 작성해주세요.")
     private String text;
 
     public Long getMemberId() {

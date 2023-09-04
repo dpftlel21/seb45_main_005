@@ -1,18 +1,13 @@
 package mainproject.musicforecast.domain.post.controller;
 
-import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.comment.mapper.CommentMapper;
-import mainproject.musicforecast.domain.post.dto.MultiResponseDto;
-import mainproject.musicforecast.domain.post.dto.SingleResponseDto;
-import mainproject.musicforecast.domain.post.dto.PostPatchDto;
-import mainproject.musicforecast.domain.post.dto.PostPostDto;
-import mainproject.musicforecast.domain.post.dto.PostResponseDto;
-import mainproject.musicforecast.domain.post.dto.PostVoteDto;
+import mainproject.musicforecast.domain.member.entity.Member;
+import mainproject.musicforecast.domain.member.mapper.MemberMapper;
+import mainproject.musicforecast.domain.member.service.MemberService;
+import mainproject.musicforecast.domain.post.dto.*;
 import mainproject.musicforecast.domain.post.entity.Post;
 import mainproject.musicforecast.domain.post.mapper.PostMapper;
 import mainproject.musicforecast.domain.post.service.PostService;
-import mainproject.musicforecast.domain.member.mapper.MemberMapper;
-import mainproject.musicforecast.domain.member.service.MemberService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +47,7 @@ public class PostController {
 
         Post post = postService.createPost(mapper.postPostToPost(memberService, PostPostDto));
         return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.postToPostResponse(memberMapper, post, commentmapper))
+                new SingleResponseDto<>(mapper.postToPostResponse(memberMapper, post, commentMapper))
                 , HttpStatus.CREATED);
     }
 

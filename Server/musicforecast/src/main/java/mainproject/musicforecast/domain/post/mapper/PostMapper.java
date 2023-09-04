@@ -8,6 +8,7 @@ import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.member.mapper.MemberMapper;
 import mainproject.musicforecast.domain.member.service.MemberService;
 import org.mapstruct.Mapper;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
+@Service
 public interface PostMapper {
     List<PostResponseDto> postsToPostResponses(List<Post> posts);
     List<PostResponseDto> postsToPostResponseDtos(List<Post> posts);

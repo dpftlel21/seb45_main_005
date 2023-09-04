@@ -9,6 +9,4 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
     Post findByPostId(Long postId);
     List<Post> findAllByMember(Member member);
-    List<Post> findByCommentCountGreaterThan(int commentCount);
-    List<Post> findByCommentCountLessThanEqual(int commentCount);
 }
