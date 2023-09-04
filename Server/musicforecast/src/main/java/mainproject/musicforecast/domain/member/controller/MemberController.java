@@ -53,7 +53,7 @@ public class MemberController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     //회원 자기소개글 목록 조회 기능
-    @GetMapping("/profile/{memberId}")
+    @GetMapping("/profile/{memberId}?intro={intro}")
     public ResponseEntity getMemberIntro(@PathVariable("memberId") @Positive long memberId){
 
         Member response = memberService.findMemberIntro(memberId);
