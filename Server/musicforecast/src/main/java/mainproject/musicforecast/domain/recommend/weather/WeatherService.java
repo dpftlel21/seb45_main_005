@@ -1,5 +1,6 @@
 package mainproject.musicforecast.domain.recommend.weather;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -10,10 +11,16 @@ import java.net.URL;
 @Service
 public class WeatherService {
 
-    private WeatherUrl weatherUrl = new WeatherUrl();
+    @Value("${weather.api.key}")
+    public String WEATHER_API;
+
+    public String accessUrl(String cityId) {
+        String apiUrl = "http://api.openweathermap.org/data/2.5/weather?id=" + cityId + "&appid=" + WEATHER_API;
+        return apiUrl;
+    }
 
     public String getWeatherString(String cityId){
-        String apiUrl = weatherUrl.accessUrl(cityId);
+        String apiUrl = accessUrl(cityId);
 
         try {
             URL url = new URL(apiUrl);
