@@ -6,6 +6,8 @@ import mainproject.musicforecast.domain.playlist.entity.Playlist;
 import mainproject.musicforecast.domain.playlist.repository.PlaylistRepository;
 import mainproject.musicforecast.domain.playlistLike.entity.PlaylistLike;
 import mainproject.musicforecast.domain.playlistLike.repository.PlaylistLikeRepository;
+import mainproject.musicforecast.global.exception.BusinessLogicException;
+import mainproject.musicforecast.global.exception.ExceptionCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,11 +25,15 @@ public class PlaylistLikeService {
         this.memberRepository = memberRepository;
     }
 
-    public void likePlaylist(long memberId, long playlistId, PlaylistLike.LikeType likeType) {
+    public void likePlaylist(long memberId, long playlistId, PlaylistLike.LikeType likeType, Member user) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new NullPointerException());
         Playlist playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new NullPointerException());
+
+        if (user.getMemberId() != playlist.getMember().getMemberId()) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
+        }
 
         PlaylistLike existPlaylistLike = playlistLikeRepository.findByMemberAndPlaylist(member, playlist);
 

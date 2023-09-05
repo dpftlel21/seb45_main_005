@@ -1,5 +1,6 @@
 package mainproject.musicforecast.domain.playlist.service;
 
+import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.playlist.dto.PlaylistDto;
 import mainproject.musicforecast.domain.playlist.entity.Playlist;
 import mainproject.musicforecast.domain.playlist.repository.PlaylistRepository;
@@ -7,6 +8,8 @@ import mainproject.musicforecast.domain.playlistTag.entity.PlaylistTag;
 import mainproject.musicforecast.domain.playlistTag.service.PlaylistTagService;
 import mainproject.musicforecast.domain.tag.entity.Tag;
 import mainproject.musicforecast.domain.tag.repository.TagRepository;
+import mainproject.musicforecast.global.exception.BusinessLogicException;
+import mainproject.musicforecast.global.exception.ExceptionCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -48,9 +51,15 @@ public class PlaylistService {
         return findPlaylist;
     }
 
+    public Page<Playlist> findMyPlaylists(int page, int size, long memberId) {
+        return playlistRepository.findMyAll(
+                PageRequest.of(page, size, Sort.by("playlistId").descending()), memberId
+        );
+    }
+
     public Page<Playlist> findPlaylists(int page, int size) {
-        return playlistRepository.findAll(
-                PageRequest.of(page, size, Sort.by("playlistId").descending())
+        return playlistRepository.findAllPublic(
+                PageRequest.of(page, size, Sort.by("playlistId").descending()), true
         );
     }
 
@@ -69,9 +78,12 @@ public class PlaylistService {
         return findPlaylist;
     }
 
-    public Playlist updatePlaylistWithTags(PlaylistDto.PatchTag playlistPatchDto) {
+    public Playlist updatePlaylistWithTags(PlaylistDto.PatchTag playlistPatchDto, Member member) {
         Playlist playlist = playlistRepository.findById(playlistPatchDto.getPlaylistId()).orElse(null);
 
+        if (member.getMemberId() != playlist.getMember().getMemberId()) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
+        }
 
         Optional.ofNullable(playlistPatchDto.getPlaylistId()).ifPresent(playlistId -> playlist.setPlaylistId(playlistId));
         Optional.ofNullable(playlistPatchDto.getTitle()).ifPresent(title -> playlist.setTitle(title));
@@ -97,8 +109,13 @@ public class PlaylistService {
         return playlistRepository.save(playlist);
     }
 
-    public void deletePlaylist(long playlistId) {
+    public void deletePlaylist(long playlistId, Member member) {
         Playlist playlist = findVerifiedPlaylist(playlistId);
+
+        if (member.getMemberId() != playlist.getMember().getMemberId()) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
+        }
+
         playlistRepository.delete(playlist);
     }
 

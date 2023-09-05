@@ -1,8 +1,11 @@
 package mainproject.musicforecast.domain.playlistSong.service;
 
+import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.playlistSong.entity.PlaylistSong;
 import mainproject.musicforecast.domain.playlistSong.repository.PlaylistSongRepository;
 import mainproject.musicforecast.domain.song.entity.Song;
+import mainproject.musicforecast.global.exception.BusinessLogicException;
+import mainproject.musicforecast.global.exception.ExceptionCode;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +17,10 @@ public class PlaylistSongService {
         this.playlistSongRepository = playlistSongRepository;
     }
 
-    public void addToPlaylistSong(PlaylistSong playlistSong) {
+    public void addToPlaylistSong(PlaylistSong playlistSong, Member member) {
+        if (member.getMemberId() != playlistSong.getPlaylist().getMember().getMemberId()) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
+        }
         playlistSongRepository.save(playlistSong);
     }
 
@@ -22,8 +28,12 @@ public class PlaylistSongService {
 //        playlistSongRepository.deleteByPlaylistIdAndSongId(playlistId, songId);
 //    }
 
-    public void deleteFromPlaylistSong(long playlistId, long songId) {
+    public void deleteFromPlaylistSong(long playlistId, long songId, Member member) {
         PlaylistSong playlistSong = playlistSongRepository.findByPlaylistIdAndSongId(playlistId, songId);
+
+        if (member.getMemberId() != playlistSong.getPlaylist().getMember().getMemberId()) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
+        }
         playlistSongRepository.deleteById(playlistSong.getPlaylistSongId());
     }
 }
