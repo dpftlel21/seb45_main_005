@@ -9,6 +9,8 @@ import SongLists from './components/Playlist/SongLists';
 import Write from './pages/Write';
 import CommunityDetail from './pages/CommunityDetail';
 import Main from './components/Main/Main';
+import SignUp from './components/Login/SignUp';
+import LoginOn from './components/Login/LoginOn';
 
 const App = () => {
   return (
@@ -18,6 +20,8 @@ const App = () => {
           path={RouteConst.WeatherRecommend}
           element={<WeatherRecommend />}
         />
+        <Route path={RouteConst.LoginOn} element={<LoginOn />} />
+        <Route path={RouteConst.SignUp} element={<SignUp />} />
         <Route path={RouteConst.MyPage} element={<Mypage />} />
         <Route path={RouteConst.Community} element={<Community />} />
         <Route path={RouteConst.SongLists} element={<SongLists />} />
