@@ -8,6 +8,8 @@ import mainproject.musicforecast.global.exception.BusinessLogicException;
 import mainproject.musicforecast.global.exception.ExceptionCode;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
@@ -38,13 +40,13 @@ public class MemberService {
 
         return savedMember;
     }
-
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Member updateMember(Member member, Member user) {
         //수정하려는 멤버가 가입된 회원인지 확인
         Member findMember = findVerifiedMember(member.getMemberId());
 
         //수정하려는 멤버와 로그인된 멤버가 같은지 확인, 다를 경우 권한 없음
-        if(findMember.getMemberId() != 28){
+        if(findMember.getMemberId() != user.getMemberId()){
             throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
         }
 
@@ -55,7 +57,7 @@ public class MemberService {
 
         return memberRepository.save(findMember);
     }
-
+    @Transactional(readOnly = true)
     public Member findMemberIntro(long memberId) {
 
         Member findMember = findVerifiedMember(memberId);

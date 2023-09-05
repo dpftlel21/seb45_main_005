@@ -1,15 +1,18 @@
 package mainproject.musicforecast.domain.member.auth.filter;
 
-import io.jsonwebtoken.ExpiredJwtException;
+
+import lombok.extern.slf4j.Slf4j;
 import mainproject.musicforecast.domain.member.auth.jwt.JwtTokenizer;
 import mainproject.musicforecast.domain.member.auth.utils.CustomAuthorityUtils;
+import mainproject.musicforecast.domain.member.entity.Member;
+import mainproject.musicforecast.domain.member.service.MemberService;
+import io.jsonwebtoken.security.SignatureException;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import io.jsonwebtoken.security.SignatureException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -19,15 +22,19 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
+    private final MemberService memberService;
 
     // (2)
     public JwtVerificationFilter(JwtTokenizer jwtTokenizer,
-                                 CustomAuthorityUtils authorityUtils) {
+                                 CustomAuthorityUtils authorityUtils,
+                                 MemberService memberService) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
+        this.memberService = memberService;
     }
 
     @Override
@@ -63,9 +70,10 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     }
 
     private void setAuthenticationToContext(Map<String, Object> claims) {
-        String username = (String) claims.get("username");   // (4-1)
+        int memberId = (int) claims.get("memberId");   //수정
+        Member user = memberService.findMember(memberId);   //수정
         List<GrantedAuthority> authorities = authorityUtils.createAuthorities((List)claims.get("roles"));  // (4-2)
-        Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);  // (4-3)
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);  // (4-3)
         SecurityContextHolder.getContext().setAuthentication(authentication); // (4-4)
     }
 }
