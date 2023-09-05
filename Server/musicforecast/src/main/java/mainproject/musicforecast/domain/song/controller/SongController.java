@@ -20,8 +20,10 @@ import org.apache.hc.core5.http.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Column;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,9 +112,13 @@ public class SongController {
 
         playlistSong.setSong(findSong);
         playlistSong.setPlaylist(findPlaylist);
+        playlistSong.setSongTitle(findSong.getTitle());
+        playlistSong.setArtistName(findSong.getArtistName());
+        playlistSong.setAlbumName(findSong.getAlbumName());
+        playlistSong.setImageUrl(findSong.getImageUrl());
 
         if (songService.checkExistSong(findSong.getSongId(), findPlaylist.getPlaylistId())) return null;
-        System.out.println("check SONG : " + songService.checkExistSong(findSong.getSongId(), findPlaylist.getPlaylistId()));
+        System.out.println("check SONG : " + playlistSong);
 
         playlistSongService.addToPlaylistSong(playlistSong, member);
 
