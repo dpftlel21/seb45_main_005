@@ -53,6 +53,18 @@ public class PlaylistController {
         );
     }
 
+    @GetMapping("/my")
+    public ResponseEntity getMyPlaylists(@RequestParam(required = false, defaultValue = "1") int page,
+                                         @RequestParam(required = false, defaultValue = "10") int size,
+                                         @AuthenticationPrincipal Member member) {
+        long memberId = member.getMemberId();
+        Page<Playlist> playlistPage = playlistService.findMyPlaylists(page - 1, size, memberId);
+        List<Playlist> playlists = playlistPage.getContent();
+        return new ResponseEntity<>(
+                new Utils.MultiResponseDto<>(mapper.playlistToPlaylistResponseDtos(playlists), playlistPage), HttpStatus.OK
+        );
+    }
+
     @GetMapping
     public ResponseEntity getPlaylists(@RequestParam(required = false, defaultValue = "1") int page,
                                        @RequestParam(required = false, defaultValue = "10") int size) {

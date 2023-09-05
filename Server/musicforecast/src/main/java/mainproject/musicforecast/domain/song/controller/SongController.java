@@ -51,12 +51,13 @@ public class SongController {
     }
 
     @GetMapping("/search")
-    public List<SpotifySearchResponseDto> search(@RequestParam(value = "keyword", required = false) String keyword) {
+    public List<SpotifySearchResponseDto> search(@RequestParam(value = "keyword", required = false) String keyword,
+                                                 @RequestParam(required = false, defaultValue = "10") int song) {
         List<SpotifySearchResponseDto> searchResponseDtoList = new ArrayList<>();
 
         try {
             SearchTracksRequest searchTracksRequest = spotifyService.setSpotifyApi().searchTracks(keyword)
-                    .limit(10)
+                    .limit(song)
                     .build();
 
             Paging<Track> searchResult = searchTracksRequest.execute();

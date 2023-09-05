@@ -51,6 +51,12 @@ public class PlaylistService {
         return findPlaylist;
     }
 
+    public Page<Playlist> findMyPlaylists(int page, int size, long memberId) {
+        return playlistRepository.findMyAll(
+                PageRequest.of(page, size, Sort.by("playlistId").descending()), memberId
+        );
+    }
+
     public Page<Playlist> findPlaylists(int page, int size) {
         return playlistRepository.findAllPublic(
                 PageRequest.of(page, size, Sort.by("playlistId").descending()), true
