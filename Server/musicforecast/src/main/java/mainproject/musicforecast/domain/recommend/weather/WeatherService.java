@@ -126,7 +126,7 @@ public class WeatherService {
 //        return genre;
 //    }
 
-        public Page<Playlist> findBySearchTags(int page, int size, String weather) {
+    public Page<Playlist> findBySearchTags(int page, int size, String weather) {
         Page<PlaylistTag> playlistTags = playlistTagRepository.findByTags(PageRequest.of(page, size, Sort.by("playlist").descending()), setSearchTags(weather));
 
         List<Playlist> playlistList = playlistTags.stream().map(playlistTag -> playlistTag.getPlaylist()).collect(Collectors.toList());
