@@ -1,6 +1,8 @@
 export const RouteConst = {
   WeatherRecommend: '/weatherRecommend',
   Main: '/',
+  LoginOn: '/login',
+  SignUp: '/signup',
   MyPage: '/mypage',
   Community: '/community',
   SongLists: '/songLists',

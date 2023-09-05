@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Logo from '../../assets/images/logo.png';
 import Mainbg from '../../assets/images/main.jpeg';
 import Vector from '../../assets/images/vector.svg';
@@ -29,10 +30,10 @@ const Main = () => {
           </div>
           <div className="text-black flex flex-row  items-center mr-10 text-xl">
             <button className="bg-[#C487F4] mr-5 rounded-xl w-32 h-10 hover:bg-opacity-90 hover:bg-[#C487F4]">
-              log in
+              <Link to="/login">log in</Link>
             </button>
             <button className="text-white  w-20 h-10  rounded-xl hover:opacity-80  ">
-              sign up
+              <Link to="/signup">sign up</Link>
             </button>
           </div>
         </div>
