@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { closePLaylists } from '../../redux/slice/PlaylistsCreateSlice';
+import { closePLaylists } from '../../redux/slice/ModalSlice';
 import backbtn from '../../assets/images/backbtn.png';
 import Album from '../../assets/images/Album.png';
 import Logo from '../../assets/images/logo.png';

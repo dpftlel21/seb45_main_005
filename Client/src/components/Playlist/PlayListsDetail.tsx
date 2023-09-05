@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { closeDetailModal, openToastModal } from '../../redux/slice/ModalSlice';
-import { openSongLists } from '../../redux/slice/SongListsSlice';
+import { closeDetailModal, openToastModal, openSongLists } from '../../redux/slice/ModalSlice';
 import xbtn from '../../assets/images/xbtn.svg';
 import Album from '../../assets/images/Album.png';
 import SongLists from './SongLists';
@@ -12,10 +11,8 @@ import { RootState } from '../../redux/store';
 const PlaylistsDetail = () => {
   const dispatch = useDispatch();
 
-  const isOpenSong = useSelector((state: RootState) => state.songLists.isOpen);
-  const isOpenToast = useSelector(
-    (state: RootState) => state.modal.isToastOpen
-  );
+  const isOpenSong = useSelector((state: RootState) => state.modal.isSongOpen);
+  const isOpenToast = useSelector((state: RootState) => state.modal.isToastOpen);
 
   const handleOpenSong = () => {
     dispatch(openSongLists());
