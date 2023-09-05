@@ -111,6 +111,9 @@ public class SongController {
         playlistSong.setSong(findSong);
         playlistSong.setPlaylist(findPlaylist);
 
+        if (songService.checkExistSong(findSong.getSongId(), findPlaylist.getPlaylistId())) return null;
+        System.out.println("check SONG : " + songService.checkExistSong(findSong.getSongId(), findPlaylist.getPlaylistId()));
+
         playlistSongService.addToPlaylistSong(playlistSong, member);
 
         return new ResponseEntity<>(HttpStatus.OK);
