@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModal, openDetailModal } from '../../redux/slice/ModalSlice';
-import { openSongLists } from '../../redux/slice/SongListsSlice';
+import { closeModal, openDetailModal, openSongLists } from '../../redux/slice/ModalSlice';
 import { RootState } from '../../redux/store';
 import xbtn from '../../assets/images/xbtn.svg';
 import Album from '../../assets/images/Album.png';
@@ -9,10 +8,8 @@ import SongLists from '../Playlist/SongLists';
 
 const PlaylistModal = () => {
   const dispatch = useDispatch();
-  const isDetailOpen = useSelector(
-    (state: RootState) => state.modal.isDetailOpen
-  );
-  const isSongOpen = useSelector((state: RootState) => state.songLists.isOpen);
+  const isDetailOpen = useSelector((state: RootState) => state.modal.isDetailOpen);
+  const isSongOpen = useSelector((state: RootState) => state.modal.isSongOpen);
 
   const handleOpenDetail = () => {
     dispatch(openDetailModal());

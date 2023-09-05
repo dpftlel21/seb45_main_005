@@ -13,17 +13,11 @@ const ToastModal = () => {
       <div className="w-[300px] flex flex-col justify-center items-center border-2 border-gray-500 border-solid animate-fadeIn">
         <div className="my-8 text-[#ffff]">
           <p className="mb-4">플리 제목</p>
-          <input
-            type="text"
-            className="w-[250px] pl-2 rounded-2xl bg-[#6b6767]"
-          ></input>
+          <input type="text" className="w-[250px] pl-2 rounded-2xl bg-[#6b6767]"></input>
         </div>
         <div className="mb-8">
           <p className="mb-4 text-[#ffff]">플리 내용</p>
-          <input
-            type="text"
-            className="w-[250px] pl-2 rounded-2xl bg-[#6b6767]"
-          ></input>
+          <input type="text" className="w-[250px] pl-2 rounded-2xl bg-[#6b6767]"></input>
         </div>
         <div>
           <button className="w-[70px] h-[40px] mb-4 ml-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white">

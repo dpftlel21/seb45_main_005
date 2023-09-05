@@ -6,9 +6,7 @@ import { RootState } from '../../../redux/store';
 
 const Pop = () => {
   const dispatch = useDispatch();
-  const isOpen = useSelector(
-    (state: RootState) => state.modal.isAlbumDetailOpen
-  );
+  const isOpen = useSelector((state: RootState) => state.modal.isAlbumDetailOpen);
 
   const handleOpenModal = () => {
     dispatch(openAlbumDetailModal());
