@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { closeSongLists } from '../../redux/slice/SongListsSlice';
 import { openPlaylists } from '../../redux/slice/PlaylistsCreateSlice';
+import { RootState } from '../../redux/store';
 import SongAdd from './SongAdd';
 import backbtn from '../../assets/images/backbtn.png';
 import Album from '../../assets/images/Album.png';
@@ -10,7 +11,7 @@ const SongLists = () => {
   const dispatch = useDispatch();
 
   const isCreateOpen = useSelector(
-    (state: any) => state.playListsCreate.isCreateOpen
+    (state: RootState) => state.playListsCreate.isCreateOpen
   );
 
   const handleCloseSong = () => {

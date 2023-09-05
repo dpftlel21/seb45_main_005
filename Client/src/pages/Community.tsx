@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import playlistimg from '../assets/images/Rectangle 64.png';
 import 'animate.css';
+import PlaylistIcon from '../components/Playlist/PlaylistIcon';
 
 const Community = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -71,6 +72,7 @@ const Community = () => {
             </table>
           </div>
         </div>
+        <PlaylistIcon />
       </div>
     </>
   );

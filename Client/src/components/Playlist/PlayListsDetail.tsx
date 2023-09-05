@@ -1,16 +1,21 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import axios from 'axios';
 import { closeDetailModal, openToastModal } from '../../redux/slice/ModalSlice';
 import { openSongLists } from '../../redux/slice/SongListsSlice';
 import xbtn from '../../assets/images/xbtn.svg';
 import Album from '../../assets/images/Album.png';
 import SongLists from './SongLists';
 import ToastModal from '../Modal/ToastModal';
+import { RootState } from '../../redux/store';
 
 const PlaylistsDetail = () => {
   const dispatch = useDispatch();
 
-  const isOpenSong = useSelector((state: any) => state.songLists.isOpen);
-  const isOpenToast = useSelector((state: any) => state.modal.isToastOpen);
+  const isOpenSong = useSelector((state: RootState) => state.songLists.isOpen);
+  const isOpenToast = useSelector(
+    (state: RootState) => state.modal.isToastOpen
+  );
 
   const handleOpenSong = () => {
     dispatch(openSongLists());
@@ -23,6 +28,17 @@ const PlaylistsDetail = () => {
   const handleOpenToast = () => {
     dispatch(openToastModal());
   };
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:8080/playlist', {})
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>
