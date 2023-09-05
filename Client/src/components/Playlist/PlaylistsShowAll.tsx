@@ -4,6 +4,7 @@ import axios from 'axios';
 import { closeDetailModal, openToastModal } from '../../redux/slice/ModalSlice';
 import { playlistInfo } from '../../redux/slice/PlaylistsSlice';
 import xbtn from '../../assets/images/xbtn.svg';
+import PlaylistsDetail from './PlaylistsDetail';
 import ToastModal from '../Modal/ToastModal';
 import { RootState } from '../../redux/store';
 import Playlists from './Playlists';
@@ -16,6 +17,7 @@ export type PlaylistInfo = {
 const PlaylistsShowAll = () => {
   const dispatch = useDispatch();
 
+  const isOpenSong = useSelector((state: RootState) => state.modal.isSongOpen);
   const isOpenToast = useSelector((state: RootState) => state.modal.isToastOpen);
   const playlistsInfo: PlaylistInfo[] = useSelector((state: RootState) => state.playlists.value);
 
@@ -29,12 +31,11 @@ const PlaylistsShowAll = () => {
 
   useEffect(() => {
     axios
-      .get('https://55e5-222-235-81-220.ngrok-free.app/playlist', {
+      .get('https://eaee-222-235-81-220.ngrok-free.app/playlist', {
         headers: { 'ngrok-skip-browser-warning': '69420' },
       })
       .then((res) => {
         dispatch(playlistInfo(res.data.data));
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -86,6 +87,7 @@ const PlaylistsShowAll = () => {
         </div>
       </div>
 
+      {isOpenSong && <PlaylistsDetail />}
       {isOpenToast && <ToastModal />}
     </>
   );

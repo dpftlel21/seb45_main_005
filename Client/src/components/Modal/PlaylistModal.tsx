@@ -1,17 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModal, openDetailModal } from '../../redux/slice/ModalSlice';
+import { closeModal, openDetailModal, openSongLists } from '../../redux/slice/ModalSlice';
 import { RootState } from '../../redux/store';
 import xbtn from '../../assets/images/xbtn.svg';
 import Album from '../../assets/images/Album.png';
 import PlaylistsShowAll from '../Playlist/PlaylistsShowAll';
 import PlaylistsDetail from '../Playlist/PlaylistsDetail';
-import Playlists from '../Playlist/Playlists';
 
 const PlaylistModal = () => {
   const dispatch = useDispatch();
   const isDetailOpen = useSelector((state: RootState) => state.modal.isDetailOpen);
   const isSongOpen = useSelector((state: RootState) => state.modal.isSongOpen);
-  const playlistsInfo = useSelector((state: RootState) => state.playlists.value);
 
   const handleOpenDetail = () => {
     dispatch(openDetailModal());
@@ -19,6 +17,10 @@ const PlaylistModal = () => {
 
   const handleCloseModal = () => {
     dispatch(closeModal());
+  };
+
+  const handleOpenCreateLists = () => {
+    dispatch(openSongLists());
   };
 
   return (
@@ -57,6 +59,37 @@ const PlaylistModal = () => {
                   <p className="mt-4">플리 내용</p>
                 </div>
               </li>
+              <li className="w-full h-[230px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out">
+                <div className="ml-2">
+                  <img src={Album} />
+                  <h1 className="mt-4">플리 제목</h1>
+                  <p className="mt-4">플리 내용</p>
+                </div>
+              </li>
+
+              <li className="w-full h-[230px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out">
+                <div className="ml-2">
+                  <img src={Album} />
+                  <h1 className="mt-4">플리 제목</h1>
+                  <p className="mt-4">플리 내용</p>
+                </div>
+              </li>
+
+              <li className="w-full h-[230px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out">
+                <div className="ml-2">
+                  <img src={Album} />
+                  <h1 className="mt-4">플리 제목</h1>
+                  <p className="mt-4">플리 내용</p>
+                </div>
+              </li>
+
+              <li className="w-full h-[230px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out">
+                <div className="ml-2">
+                  <img src={Album} />
+                  <h1 className="mt-4">플리 제목</h1>
+                  <p className="mt-4">플리 내용</p>
+                </div>
+              </li>
             </ul>
             {/* 마이 플레이리스트 */}
             <div className="w-full h-[50px] flex justify-between items-center mt-12 font-['Anton-Regular']">
@@ -67,9 +100,16 @@ const PlaylistModal = () => {
             </div>
             {/* 플리 앨범, 제목, 내용 */}
             <ul className="w-full mt-6 flex">
-              {playlistsInfo.map((el) => (
-                <Playlists el={el} />
-              ))}
+              <li
+                onClick={handleOpenCreateLists}
+                className="h-[230px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
+              >
+                <div className="ml-2 cursor-pointer">
+                  <img src={Album} />
+                  <h1 className="mt-4">플리 제목</h1>
+                  <p className="mt-4">플리 내용</p>
+                </div>
+              </li>
             </ul>
           </div>
         </div>

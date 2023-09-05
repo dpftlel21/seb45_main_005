@@ -1,11 +1,11 @@
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-// import axios from 'axios';
+import axios from 'axios';
 import { openSongLists } from '../../redux/slice/ModalSlice';
 // import { RootState } from '../../redux/store';
 import Album from '../../assets/images/Album.png';
 import { PlaylistInfo } from './PlaylistsShowAll';
-// import { playlistDetail } from '../../redux/slice/PlaylistsSlice';
+import { playlistDetail } from '../../redux/slice/PlaylistsSlice';
 
 type PlaylistProps = {
   el: PlaylistInfo;
@@ -18,22 +18,19 @@ const Playlists = ({ el }: PlaylistProps) => {
     dispatch(openSongLists());
   };
 
-  // const playListDetail = useSelector((state: RootState) => state.playlists.detailInfo);
-  // console.log(playListDetail);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`https://55e5-222-235-81-220.ngrok-free.app/playlist/${el.playlistId}`, {
-  //       headers: { 'ngrok-skip-browser-warning': '69420' },
-  //     })
-  //     .then((res) => {
-  //       dispatch(playlistDetail(res.data.data));
-  //       console.log(res.data.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`https://eaee-222-235-81-220.ngrok-free.app/playlist/${el.playlistId}`, {
+        headers: { 'ngrok-skip-browser-warning': '69420' },
+      })
+      .then((res) => {
+        dispatch(playlistDetail(res.data.data));
+        console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <li
