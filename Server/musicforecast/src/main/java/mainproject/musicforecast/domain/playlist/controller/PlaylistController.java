@@ -1,5 +1,6 @@
 package mainproject.musicforecast.domain.playlist.controller;
 
+import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.playlist.Utils;
 import mainproject.musicforecast.domain.playlist.dto.PlaylistDto;
 import mainproject.musicforecast.domain.playlist.entity.Playlist;
@@ -11,6 +12,8 @@ import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +53,18 @@ public class PlaylistController {
         );
     }
 
+    @GetMapping("/my")
+    public ResponseEntity getMyPlaylists(@RequestParam(required = false, defaultValue = "1") int page,
+                                         @RequestParam(required = false, defaultValue = "10") int size,
+                                         @AuthenticationPrincipal Member member) {
+        long memberId = member.getMemberId();
+        Page<Playlist> playlistPage = playlistService.findMyPlaylists(page - 1, size, memberId);
+        List<Playlist> playlists = playlistPage.getContent();
+        return new ResponseEntity<>(
+                new Utils.MultiResponseDto<>(mapper.playlistToPlaylistResponseDtos(playlists), playlistPage), HttpStatus.OK
+        );
+    }
+
     @GetMapping
     public ResponseEntity getPlaylists(@RequestParam(required = false, defaultValue = "1") int page,
                                        @RequestParam(required = false, defaultValue = "10") int size) {
@@ -72,27 +87,31 @@ public class PlaylistController {
 //        );
 //    }
 
+    @PreAuthorize("isAuthenticated()")
     @PatchMapping("/{playlist-id}")
     public ResponseEntity patchPlaylistWithTags(@PathVariable("playlist-id") long playlistId,
-                                                         @RequestBody PlaylistDto.PatchTag playlistPatchDto) {
+                                                @RequestBody PlaylistDto.PatchTag playlistPatchDto,
+                                                @AuthenticationPrincipal Member member) {
         playlistPatchDto.setPlaylistId(playlistId);
-        Playlist playlist = playlistService.updatePlaylistWithTags(playlistPatchDto);
+        Playlist playlist = playlistService.updatePlaylistWithTags(playlistPatchDto, member);
         return new ResponseEntity<>(
                 new Utils.SingleResponseDto<>(mapper.playlistToPlaylistResponseDto(playlist)), HttpStatus.OK
         );
-
     }
 
+
     @DeleteMapping("/{playlist-id}")
-    public ResponseEntity deletePlaylist(@PathVariable("playlist-id") @Positive long playlistId) {
-        playlistService.deletePlaylist(playlistId);
+    public ResponseEntity deletePlaylist(@PathVariable("playlist-id") @Positive long playlistId,
+                                         @AuthenticationPrincipal Member member) {
+        playlistService.deletePlaylist(playlistId, member);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/{playlist-id}/like")
     public ResponseEntity likePlaylist(@PathVariable("playlist-id") long playlistId,
-                                         @RequestBody PlaylistDto.Like playlistLikeDto) {
-        playlistLikeService.likePlaylist(playlistLikeDto.getMemberId(), playlistId, PlaylistLike.LikeType.Like);
+                                       @RequestBody PlaylistDto.Like playlistLikeDto,
+                                       @AuthenticationPrincipal Member member) {
+        playlistLikeService.likePlaylist(playlistLikeDto.getMemberId(), playlistId, PlaylistLike.LikeType.Like, member);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
