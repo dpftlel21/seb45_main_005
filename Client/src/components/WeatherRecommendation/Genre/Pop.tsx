@@ -2,10 +2,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openAlbumDetailModal } from '../../../redux/slice/ModalSlice';
 import Album from '../../../assets/images/Album.png';
 import AlbumModal from '../../Modal/AlbumModal';
+import { RootState } from '../../../redux/store';
 
 const Pop = () => {
   const dispatch = useDispatch();
-  const isOpen = useSelector((state: any) => state.modal.isAlbumDetailOpen);
+  const isOpen = useSelector(
+    (state: RootState) => state.modal.isAlbumDetailOpen
+  );
 
   const handleOpenModal = () => {
     dispatch(openAlbumDetailModal());
@@ -20,26 +23,31 @@ const Pop = () => {
           src={Album}
           alt="Album"
           className="w-[200px] h-[200px] mt-12 hover:translate-y-[-15px] transition duration-300 ease-in-out"
+          tabIndex={0}
         />
         <img
           src={Album}
           alt="Album"
           className="w-[200px] h-[200px] mt-12 hover:translate-y-[-15px] transition duration-300 ease-in-out"
+          tabIndex={0}
         />
         <img
           src={Album}
           alt="Album"
           className="w-[200px] h-[200px] mt-12 hover:translate-y-[-15px] transition duration-300 ease-in-out"
+          tabIndex={0}
         />
         <img
           src={Album}
           alt="Album"
           className="w-[200px] h-[200px] mt-12 hover:translate-y-[-15px] transition duration-300 ease-in-out"
+          tabIndex={0}
         />
         <img
           src={Album}
           alt="Album"
           className="w-[200px] h-[200px] mt-12 hover:translate-y-[-15px] transition duration-300 ease-in-out"
+          tabIndex={0}
         />
       </div>
 
