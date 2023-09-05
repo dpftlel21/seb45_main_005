@@ -9,6 +9,7 @@ import mainproject.musicforecast.global.exception.response.ErrorResponse;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -37,20 +38,21 @@ public class MemberController {
 
         Member response = memberService.createMember(member);
 
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(mapper.memberToMemberResponseDto(response), HttpStatus.CREATED);
     }
     //회원정보 수정
-    @PatchMapping("/profile/edit/{memberId}")
+    @PatchMapping("/profile/{memberId}")
     public ResponseEntity patchMember(@PathVariable("memberId") @Positive long memberId,
-                                      @Valid @RequestBody MemberPatchDto memberPatchDto) {
+                                      @Valid @RequestBody MemberPatchDto memberPatchDto,
+                                      @AuthenticationPrincipal Member user) {
 
         memberPatchDto.setMemberId(memberId);
 
         Member member = mapper.memberPatchDtoToMember(memberPatchDto);
 
-        Member response = memberService.updateMember(member);
+        Member response = memberService.updateMember(member, user);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(mapper.memberToMemberResponseDto(response), HttpStatus.OK);
     }
     //회원 자기소개글 목록 조회 기능
     @GetMapping("/profile/{memberId}?intro={intro}")
@@ -61,9 +63,11 @@ public class MemberController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     //회원 플레이리스트 목록 조회 기능
-    @GetMapping("/profile/{memberId}/playlist")
+    @GetMapping("/{memberId}")
     public ResponseEntity getMemberPlaylist(@PathVariable("memberId") @Positive long memberId) {
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        Member response = memberService.findMember(memberId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     //회원 게시글 목록 조회 기능
     @GetMapping("/profile/{memberId}/post")
