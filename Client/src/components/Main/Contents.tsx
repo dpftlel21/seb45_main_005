@@ -29,9 +29,7 @@ const Contents = () => {
           <img src={List} alt="" />
           <div className="text-white mt-12">
             <span className="text-2xl">날씨에 따른 음악 추천</span>
-            <p className="text-lg">
-              자신의 플레이리스트, 애청곡 등을 자유롭게 공유해 봅시다 !!
-            </p>
+            <p className="text-lg">자신의 플레이리스트, 애청곡 등을 자유롭게 공유해 봅시다 !!</p>
           </div>
         </div>
       </div>

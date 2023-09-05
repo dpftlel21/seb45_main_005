@@ -25,22 +25,13 @@ const Mypage = () => {
         <Header />
         <div className="flex w-full h-[800px]">
           <div className="flex flex-col w-[200px] items-center mt-20 ml-10">
-            <button
-              className={buttonClasses(0)}
-              onClick={() => handleButtonClick(0)}
-            >
+            <button className={buttonClasses(0)} onClick={() => handleButtonClick(0)}>
               Profile
             </button>
-            <button
-              className={buttonClasses(1)}
-              onClick={() => handleButtonClick(1)}
-            >
+            <button className={buttonClasses(1)} onClick={() => handleButtonClick(1)}>
               My PlayList
             </button>
-            <button
-              className={buttonClasses(2)}
-              onClick={() => handleButtonClick(2)}
-            >
+            <button className={buttonClasses(2)} onClick={() => handleButtonClick(2)}>
               내가 쓴 게시글
             </button>
           </div>

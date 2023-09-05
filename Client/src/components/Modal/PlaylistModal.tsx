@@ -3,8 +3,8 @@ import { closeModal, openDetailModal, openSongLists } from '../../redux/slice/Mo
 import { RootState } from '../../redux/store';
 import xbtn from '../../assets/images/xbtn.svg';
 import Album from '../../assets/images/Album.png';
+import PlaylistsShowAll from '../Playlist/PlaylistsShowAll';
 import PlaylistsDetail from '../Playlist/PlayListsDetail';
-import SongLists from '../Playlist/SongLists';
 
 const PlaylistModal = () => {
   const dispatch = useDispatch();
@@ -114,8 +114,8 @@ const PlaylistModal = () => {
           </div>
         </div>
       </div>
-      {isDetailOpen && <PlaylistsDetail />}
-      {isSongOpen && <SongLists />}
+      {isDetailOpen && <PlaylistsShowAll />}
+      {isSongOpen && <PlaylistsDetail />}
     </>
   );
 };
