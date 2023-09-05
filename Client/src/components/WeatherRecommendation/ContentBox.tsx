@@ -12,6 +12,7 @@ const ContentBox = () => {
             src={Today}
             alt="TodayMusic"
             className="w-[300px] h-[150px] mt-12"
+            tabIndex={0}
           />
         </div>
         <Pop />

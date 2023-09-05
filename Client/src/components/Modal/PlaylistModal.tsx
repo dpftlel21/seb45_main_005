@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { closeModal, openDetailModal } from '../../redux/slice/ModalSlice';
 import { openSongLists } from '../../redux/slice/SongListsSlice';
+import { RootState } from '../../redux/store';
 import xbtn from '../../assets/images/xbtn.svg';
 import Album from '../../assets/images/Album.png';
 import PlaylistsDetail from '../Playlist/PlayListsDetail';
@@ -8,8 +9,10 @@ import SongLists from '../Playlist/SongLists';
 
 const PlaylistModal = () => {
   const dispatch = useDispatch();
-  const isDetailOpen = useSelector((state: any) => state.modal.isDetailOpen);
-  const isSongOpen = useSelector((state: any) => state.songLists.isOpen);
+  const isDetailOpen = useSelector(
+    (state: RootState) => state.modal.isDetailOpen
+  );
+  const isSongOpen = useSelector((state: RootState) => state.songLists.isOpen);
 
   const handleOpenDetail = () => {
     dispatch(openDetailModal());
@@ -53,7 +56,7 @@ const PlaylistModal = () => {
             {/* 플리 앨범, 제목, 내용 */}
             <ul className="w-full mt-6 flex">
               <li className="w-full h-[230px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out">
-                <div className="ml-2">
+                <div className="ml-2 cursor-pointer">
                   <img src={Album} />
                   <h1 className="mt-4">플리 제목</h1>
                   <p className="mt-4">플리 내용</p>
@@ -102,9 +105,9 @@ const PlaylistModal = () => {
             <ul className="w-full mt-6 flex">
               <li
                 onClick={handleOpenCreateLists}
-                className="w-full h-[230px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
+                className="h-[230px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
               >
-                <div className="ml-2">
+                <div className="ml-2 cursor-pointer">
                   <img src={Album} />
                   <h1 className="mt-4">플리 제목</h1>
                   <p className="mt-4">플리 내용</p>
