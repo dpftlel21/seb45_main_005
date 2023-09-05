@@ -28,7 +28,11 @@ const PlaylistsDetail = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/playlist', {})
+      .get('https://55e5-222-235-81-220.ngrok-free.app/playlist', {
+        headers: {
+          'ngrok-skip-browser-warning': '69420',
+        },
+      })
       .then((res) => {
         console.log(res);
       })

@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import playlistimg from '../assets/images/Rectangle 64.png';
 import 'animate.css';
 import PlaylistIcon from '../components/Playlist/PlaylistIcon';
 
+interface Post {
+  postId: number;
+  title: string;
+  voteCount: number;
+  viewCount: number;
+  text: string;
+  // nickName: string;
+  memberId: number;
+}
+
 const Community = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [posts, setPosts] = useState<Post[]>([]);
   const navigate = useNavigate();
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,6 +35,22 @@ const Community = () => {
     navigate('./write');
   };
 
+  useEffect(() => {
+    axios
+      .get('https://55e5-222-235-81-220.ngrok-free.app/posts?page=1&size=10', {
+        headers: {
+          'ngrok-skip-browser-warning': '69420',
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setPosts(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <>
       <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed]">
@@ -31,10 +59,7 @@ const Community = () => {
         </div>
         <div className="flex flex-col w-full h-[1024px] items-center mt-4">
           <div className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#000000] justify-center">
-            <button
-              className="w-[140px] text-center text-xs underline"
-              onClick={handleWriteButton}
-            >
+            <button className="w-[140px] text-center text-xs underline" onClick={handleWriteButton}>
               글쓰기
             </button>
 
@@ -48,27 +73,29 @@ const Community = () => {
               />
             </form>
 
-            <button className="w-[50px] text-center text-xs underline">
-              조회순
-            </button>
-            <button className="w-[50px] text-center text-xs underline">
-              추천순
-            </button>
+            <button className="w-[50px] text-center text-xs underline">조회순</button>
+            <button className="w-[50px] text-center text-xs underline">추천순</button>
           </div>
           <div>
             <table className="flex flex-col w-[875px] items-center justify-center ">
-              <tr className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#bdc2f8] justify-center">
-                <td className="w-[50px] text-center text-xs">1</td>
-                <td className="w-[100px]">
-                  <img src={playlistimg} alt="임시사진" />
-                </td>
+              {posts &&
+                posts.map((item) => (
+                  <tr
+                    className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#bdc2f8] justify-center"
+                    key={item.postId}
+                  >
+                    <td className="w-[50px] text-center text-xs">1</td>
+                    <td className="w-[100px]">
+                      <img src={playlistimg} alt="임시사진" />
+                    </td>
 
-                <td className="w-[700px] text-start text-xs ml-10">
-                  <a href="./community/1">컨텐츠 제목</a>
-                </td>
-                <td className="w-[50px] text-center text-xs">89</td>
-                <td className="w-[50px] text-center text-xs">190</td>
-              </tr>
+                    <td className="w-[700px] text-start text-xs ml-10">
+                      <a href={`./community/${item.postId}`}>{item.title}</a>
+                    </td>
+                    <td className="w-[50px] text-center text-xs">{item.viewCount}</td>
+                    <td className="w-[50px] text-center text-xs">{item.voteCount}</td>
+                  </tr>
+                ))}
             </table>
           </div>
         </div>
