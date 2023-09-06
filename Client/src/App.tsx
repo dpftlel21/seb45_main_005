@@ -21,15 +21,11 @@ import LoginOn from './components/Login/LoginOn';
 import SongLists from './components/Playlist/SongLists';
 import Main from './components/Main/Main';
 
-
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path={RouteConst.WeatherRecommend}
-          element={<WeatherRecommend />}
-        />
+        <Route path={RouteConst.WeatherRecommend} element={<WeatherRecommend />} />
         <Route path={RouteConst.LoginOn} element={<LoginOn />} />
         <Route path={RouteConst.SignUp} element={<SignUp />} />
         <Route path={RouteConst.MyPage} element={<Mypage />} />

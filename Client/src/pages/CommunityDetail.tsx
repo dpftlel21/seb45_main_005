@@ -22,11 +22,7 @@ const CommunityDetail = () => {
                 <span className="text-xl">글제목입니다</span>
               </div>
               <div className="w-[875px] h-[50px] flex items-center">
-                <img
-                  src={usericon}
-                  alt="유저아이콘"
-                  className="w-[40px] h-40px]"
-                />
+                <img src={usericon} alt="유저아이콘" className="w-[40px] h-40px]" />
                 <span className="inline-flex w-[60px] h-[50px] items-center justify-center">
                   유저이름
                 </span>

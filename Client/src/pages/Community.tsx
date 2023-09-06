@@ -31,10 +31,7 @@ const Community = () => {
         </div>
         <div className="flex flex-col w-full h-[1024px] items-center mt-4">
           <div className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#000000] justify-center">
-            <button
-              className="w-[140px] text-center text-xs underline"
-              onClick={handleWriteButton}
-            >
+            <button className="w-[140px] text-center text-xs underline" onClick={handleWriteButton}>
               글쓰기
             </button>
 
@@ -48,12 +45,8 @@ const Community = () => {
               />
             </form>
 
-            <button className="w-[50px] text-center text-xs underline">
-              조회순
-            </button>
-            <button className="w-[50px] text-center text-xs underline">
-              추천순
-            </button>
+            <button className="w-[50px] text-center text-xs underline">조회순</button>
+            <button className="w-[50px] text-center text-xs underline">추천순</button>
           </div>
           <div>
             <table className="flex flex-col w-[875px] items-center justify-center ">

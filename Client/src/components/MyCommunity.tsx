@@ -26,12 +26,8 @@ const MyCommunity = () => {
             />
           </form>
           <div>
-            <button className="w-[50px] text-center text-xs underline">
-              조회순
-            </button>
-            <button className="w-[50px] text-center text-xs underline">
-              추천순
-            </button>
+            <button className="w-[50px] text-center text-xs underline">조회순</button>
+            <button className="w-[50px] text-center text-xs underline">추천순</button>
           </div>
         </div>
         <div className="mt-5">
