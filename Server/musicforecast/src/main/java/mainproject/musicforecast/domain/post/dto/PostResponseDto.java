@@ -18,7 +18,6 @@ public class PostResponseDto {
     private Long memberId;
     private String nickName;
     private int voteCount;
-    private int commentCount;
     private int viewCount;
     private LocalDateTime createdAt;
 
