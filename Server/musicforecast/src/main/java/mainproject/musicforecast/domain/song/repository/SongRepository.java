@@ -1,5 +1,7 @@
 package mainproject.musicforecast.domain.song.repository;
 
+import mainproject.musicforecast.domain.playlist.entity.Playlist;
+import mainproject.musicforecast.domain.playlistSong.entity.PlaylistSong;
 import mainproject.musicforecast.domain.song.entity.Song;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -20,4 +22,7 @@ public interface SongRepository extends JpaRepository<Song, Long> {
     @Modifying
     @Query("DELETE FROM Song s WHERE s.title=:title AND s.artistName=:artistName AND s.albumName=:albumName")
     void deleteDuplicateSongs(@Param("title") String title, @Param("artistName") String artistName, @Param("albumName") String albumName);
+
+    @Query("SELECT p FROM PlaylistSong p WHERE p.song.songId=:songId AND p.playlist.playlistId=:playlistId")
+    PlaylistSong findExistSong(long songId, long playlistId);
 }

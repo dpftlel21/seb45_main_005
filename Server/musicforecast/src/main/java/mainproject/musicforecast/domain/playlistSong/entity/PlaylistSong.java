@@ -22,4 +22,16 @@ public class PlaylistSong {
     @ManyToOne
     @JoinColumn(name = "SONG_ID")
     private Song song;
+
+    @Column
+    private String songTitle;
+
+    @Column
+    private String artistName;
+
+    @Column
+    private String albumName;
+
+    @Column
+    private String imageUrl;
 }
