@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
+import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import { setAccessToken, setRefreshToken } from '../../redux/slice/LoginSlice';
 import Logo from '../../assets/images/logo.png';
 import Email from '../../assets/images/email.svg';
 import Lock from '../../assets/images/lock.svg';
-import GoogleOauth from './GoogleOauth';
+import { RootState } from '../../redux/store';
+// import GoogleOauth from './GoogleOauth';
 
 interface Formvalue {
-  email: string;
+  username: string;
   password: string;
 }
 interface DecodedToken {
@@ -17,14 +20,14 @@ interface DecodedToken {
 }
 
 const LoginOn = () => {
+  const dispatch = useDispatch();
+  const accessToken = useSelector((state: RootState) => state.login.accessToken);
+  const refreshToken = useSelector((state: RootState) => state.login.refreshToken);
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<Formvalue>();
-
-  const [accessToken, setAccessToken] = useState('');
-  const [refreshToken, setRefreshToken] = useState('');
 
   // 초기 로딩 시, 로컬 스토리지에서 토큰 가져오기
   useEffect(() => {
@@ -38,21 +41,18 @@ const LoginOn = () => {
     }
   }, []);
 
-  const handleLogin = async (email: string, password: string) => {
+  const handleLogin = async (username: string, password: string) => {
     try {
       const response = await axios.post(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/auth/login',
-        { email, password },
+        '/auth/login',
+        { username, password },
         { withCredentials: true }
       );
+      console.log(response.headers);
 
-      const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data;
-
-      localStorage.setItem('accessToken', newAccessToken);
-      localStorage.setItem('refreshToken', newRefreshToken);
-
-      setAccessToken(newAccessToken);
-      setRefreshToken(newRefreshToken);
+      dispatch(setAccessToken(response.headers.authorization));
+      console.log(response.headers.authorization);
+      dispatch(setRefreshToken(response.headers.refreshtoken));
     } catch (error) {
       console.error('로그인 실패:', error);
     }
@@ -71,10 +71,7 @@ const LoginOn = () => {
         if (!refreshToken) {
           return;
         }
-        const response = await axios.post(
-          'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/auth/login',
-          { refreshToken }
-        );
+        const response = await axios.post('/auth/login', { refreshToken });
         const newAccessToken = response.data.accessToken;
 
         localStorage.setItem('accessToken', newAccessToken);
@@ -109,8 +106,7 @@ const LoginOn = () => {
   const onSubmit = async (data: Formvalue) => {
     console.log(data);
 
-    handleLogin(data.email, data.password);
-    console.log(accessToken);
+    handleLogin(data.username, data.password);
   };
 
   return (
@@ -125,11 +121,11 @@ const LoginOn = () => {
             >
               <div className="flex flex-row items-center text-xl">
                 <img src={Email} alt="" className="w-10" />
-                <label htmlFor="email">이메일</label>
+                <label htmlFor="username">이메일</label>
               </div>
               <input
                 type="text"
-                {...register('email', {
+                {...register('username', {
                   pattern: {
                     value:
                       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
@@ -168,11 +164,11 @@ const LoginOn = () => {
                 disabled={isSubmitting}
                 className=" mt-12 bg-[#C487F4] w-[270px] h-10 rounded-xl hover:bg-opacity-90 hover:bg-[#C487F4]"
               >
-                <Link to="/">로그인</Link>
+                로그인
               </button>
             </form>
             <div className="flex flex-row justify-between ml-56 mt-5 w-52 mb-24">
-              <GoogleOauth />
+              {/* <GoogleOauth /> */}
               <div>카카오</div>
               <div>네이버</div>
             </div>

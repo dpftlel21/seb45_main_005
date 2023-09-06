@@ -14,7 +14,7 @@ const Footer = () => {
       <MainHead />
       <header
         className="bg-cover bg-center h-screen "
-        style={{ backgroundImage: url(${Mainbg}) }}
+        style={{ backgroundImage: `url(${Mainbg})` }}
       >
         <div className="w-full h-full bg-black bg-opacity-70">
           <div className="flex flex-col justify-center items-center ">
