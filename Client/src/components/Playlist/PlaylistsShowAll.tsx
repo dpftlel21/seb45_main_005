@@ -4,10 +4,10 @@ import axios from 'axios';
 import { closeDetailModal, openToastModal } from '../../redux/slice/ModalSlice';
 import { playlistInfo } from '../../redux/slice/PlaylistsSlice';
 import xbtn from '../../assets/images/xbtn.svg';
-import PlaylistsDetail from './PlayListsDetail';
+// import PlaylistsDetail from './PlayListsDetail';
+import Playlists from './Playlists';
 import ToastModal from '../Modal/ToastModal';
 import { RootState } from '../../redux/store';
-import Playlists from './Playlists';
 
 export type PlaylistInfo = {
   title: string;
@@ -17,7 +17,8 @@ export type PlaylistInfo = {
 const PlaylistsShowAll = () => {
   const dispatch = useDispatch();
 
-  const isOpenSong = useSelector((state: RootState) => state.modal.isSongOpen);
+  // const isOpenSong = useSelector((state: RootState) => state.modal.isSongOpen);
+  // const token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sIm1lbWJlcklkIjozNiwic3ViIjoidGVzdHRlc3QyQHRlc3QuY29tIiwiaWF0IjoxNjkzOTE0NzE2LCJleHAiOjE2OTM5MTY1MTZ9.yyVl_L-x5xpjJ8WRFXSqR6nvu95BRg08NHFdCAYMSOg"
   const isOpenToast = useSelector((state: RootState) => state.modal.isToastOpen);
   const playlistsInfo: PlaylistInfo[] = useSelector((state: RootState) => state.playlists.value);
 
@@ -31,16 +32,20 @@ const PlaylistsShowAll = () => {
 
   useEffect(() => {
     axios
-      .get('https://eaee-222-235-81-220.ngrok-free.app/playlist', {
-        headers: { 'ngrok-skip-browser-warning': '69420' },
-      })
+      .get('http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist')
       .then((res) => {
         dispatch(playlistInfo(res.data.data));
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  // const handleDeletePlayList = () => {
+  //   return
+  //   axios .
+  // }
 
   return (
     <>
@@ -69,7 +74,7 @@ const PlaylistsShowAll = () => {
             {/* 플리 앨범, 제목, 내용 */}
             <ul className="w-full h-[550px] mt-6 flex flex-wrap overflow-y-scroll">
               {playlistsInfo.map((el) => (
-                <Playlists el={el} />
+                <Playlists key={el.playlistId} el={el} playlistId={el.playlistId} />
               ))}
             </ul>
             <div className="flex justify-center mt-8">
@@ -87,7 +92,7 @@ const PlaylistsShowAll = () => {
         </div>
       </div>
 
-      {isOpenSong && <PlaylistsDetail />}
+      {/* {isOpenSong && <PlaylistsDetail />} */}
       {isOpenToast && <ToastModal />}
     </>
   );

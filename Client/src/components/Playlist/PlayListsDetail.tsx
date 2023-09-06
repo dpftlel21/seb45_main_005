@@ -1,20 +1,27 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import axios from 'axios';
 import { closeSongLists, openPlaylists } from '../../redux/slice/ModalSlice';
+import { playlistDetail } from '../../redux/slice/PlaylistsSlice';
 import { RootState } from '../../redux/store';
 import SongAdd from './SongAdd';
 import backbtn from '../../assets/images/backbtn.png';
 import Album from '../../assets/images/Album.png';
 import Logo from '../../assets/images/logo.png';
 
-// type PlaylistDetailInfo = {
-//   playListSongId: number;
-//   songId: number;
-// };
+type PlaylistDetailInfo = {
+  playlistSongs: [];
+  playlistTagId: number;
+};
 
 const PlaylistsDetail = () => {
   const dispatch = useDispatch();
 
   const isCreateOpen = useSelector((state: RootState) => state.modal.isCreateOpen);
+  const playlistId = useSelector((state: RootState) => state.playlists.selectedPlaylistId);
+  const DetailInfo: PlaylistDetailInfo[] = useSelector(
+    (state: RootState) => state.playlists.detailInfo
+  );
 
   const handleCloseSong = () => {
     dispatch(closeSongLists());
@@ -23,6 +30,20 @@ const PlaylistsDetail = () => {
   const handleOpenCreateLists = () => {
     dispatch(openPlaylists());
   };
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/${playlistId}`
+      )
+      .then((res) => {
+        dispatch(playlistDetail(res.data.data.playlistSongs));
+        console.log(res.data.data.playlistSongs);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [playlistId]);
 
   return (
     <>
@@ -71,25 +92,26 @@ const PlaylistsDetail = () => {
             </div>
             {/* 플리 노래목록 */}
             <ul className="w-full h-[440px] mt-8 flex flex-col overflow-x-hidden z">
-              <li className="w-full grid grid-cols-5 items-center text-center border-t-2 border-solid border-gray-200 border-opacity-20 hover:bg-[#47464680]">
-                {/* No */}
-                <h3 className="">1</h3>
-                {/* Title */}
-                <div className="flex justify-center items-center text-center">
-                  <img src={Album} className="w-[50px] h-[50px]" />
-                  <div className="h-[50px] flex flex-col items-center my-4">
-                    <p className="text-sm"></p>
-                    <p className="mt-2 text-sm"></p>
+              {DetailInfo.map((e) => (
+                <li className="w-full grid grid-cols-5 items-center text-center border-t-2 border-solid border-gray-200 border-opacity-20 hover:bg-[#47464680]">
+                  {/* No */}
+                  <h3 className="">1</h3>
+                  {/* Title */}
+                  <div className="flex justify-center items-center text-center">
+                    <img src={Album} className="w-[50px] h-[50px]" />
+                    <div className="h-[50px] flex flex-col items-center my-4">
+                      <p className="text-sm">{e.playlistTagId}</p>
+                      <p className="mt-2 text-sm"></p>
+                    </div>
                   </div>
-                </div>
-                {/* Album */}
-                {/* <h3 className="">앨범 이름</h3> */}
-                {/* Dated added */}
-                {/* <h3 className="">1 Week ago</h3> */}
-                {/* 실행시간 */}
-                {/* <h3 className="">3:12</h3> */}
-              </li>
-              ;
+                  {/* Album */}
+                  {/* <h3 className="">앨범 이름</h3> */}
+                  {/* Dated added */}
+                  {/* <h3 className="">1 Week ago</h3> */}
+                  {/* 실행시간 */}
+                  {/* <h3 className="">3:12</h3> */}
+                </li>
+              ))}
             </ul>
             <div className="flex justify-center my-8">
               <button className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white">
