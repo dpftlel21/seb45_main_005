@@ -5,7 +5,6 @@ export const RouteConst = {
   SignUp: '/signup',
   MyPage: '/mypage',
   Community: '/community',
-  SongLists: '/songLists',
   Write: '/community/write',
   Detail: '/community/:id',
   MUBTI: '/mubti',

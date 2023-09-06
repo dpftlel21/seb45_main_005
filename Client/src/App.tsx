@@ -18,7 +18,6 @@ import SurveyLoading from './pages/MUBTI/Survey/SurveyLoading';
 
 import SignUp from './components/Login/SignUp';
 import LoginOn from './components/Login/LoginOn';
-import SongLists from './components/Playlist/SongLists';
 import Main from './components/Main/Main';
 
 const App = () => {
@@ -30,7 +29,6 @@ const App = () => {
         <Route path={RouteConst.SignUp} element={<SignUp />} />
         <Route path={RouteConst.MyPage} element={<Mypage />} />
         <Route path={RouteConst.Community} element={<Community />} />
-        <Route path={RouteConst.SongLists} element={<SongLists />} />
         <Route path={RouteConst.Write} element={<Write />} />
         <Route path={RouteConst.Detail} element={<CommunityDetail />} />
         <Route path={RouteConst.Main} element={<Main />} />

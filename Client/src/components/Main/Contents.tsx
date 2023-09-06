@@ -31,6 +31,7 @@ const Contents = () => {
               자신의 플레이리스트, 애청곡을 공유하는 웹 사이트 입니다.
             </span>
           </div>
+
           <div className="flex flex-row justify-start  mx-60 mt-6 hover:opacity-90">
             <button onClick={handleButton} className="flex flex-row ">
               <img
@@ -39,7 +40,8 @@ const Contents = () => {
               ></img>
               <span className="text-white">{bton ? '컨텐츠 닫힘' : '컨텐츠 열림'}</span>
             </button>
-          </div>
+        </div>
+       
           {/* 컨텐츠 */}
           {!bton && (
             <div>

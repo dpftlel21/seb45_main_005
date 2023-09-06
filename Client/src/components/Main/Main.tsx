@@ -6,7 +6,7 @@ import Contents from './Contents';
 import Footer from './Footer';
 
 const Main = () => {
-  const slides = [<Contents />, <Chart />, <Footer />];
+ const slides = [<Contents />, <Chart />, <Footer />];
   return (
     <div className="bg-black ">
       <Swiper
