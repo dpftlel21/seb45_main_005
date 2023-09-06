@@ -37,11 +37,9 @@ const Community = () => {
 
   useEffect(() => {
     axios
-      .get('https://55e5-222-235-81-220.ngrok-free.app/posts?page=1&size=10', {
-        headers: {
-          'ngrok-skip-browser-warning': '69420',
-        },
-      })
+      .get(
+        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts?page=1&size=10'
+      )
       .then((res) => {
         console.log(res);
         setPosts(res.data.data);
