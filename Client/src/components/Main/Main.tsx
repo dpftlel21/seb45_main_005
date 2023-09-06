@@ -19,10 +19,7 @@ const Main = () => {
   };
 
   return (
-    <header
-      className="bg-cover bg-center h-screen "
-      style={{ backgroundImage: `url(${Mainbg})` }}
-    >
+    <header className="bg-cover bg-center h-screen " style={{ backgroundImage: `url(${Mainbg})` }}>
       <div className="w-full h-full bg-black bg-opacity-50">
         <div className="flex flex-row justify-between">
           <div>
@@ -39,13 +36,10 @@ const Main = () => {
         </div>
 
         <div className="w-full text-white flex flex-col justify-center items-center ">
-          <h2 className="text-6xl h-40 font-sigmar-one">
-            Welcome to “MUSIC FORECAST” !!
-          </h2>
+          <h2 className="text-6xl h-40 font-sigmar-one">Welcome to “MUSIC FORECAST” !!</h2>
           <span className="text-2xl font">
-            날씨와 더불어 유저가 처한 상황 (운동, 기분)에 따라 음악 추천을
-            해주고, 유저들끼리 자신의 플레이리스트, 애청곡을 공유하는 웹 사이트
-            입니다.
+            날씨와 더불어 유저가 처한 상황 (운동, 기분)에 따라 음악 추천을 해주고, 유저들끼리 자신의
+            플레이리스트, 애청곡을 공유하는 웹 사이트 입니다.
           </span>
         </div>
         <div className="flex flex-row justify-start  mx-60 mt-6 hover:opacity-90">
@@ -54,9 +48,7 @@ const Main = () => {
               src={Vector}
               className={`mr-6 ${imageFlipped ? 'transform scale-y-[-1]' : ''}`}
             ></img>
-            <span className="text-white">
-              {bton ? '컨텐츠 열기' : '컨텐츠 닫기'}
-            </span>
+            <span className="text-white">{bton ? '컨텐츠 열기' : '컨텐츠 닫기'}</span>
           </button>
         </div>
         {/* 컨텐츠 */}

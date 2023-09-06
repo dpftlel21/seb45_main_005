@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import PlaylistIcon from '../components/Playlist/PlaylistIcon';
@@ -14,13 +15,38 @@ const Write = () => {
   const handleCancel = () => {
     navigate('../community');
   };
+
+  const handlePost = async () => {
+    // 등록 버튼 클릭 시 POST 요청을 보내는 함수
+    try {
+      const response = await axios.post(
+        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts',
+        {
+          title,
+          text: content,
+        }
+      );
+
+      console.log('서버 응답:', response.data);
+
+      // POST 요청 성공 후 필요한 작업 수행
+      // 예를 들어, 페이지 이동 또는 메시지 표시 등
+      navigate('../');
+    } catch (error) {
+      console.error('POST 요청 실패:', error);
+      // POST 요청 실패 시 처리할 내용 추가
+      alert(error);
+    }
+  };
   return (
     <>
       <div className="bg-gradient-to-b from-[#ffffff] to-[#d1d1d1]">
         <Header />
         <div className="flex justify-center mt-10">
           <div className="w-[745px]">
-            <button className="mr-2 underline">등록</button>
+            <button className="mr-2 underline" onClick={handlePost}>
+              등록
+            </button>
             <button className="underline" onClick={handleCancel}>
               취소
             </button>
