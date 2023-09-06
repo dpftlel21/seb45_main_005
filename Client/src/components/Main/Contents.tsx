@@ -40,8 +40,8 @@ const Contents = () => {
               ></img>
               <span className="text-white">{bton ? '컨텐츠 닫힘' : '컨텐츠 열림'}</span>
             </button>
-        </div>
-       
+          </div>
+
           {/* 컨텐츠 */}
           {!bton && (
             <div>
