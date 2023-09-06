@@ -44,14 +44,11 @@ module.exports = {
       },
     ],
     // 클래스 멤버(변수, 함수)는 무조건 한 줄 씩 띄워져야 함
-    'lines-between-class-members': [
-      'error',
-      'always',
-      { exceptAfterSingleLine: true },
-    ],
+    'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
   },
   settings: {
     'import/resolver': {
+      typescript: {},
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },

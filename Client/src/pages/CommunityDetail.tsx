@@ -42,7 +42,7 @@ const CommunityDetail = () => {
   }, [communityId]);
 
   return (
-    <>
+     <>
       <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] h-[1024px]">
         <Header />
         {posts.map((item) => (
