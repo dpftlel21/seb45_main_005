@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { closeModal, openDetailModal, openSongLists } from '../../redux/slice/ModalSlice';
 import { setSelectedPlaylistId, playlistInfo } from '../../redux/slice/PlaylistsSlice';
@@ -16,6 +16,7 @@ export type PlaylistInfo = {
 
 const PlaylistModal = () => {
   const dispatch = useDispatch();
+  const [title, setTitle] = useState<string>('');
   const isDetailOpen = useSelector((state: RootState) => state.modal.isSongOpen);
   const isShowAll = useSelector((state: RootState) => state.modal.isDetailOpen);
   const playlistsInfo: PlaylistInfo[] = useSelector((state: RootState) => state.playlists.value);
@@ -112,7 +113,7 @@ const PlaylistModal = () => {
           </div>
         </div>
       </div>
-      {isDetailOpen && <PlaylistsDetail />}
+      {isDetailOpen && <PlaylistsDetail title={title} setTitle={setTitle} />}
       {isShowAll && <PlaylistsShowAll />}
     </>
   );
