@@ -95,5 +95,9 @@ public class PostService {
         postRepository.delete(post);
     }
 
+    public Page<Post> searchPostsByKeyword(int page, int size, String keyword) {
+        Pageable pageable = PageRequest.of(page, size);
+        return postRepository.findByTitleContainingIgnoreCase(keyword, pageable);
+    }
 
 }

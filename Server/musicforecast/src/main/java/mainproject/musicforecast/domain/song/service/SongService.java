@@ -34,7 +34,6 @@ public class SongService {
     }
 
     public boolean checkExistSong(long songId, long playlistId) {
-        System.out.println("findExistSong : " + songRepository.findExistSong(songId, playlistId));
         if (songRepository.findExistSong(songId, playlistId) != null) return true;
         return false;
     }

@@ -111,7 +111,7 @@ public class PlaylistController {
     public ResponseEntity likePlaylist(@PathVariable("playlist-id") long playlistId,
                                        @RequestBody PlaylistDto.Like playlistLikeDto,
                                        @AuthenticationPrincipal Member member) {
-        playlistLikeService.likePlaylist(playlistLikeDto.getMemberId(), playlistId, PlaylistLike.LikeType.Like, member);
+        playlistLikeService.likePlaylist(playlistId, PlaylistLike.LikeType.Like, member);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

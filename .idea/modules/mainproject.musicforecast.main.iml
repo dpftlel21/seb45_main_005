@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
 <module external.linked.project.id="musicforecast:main" external.linked.project.path="$MODULE_DIR$/../../Server/musicforecast" external.root.project.path="$MODULE_DIR$/../../Server/musicforecast" external.system.id="GRADLE" external.system.module.group="mainproject" external.system.module.type="sourceSet" external.system.module.version="0.0.1-SNAPSHOT" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet external-system-id="GRADLE" type="web" name="Web">
@@ -98,12 +97,5 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.h2database:h2:2.1.214" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.mysql:mysql-connector-j:8.0.33" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.sun.activation:jakarta.activation:1.2.2" level="project" />
-=======
-<module version="4">
-  <component name="AdditionalModuleElements">
-    <content url="file://$MODULE_DIR$/../../Server/musicforecast/build/generated/sources/annotationProcessor/java/main">
-      <sourceFolder url="file://$MODULE_DIR$/../../Server/musicforecast/build/generated/sources/annotationProcessor/java/main" isTestSource="false" generated="true" />
-    </content>
->>>>>>> f7d3f6658ac59414fa04d65aa38e58e6fd5de4ff
   </component>
 </module>
