@@ -21,7 +21,7 @@ const Mypage = () => {
   };
   return (
     <>
-      <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed]">
+      <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] h-[1024px]">
         <Header />
         <div className="flex w-full h-[800px]">
           <div className="flex flex-col w-[200px] items-center mt-20 ml-10">

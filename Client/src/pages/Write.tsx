@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/redux/store';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
@@ -11,6 +13,10 @@ const Write = () => {
   const [content, setContent] = useState('');
   const [song, setSong] = useState('');
   const navigate = useNavigate();
+  const accessToken = useSelector((state: RootState) => state.login.accessToken);
+  // const refreshToken = useSelector((state: RootState) => state.login.refreshToken);
+  // const dispatch = useDispatch();
+  console.log(accessToken);
 
   const handleCancel = () => {
     navigate('../community');
@@ -20,18 +26,26 @@ const Write = () => {
     // 등록 버튼 클릭 시 POST 요청을 보내는 함수
     try {
       const response = await axios.post(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts',
+        '/posts',
         {
+          memberId: 25,
           title,
           text: content,
+        },
+        {
+          headers: {
+            Authorization: accessToken,
+          },
         }
       );
 
       console.log('서버 응답:', response.data);
+      console.log('postId', response.data.data.postId);
+      console.log('이름', response.data.data.nickName);
 
       // POST 요청 성공 후 필요한 작업 수행
       // 예를 들어, 페이지 이동 또는 메시지 표시 등
-      navigate('../');
+      navigate(`../community/${response.data.data.postId}`);
     } catch (error) {
       console.error('POST 요청 실패:', error);
       // POST 요청 실패 시 처리할 내용 추가

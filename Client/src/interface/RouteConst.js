@@ -14,5 +14,6 @@ export const RouteConst = {
   Liking: '/mubti/liking',
   Result: '/mubti/result',
   Loading: '/mubti/loading',
+  EditProfile: '/mypage/edit',
   Search: '/search',
 };

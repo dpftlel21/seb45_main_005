@@ -1,7 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import userphoto from '../assets/images/user.png';
 import 'animate.css';
 
 const Profile = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="flex flex-col w-full items-center">
@@ -12,7 +14,10 @@ const Profile = () => {
           <div className="flex w-[600px] items-center justify-between">
             <span className="w-40vw ml-4">이름</span>
             <div>
-              <button className="w-[150px] h-[30px] bg-white shadow-md hover:shadow-lg rounded-md">
+              <button
+                className="w-[150px] h-[30px] bg-white shadow-md hover:shadow-lg rounded-md"
+                onClick={() => navigate('./edit')}
+              >
                 개인정보 수정
               </button>
             </div>

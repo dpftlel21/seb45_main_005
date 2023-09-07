@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { RootState } from 'src/redux/store';
 import axios from 'axios';
 import Header from '../components/Header';
 import usericon from '../assets/images/user.png';
@@ -20,7 +23,13 @@ const CommunityDetail = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const currentUrl = new URL(document.location.toString());
   const communityParam = currentUrl.pathname.split('/').pop() || '';
-  const communityId = parseInt(communityParam, 10);
+  const postId = parseInt(communityParam, 10);
+  console.log(postId);
+  const accessToken = useSelector((state: RootState) => state.login.accessToken);
+  // const accessToken = useSelector((state: RootState) => state.login.accessToken);
+  // const refreshToken = useSelector((state: RootState) => state.login.refreshToken);
+  // const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLikeClick = () => {
     setIsLiked((prevIsLiked) => !prevIsLiked);
@@ -28,18 +37,42 @@ const CommunityDetail = () => {
 
   useEffect(() => {
     axios
-      .get(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts?page=1&size=10'
-      )
+      .get('/posts?page=1&size=10')
       .then((res) => {
         console.log(res);
         // setPosts(res.data.data);
-        setPosts(res.data.data.filter((item: any) => item.postId === communityId));
+        setPosts(res.data.data.filter((item: any) => item.postId === postId));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [communityId]);
+  }, [postId]);
+
+  const handleDelete = () => {
+    const confirmDelete = window.confirm('삭제하시겠습니까?');
+
+    if (confirmDelete) {
+      // 확인을 누르면 삭제 요청을 보냅니다.
+      return axios
+        .delete(`/posts/${postId}`, {
+          headers: {
+            Authorization: accessToken,
+          },
+        })
+        .then((res) => {
+          // 삭제 성공 시의 처리
+          console.log('삭제가 완료되었습니다.', res.data);
+          navigate('../community');
+          // 여기에서 필요한 추가 작업을 수행할 수 있습니다.
+        })
+        .catch((err) => {
+          // 삭제 실패 시의 처리
+          console.error('삭제 중 오류가 발생했습니다.', err);
+          // 여기에서 오류 처리를 할 수 있습니다.
+        });
+    }
+    return <></>;
+  };
 
   return (
     <>
@@ -50,12 +83,18 @@ const CommunityDetail = () => {
             <div className="w-[875px] mt-10">
               {/* 상단 제목과 이름 좋아요 바 */}
               <div className="w-[875px] h-[100px] border-b-[1px] border-solid border-black">
-                <div className="w-[875px] h-[50px]">
+                <div className="w-[875px] h-[50px] flex justify-between">
                   <span className="text-xl">{item.title}</span>
+                  <div className="w-[150px] flex justify-center">
+                    <button className="mr-5 text-xs">수정</button>
+                    <button className="text-xs" onClick={handleDelete}>
+                      삭제
+                    </button>
+                  </div>
                 </div>
                 <div className="w-[875px] h-[50px] flex items-center">
                   <img src={usericon} alt="유저아이콘" className="w-[40px] h-40px]" />
-                  <span className="inline-flex w-[60px] h-[50px] items-center justify-center">
+                  <span className="inline-flex w-[80px] h-[50px] items-center justify-center">
                     {item.nickName}
                   </span>
                   <div className="w-[625px]"></div>

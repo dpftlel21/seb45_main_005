@@ -86,5 +86,5 @@
     "typescript": "^4.9.5",
     "webpack": "^5.88.2"
   },
-  "proxy": "http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/"
+  "proxy": "http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080"
 }
