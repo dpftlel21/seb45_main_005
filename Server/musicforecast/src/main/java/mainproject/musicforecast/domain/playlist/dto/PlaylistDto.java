@@ -14,7 +14,7 @@ public class PlaylistDto {
     @Getter
     @Setter
     public static class Post {
-        private long memberId;
+//        private long memberId;
         private String title;
         private boolean isPublic;
     }
@@ -40,10 +40,10 @@ public class PlaylistDto {
     /*
     * 좋아요 누를 때 보내는 값
     */
-    @Getter
-    public static class Like {
-        private long memberId;
-    }
+//    @Getter
+//    public static class Like {
+//        private long memberId;
+//    }
     
     /*
     * 플레이리스트 목록에서 조회시
