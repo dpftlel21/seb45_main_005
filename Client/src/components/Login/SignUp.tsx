@@ -30,13 +30,13 @@ const SignUp = () => {
   } = useForm<IFormInput>();
 
   const onSubmit = async (data: IFormInput) => {
+    data.birthdate = data.birthdate.replace(/-/g, '');
+
     data.id = generateID();
     console.log(data);
+
     try {
-      const response = await axios.post(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/signup',
-        data
-      );
+      const response = await axios.post('/members/signup', data);
 
       if (response.status === 200) {
         console.log('회원가입 성공');
