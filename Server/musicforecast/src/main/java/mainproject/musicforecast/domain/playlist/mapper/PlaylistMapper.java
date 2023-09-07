@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 //@Service //PlaylistController에서 Could not autowire.
 public interface PlaylistMapper {
 
-    default Playlist playlistPostDtoToPlaylist(PlaylistDto.Post playlistPostDto) {
+    default Playlist playlistPostDtoToPlaylist(PlaylistDto.Post playlistPostDto, Member user) {
         Member member = new Member();
 
-        member.setMemberId(playlistPostDto.getMemberId());
+        member.setMemberId(user.getMemberId());
 
         Playlist playlist = new Playlist();
 

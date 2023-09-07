@@ -39,8 +39,9 @@ public class PlaylistController {
     }
 
     @PostMapping
-    public ResponseEntity postPlaylist(@Valid @RequestBody PlaylistDto.Post playlistPostDto) {
-        Playlist playlist = playlistService.createPlaylist(mapper.playlistPostDtoToPlaylist(playlistPostDto));
+    public ResponseEntity postPlaylist(@Valid @RequestBody PlaylistDto.Post playlistPostDto,
+                                       @AuthenticationPrincipal Member member) {
+        Playlist playlist = playlistService.createPlaylist(mapper.playlistPostDtoToPlaylist(playlistPostDto, member));
         URI location = Utils.createUri("/playlist", playlist.getPlaylistId());
         return ResponseEntity.created(location).build();
     }
@@ -109,9 +110,8 @@ public class PlaylistController {
 
     @PatchMapping("/{playlist-id}/like")
     public ResponseEntity likePlaylist(@PathVariable("playlist-id") long playlistId,
-                                       @RequestBody PlaylistDto.Like playlistLikeDto,
                                        @AuthenticationPrincipal Member member) {
-        playlistLikeService.likePlaylist(playlistLikeDto.getMemberId(), playlistId, PlaylistLike.LikeType.Like, member);
+        playlistLikeService.likePlaylist(playlistId, PlaylistLike.LikeType.Like, member);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
