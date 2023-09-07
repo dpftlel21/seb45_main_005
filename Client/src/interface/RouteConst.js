@@ -15,4 +15,6 @@ export const RouteConst = {
   Result: '/mubti/result',
   Loading: '/mubti/loading',
   Test: '/test',
+  EditProfile: '/mypage/edit',
+  Search: '/search',
 };
