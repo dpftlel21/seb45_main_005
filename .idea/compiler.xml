@@ -12,10 +12,5 @@
         <module name="mainproject.musicforecast.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="mainproject.musicforecast.main" target="11" />
-      <module name="musicforecast" target="11" />
-      <module name="musicforecast.test" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>
