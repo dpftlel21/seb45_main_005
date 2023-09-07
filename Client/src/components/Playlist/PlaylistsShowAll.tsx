@@ -19,6 +19,7 @@ export type PlaylistInfo = {
 const PlaylistsShowAll = () => {
   const dispatch = useDispatch();
 
+  const [title, setTitle] = useState<string>('');
   const [reRendering, setReRendering] = useState<string>('');
 
   const isDetailOpen = useSelector((state: RootState) => state.modal.isSongOpen);
@@ -34,12 +35,11 @@ const PlaylistsShowAll = () => {
       .get('/playlist?page=1&size=80')
       .then((res) => {
         dispatch(playlistInfo(res.data.data));
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [reRendering, setReRendering]);
+  }, [reRendering, setReRendering, title, setTitle]);
 
   return (
     <>
@@ -67,8 +67,9 @@ const PlaylistsShowAll = () => {
             </div>
             {/* 플리 앨범, 제목, 내용 */}
             <ul className="w-full h-[550px] mt-6 flex flex-wrap overflow-y-scroll">
-              {playlistsInfo.map((el) => (
+              {playlistsInfo.map((el, index) => (
                 <Playlists
+                  key={index}
                   setReRendering={setReRendering}
                   el={el}
                   playlistId={el.playlistId}
@@ -80,7 +81,7 @@ const PlaylistsShowAll = () => {
           </div>
         </div>
       </div>
-      {isDetailOpen && <PlaylistsDetail />}
+      {isDetailOpen && <PlaylistsDetail title={title} setTitle={setTitle} />}
       {isOpenToast && <ToastModal setReRendering={setReRendering} />}
     </>
   );
