@@ -1,15 +1,24 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import axios from 'axios';
 import { closeModal, openDetailModal, openSongLists } from '../../redux/slice/ModalSlice';
+import { setSelectedPlaylistId, playlistInfo } from '../../redux/slice/PlaylistsSlice';
 import { RootState } from '../../redux/store';
 import xbtn from '../../assets/images/xbtn.svg';
 import Album from '../../assets/images/Album.png';
 import PlaylistsShowAll from '../Playlist/PlaylistsShowAll';
 import PlaylistsDetail from '../Playlist/PlayListsDetail';
 
+export type PlaylistInfo = {
+  title: string;
+  playlistId: number;
+};
+
 const PlaylistModal = () => {
   const dispatch = useDispatch();
-  const isDetailOpen = useSelector((state: RootState) => state.modal.isDetailOpen);
-  const isSongOpen = useSelector((state: RootState) => state.modal.isSongOpen);
+  const isDetailOpen = useSelector((state: RootState) => state.modal.isSongOpen);
+  const isShowAll = useSelector((state: RootState) => state.modal.isDetailOpen);
+  const playlistsInfo: PlaylistInfo[] = useSelector((state: RootState) => state.playlists.value);
 
   const handleOpenDetail = () => {
     dispatch(openDetailModal());
@@ -19,9 +28,22 @@ const PlaylistModal = () => {
     dispatch(closeModal());
   };
 
-  const handleOpenCreateLists = () => {
+  const handleOpenListDetail = (playlistId: number) => {
     dispatch(openSongLists());
+    dispatch(setSelectedPlaylistId(playlistId));
   };
+
+  useEffect(() => {
+    axios
+      .get('/playlist')
+      .then((res) => {
+        dispatch(playlistInfo(res.data.data));
+        console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>
@@ -69,22 +91,29 @@ const PlaylistModal = () => {
             </div>
             {/* 플리 앨범, 제목, 내용 */}
             <ul className="w-full mt-6 flex">
-              <li
-                onClick={handleOpenCreateLists}
-                className="h-[230px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
-              >
-                <div className="ml-2 cursor-pointer">
-                  <img src={Album} />
-                  <h1 className="mt-4">플리 제목</h1>
-                  <p className="mt-4">플리 내용</p>
-                </div>
-              </li>
+              {playlistsInfo.map((el, index) => {
+                if (index <= 4) {
+                  return (
+                    <li
+                      onClick={() => handleOpenListDetail(el.playlistId)}
+                      className="h-[230px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
+                    >
+                      <div className="ml-2 cursor-pointer">
+                        <img src={Album} />
+                        <h1 className="mt-4">{el.title}</h1>
+                        <p className="mt-4">플리 내용</p>
+                      </div>
+                    </li>
+                  );
+                }
+                return <></>;
+              })}
             </ul>
           </div>
         </div>
       </div>
-      {isDetailOpen && <PlaylistsShowAll />}
-      {isSongOpen && <PlaylistsDetail />}
+      {isDetailOpen && <PlaylistsDetail />}
+      {isShowAll && <PlaylistsShowAll />}
     </>
   );
 };

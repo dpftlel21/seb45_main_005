@@ -1,24 +1,27 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { closeDetailModal, openToastModal } from '../../redux/slice/ModalSlice';
+import { closeDetailModal } from '../../redux/slice/ModalSlice';
 import { playlistInfo } from '../../redux/slice/PlaylistsSlice';
 import xbtn from '../../assets/images/xbtn.svg';
-// import PlaylistsDetail from './PlayListsDetail';
+import PlaylistsDetail from './PlayListsDetail';
 import Playlists from './Playlists';
 import ToastModal from '../Modal/ToastModal';
 import { RootState } from '../../redux/store';
+import PlaylistAddButton from './Button/PlaylistAddButton';
 
 export type PlaylistInfo = {
   title: string;
   playlistId: number;
+  memberId: number;
 };
 
 const PlaylistsShowAll = () => {
   const dispatch = useDispatch();
 
-  // const isOpenSong = useSelector((state: RootState) => state.modal.isSongOpen);
-  // const token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sIm1lbWJlcklkIjozNiwic3ViIjoidGVzdHRlc3QyQHRlc3QuY29tIiwiaWF0IjoxNjkzOTE0NzE2LCJleHAiOjE2OTM5MTY1MTZ9.yyVl_L-x5xpjJ8WRFXSqR6nvu95BRg08NHFdCAYMSOg"
+  const [reRendering, setReRendering] = useState<string>('');
+
+  const isDetailOpen = useSelector((state: RootState) => state.modal.isSongOpen);
   const isOpenToast = useSelector((state: RootState) => state.modal.isToastOpen);
   const playlistsInfo: PlaylistInfo[] = useSelector((state: RootState) => state.playlists.value);
 
@@ -26,13 +29,9 @@ const PlaylistsShowAll = () => {
     dispatch(closeDetailModal());
   };
 
-  const handleOpenToast = () => {
-    dispatch(openToastModal());
-  };
-
   useEffect(() => {
     axios
-      .get('http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist')
+      .get('/playlist?page=1&size=80')
       .then((res) => {
         dispatch(playlistInfo(res.data.data));
         console.log(res.data.data);
@@ -40,12 +39,7 @@ const PlaylistsShowAll = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-
-  // const handleDeletePlayList = () => {
-  //   return
-  //   axios .
-  // }
+  }, [reRendering, setReRendering]);
 
   return (
     <>
@@ -74,26 +68,20 @@ const PlaylistsShowAll = () => {
             {/* 플리 앨범, 제목, 내용 */}
             <ul className="w-full h-[550px] mt-6 flex flex-wrap overflow-y-scroll">
               {playlistsInfo.map((el) => (
-                <Playlists key={el.playlistId} el={el} playlistId={el.playlistId} />
+                <Playlists
+                  setReRendering={setReRendering}
+                  el={el}
+                  playlistId={el.playlistId}
+                  memberId={el.memberId}
+                />
               ))}
             </ul>
-            <div className="flex justify-center mt-8">
-              <button
-                onClick={handleOpenToast}
-                className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
-              >
-                추가
-              </button>
-              <button className="w-[150px] h-[50px] mb-4 ml-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white">
-                삭제
-              </button>
-            </div>
+            <PlaylistAddButton />
           </div>
         </div>
       </div>
-
-      {/* {isOpenSong && <PlaylistsDetail />} */}
-      {isOpenToast && <ToastModal />}
+      {isDetailOpen && <PlaylistsDetail />}
+      {isOpenToast && <ToastModal setReRendering={setReRendering} />}
     </>
   );
 };
