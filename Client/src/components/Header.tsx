@@ -15,7 +15,13 @@ const Header = () => {
         <Link to="/weatherRecommend">
           <h2>RECOMMENDATION</h2>
         </Link>
-        <h2>MUBTI</h2>
+        <Link to="/mubti">
+          <h2>MUBTI</h2>
+        </Link>
+        <Link to="/search">
+          <h2>Search Songs</h2>
+        </Link>
+        <h2></h2>
       </div>
       <div className="w-[400px] flex justify-around items-center">
         <button>

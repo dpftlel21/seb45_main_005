@@ -15,6 +15,7 @@ import CommunityDetail from './pages/CommunityDetail';
 import WeatherRecommend from './pages/WeatherRecommend';
 import SurveyResult from './pages/MUBTI/Survey/SurveyResult';
 import SurveyLoading from './pages/MUBTI/Survey/SurveyLoading';
+import SearchSongs from './pages/SearchSongs';
 
 import SignUp from './components/Login/SignUp';
 import LoginOn from './components/Login/LoginOn';
@@ -39,6 +40,7 @@ const App = () => {
         <Route path={RouteConst.Liking} element={<SurveyLiking />} />
         <Route path={RouteConst.Loading} element={<SurveyLoading />} />
         <Route path={RouteConst.Result} element={<SurveyResult />} />
+        <Route path={RouteConst.Search} element={<SearchSongs />} />
       </Routes>
     </BrowserRouter>
   );
