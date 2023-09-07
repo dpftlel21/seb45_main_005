@@ -14,7 +14,6 @@ public class PlaylistDto {
     @Getter
     @Setter
     public static class Post {
-        private long memberId;
         private String title;
         private boolean isPublic;
     }
