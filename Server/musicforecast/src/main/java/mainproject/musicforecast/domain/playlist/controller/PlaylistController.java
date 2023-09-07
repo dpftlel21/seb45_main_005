@@ -39,8 +39,9 @@ public class PlaylistController {
     }
 
     @PostMapping
-    public ResponseEntity postPlaylist(@Valid @RequestBody PlaylistDto.Post playlistPostDto) {
-        Playlist playlist = playlistService.createPlaylist(mapper.playlistPostDtoToPlaylist(playlistPostDto));
+    public ResponseEntity postPlaylist(@Valid @RequestBody PlaylistDto.Post playlistPostDto,
+                                       @AuthenticationPrincipal Member member) {
+        Playlist playlist = playlistService.createPlaylist(mapper.playlistPostDtoToPlaylist(playlistPostDto, member));
         URI location = Utils.createUri("/playlist", playlist.getPlaylistId());
         return ResponseEntity.created(location).build();
     }
