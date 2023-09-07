@@ -7,6 +7,7 @@ import mainproject.musicforecast.domain.member.service.MemberService;
 import mainproject.musicforecast.domain.post.dto.*;
 import mainproject.musicforecast.domain.post.entity.Post;
 import mainproject.musicforecast.domain.post.mapper.PostMapper;
+import mainproject.musicforecast.domain.post.repository.PostRepository;
 import mainproject.musicforecast.domain.post.service.PostService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -33,12 +34,15 @@ public class PostController {
 
     private final CommentMapper commentMapper;
 
-    public PostController(PostService postService, PostMapper mapper, MemberService memberService, MemberMapper memberMapper, CommentMapper commentMapper) {
+    private final PostRepository postRepository;
+
+    public PostController(PostService postService, PostMapper mapper, MemberService memberService, MemberMapper memberMapper, CommentMapper commentMapper, PostRepository postRepository) {
         this.postService = postService;
         this.mapper = mapper;
         this.memberService = memberService;
         this.memberMapper = memberMapper;
         this.commentMapper = commentMapper;
+        this.postRepository = postRepository;
     }
 
     // 글 등록
@@ -54,8 +58,8 @@ public class PostController {
     // 글 수정
     @PatchMapping("/{post-id}")
     public ResponseEntity patchPost(@PathVariable("post-id") @Positive long postId,
-                                        @Valid @RequestBody PostPatchDto requestBody,
-                                        @AuthenticationPrincipal Member member) {
+                                    @Valid @RequestBody PostPatchDto requestBody,
+                                    @AuthenticationPrincipal Member member) {
         requestBody.setPostId(postId);
 
         Post post = postService.updatePost(
@@ -94,7 +98,7 @@ public class PostController {
     // 전체 게시글 조회
     @GetMapping  // page = 1, size = 10으로 설정
     public ResponseEntity getPosts(@Positive @RequestParam int page,
-                                       @Positive @RequestParam int size) {
+                                   @Positive @RequestParam int size) {
         Page<Post> pagePosts = postService.findPosts(page - 1, size);
         List<Post> posts = pagePosts.getContent();
         List<PostResponseDto> response =
@@ -110,8 +114,25 @@ public class PostController {
     // 게시글 삭제
     @DeleteMapping("/{post-id}")
     public ResponseEntity deletePost(@PathVariable("post-id") @Positive Long postId,
-                                         @AuthenticationPrincipal Member member) {
+                                     @AuthenticationPrincipal Member member) {
         postService.deletePost(postId, member);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // 게시글 키워드로 검색
+    @GetMapping("/search")
+    public ResponseEntity searchPosts(
+            @Positive @RequestParam int page,
+            @Positive @RequestParam int size,
+            @RequestParam String keyword) {
+        Page<Post> pagePosts = postService.searchPostsByKeyword(page - 1, size, keyword);
+        List<Post> posts = pagePosts.getContent();
+        List<PostResponseDto> response = posts.stream()
+                .map(post -> mapper.postToPostResponse(memberMapper, post, commentMapper))
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(response, pagePosts),
+                HttpStatus.OK);
     }
 }
