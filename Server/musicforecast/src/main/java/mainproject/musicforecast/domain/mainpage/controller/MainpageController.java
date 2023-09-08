@@ -1,5 +1,6 @@
 package mainproject.musicforecast.domain.mainpage.controller;
 
+import mainproject.musicforecast.domain.mainpage.service.MainpageService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,27 +19,24 @@ import java.util.Objects;
 @RequestMapping("/main")
 public class MainpageController {
 
-    @GetMapping("/weather")
-    public ResponseEntity clickWeather(HttpServletRequest request) {
-        HttpHeaders headers = new HttpHeaders();
+    private final MainpageService mainpageService;
 
-        String authorization = request.getHeader("Authorization");
-
-        if (Objects.equals(authorization, null)) {
-            headers.setLocation(URI.create("/auth/login"));
-            return new ResponseEntity(headers, HttpStatus.MOVED_PERMANENTLY);
-        }
-        headers.setLocation(URI.create("/weather"));
-        return new ResponseEntity(headers, HttpStatus.MOVED_PERMANENTLY);
+    public MainpageController(MainpageService mainpageService) {
+        this.mainpageService = mainpageService;
     }
 
-//    @GetMapping("/mubti")
-//    public ResponseEntity clickMubti() {
-//
-//    }
-//
-//    @GetMapping("/posts")
-//    public ResponseEntity clickCommunity() {
-//
-//    }
+    @GetMapping("/weather")
+    public ResponseEntity clickWeather(HttpServletRequest request) {
+        return mainpageService.redirectPage(request, "/auth/login", "/weather/result");
+    }
+
+    @GetMapping("/mubti")
+    public ResponseEntity clickMubti(HttpServletRequest request) {
+        return mainpageService.redirectPage(request, "/auth/login", "/mubti");
+    }
+
+    @GetMapping("/posts")
+    public ResponseEntity clickCommunity(HttpServletRequest request) {
+        return mainpageService.redirectPage(request, "/auth/login", "/posts");
+    }
 }
