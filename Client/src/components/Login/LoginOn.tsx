@@ -45,7 +45,7 @@ const LoginOn = () => {
   const handleLogin = async (username: string, password: string) => {
     try {
       const response = await axios.post(
-        '/auth/login',
+        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/auth/login',
         { username, password },
         { withCredentials: true }
       );
@@ -65,7 +65,10 @@ const LoginOn = () => {
         if (!refreshToken) {
           return;
         }
-        const response = await axios.post('/auth/login', { refreshToken });
+        const response = await axios.post(
+          'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/auth/login',
+          { refreshToken }
+        );
         const newAccessToken = response.data.accessToken;
 
         localStorage.setItem('accessToken', newAccessToken);

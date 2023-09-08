@@ -28,11 +28,15 @@ const Test = () => {
       return;
     }
     try {
-      const response = await axios.post(`/auth/login`, null, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const response = await axios.post(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/auth/login`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       const newAccessToken = response.data.accessToken;
       setAccessToken(newAccessToken);
       localStorage.setItem('accessToken', newAccessToken);
@@ -56,7 +60,10 @@ const Test = () => {
       password,
     };
     try {
-      const response = await axios.post(`/auth/login`, data);
+      const response = await axios.post(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/auth/login`,
+        data
+      );
       const acToken = response.data.accessToken;
       setAccessToken(acToken);
       localStorage.setItem('accessToken', acToken);
