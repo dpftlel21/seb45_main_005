@@ -10,7 +10,9 @@ const MainHead = () => {
   const loginState = useSelector((state: RootState) => state.login.loginState);
 
   const logoutHandler = () => {
+    
     dispatch(logout());
+
   };
 
   return (

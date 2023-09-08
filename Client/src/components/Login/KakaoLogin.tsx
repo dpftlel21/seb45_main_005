@@ -17,7 +17,9 @@ const SocialKakao = () => {
   };
   return (
     <>
-      <KakaoLogin token={kakaoClientId} onSuccess={kakaoOnSuccess} onFail={kakaoOnFailure} />
+      <KakaoLogin token={kakaoClientId} onSuccess={kakaoOnSuccess} onFail={kakaoOnFailure}>
+        <div>카카오</div>
+      </KakaoLogin>
     </>
   );
 };
