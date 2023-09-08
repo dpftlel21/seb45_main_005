@@ -28,4 +28,11 @@ public class MainpageService {
         headers.setLocation(URI.create(afterLoginPath));
         return new ResponseEntity(headers, HttpStatus.MOVED_PERMANENTLY);
     }
+
+    public ResponseEntity redirectPageByChoice(String redirectPath) {
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setLocation(URI.create(redirectPath));
+        return new ResponseEntity(headers, HttpStatus.MOVED_PERMANENTLY);
+    }
 }
