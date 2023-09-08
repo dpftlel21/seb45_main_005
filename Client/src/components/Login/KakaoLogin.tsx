@@ -5,7 +5,7 @@ import { setAccessToken, setLoginState } from '../../redux/slice/LoginSlice';
 
 const SocialKakao = () => {
   const dispatch = useDispatch();
-  const kakaoClientId = 'c3a9c1a4a26072eab3fa0aee620feeae';
+  const kakaoClientId = process.env.REACT_APP_KAKAO_AUTH_CLIENT_ID;
   const kakaoOnSuccess = async (data: any) => {
     console.log(data.response.access_token);
     dispatch(setAccessToken(data.response.access_token));
