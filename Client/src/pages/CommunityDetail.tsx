@@ -37,9 +37,7 @@ const CommunityDetail = () => {
 
   useEffect(() => {
     axios
-      .get(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts?page=1&size=10'
-      )
+      .get('/posts?page=1&size=10')
       .then((res) => {
         console.log(res);
         // setPosts(res.data.data);

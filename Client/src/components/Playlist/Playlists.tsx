@@ -31,14 +31,11 @@ const Playlists = ({ el, setReRendering }: PlaylistProps) => {
 
     if (shouldDelete) {
       return axios
-        .delete(
-          `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/${el.playlistId}`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        )
+        .delete(`/playlist/${el.playlistId}`, {
+          headers: {
+            Authorization: token,
+          },
+        })
         .then((res) => {
           setReRendering(el.playlistId);
           console.log(res);

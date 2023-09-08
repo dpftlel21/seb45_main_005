@@ -32,9 +32,7 @@ const PlaylistsShowAll = () => {
 
   useEffect(() => {
     axios
-      .get(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist?page=1&size=80'
-      )
+      .get('/playlist?page=1&size=80')
       .then((res) => {
         dispatch(playlistInfo(res.data.data));
       })

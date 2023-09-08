@@ -26,7 +26,7 @@ const Write = () => {
     // 등록 버튼 클릭 시 POST 요청을 보내는 함수
     try {
       const response = await axios.post(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts',
+        '/posts',
         {
           memberId: 25,
           title,
