@@ -20,8 +20,6 @@ public class MubtiService {
     }
 
     public Page<Playlist> findBySearchTags(int page, int size, int a, int b) {
-        if (setSearchTags(a, b).get(0) == "redirect") return null;
-
         Page<PlaylistTag> playlistTags = playlistTagRepository.findByTags(PageRequest.of(page, size, Sort.by("playlist").descending()), setSearchTags(a, b));
 
         List<Playlist> playlistList = playlistTags.stream().map(playlistTag -> playlistTag.getPlaylist()).collect(Collectors.toList());
@@ -80,13 +78,13 @@ public class MubtiService {
                     genre.add("신나는");
                     break;
                 case 4:
-                    genre.add("신나는");
+                    // adminSuggest
                     break;
                 default:
                     break;
             }
         } else {
-            genre.add("redirect");
+            // redirect
         }
         return genre;
     }

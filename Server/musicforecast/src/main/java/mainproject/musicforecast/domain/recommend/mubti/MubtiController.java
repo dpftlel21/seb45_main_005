@@ -34,8 +34,11 @@ public class MubtiController {
                                             @RequestParam int a, @RequestParam(required = false, defaultValue = "0") int b) {
         Page<Playlist> playlistPage = mubtiService.findBySearchTags(page - 1, size, a, b);
 
-        if (playlistPage == null) {
+        if (a == 4) {
             return mainpageService.redirectPageByChoice("/youtuber");
+        }
+        else if (a == 3 && b == 4) {
+            return mainpageService.redirectPageByChoice("/admin-suggest");
         }
 
         List<Playlist> playlists = playlistPage.getContent();
