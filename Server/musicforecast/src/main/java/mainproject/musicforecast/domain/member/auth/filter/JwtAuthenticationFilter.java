@@ -3,6 +3,7 @@ package mainproject.musicforecast.domain.member.auth.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import mainproject.musicforecast.domain.member.auth.jwt.JwtTokenizer;
+import mainproject.musicforecast.domain.member.auth.utils.CustomAuthorityUtils;
 import mainproject.musicforecast.domain.member.dto.LoginDto;
 import mainproject.musicforecast.domain.member.entity.Member;
 import org.springframework.security.authentication.AuthenticationManager;

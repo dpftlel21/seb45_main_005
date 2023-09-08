@@ -4,6 +4,7 @@ import mainproject.musicforecast.domain.member.auth.utils.CustomAuthorityUtils;
 import mainproject.musicforecast.domain.member.dto.MemberResponseDto;
 import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.member.repository.MemberRepository;
+import mainproject.musicforecast.domain.provider.ProviderRepository;
 import mainproject.musicforecast.global.exception.BusinessLogicException;
 import mainproject.musicforecast.global.exception.ExceptionCode;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,20 +22,28 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils customAuthorityUtils;
-    public MemberService(MemberRepository memberRepository,PasswordEncoder passwordEncoder, CustomAuthorityUtils customAuthorityUtils) {
+    private final ProviderRepository providerRepository;
+    public MemberService(MemberRepository memberRepository,PasswordEncoder passwordEncoder, CustomAuthorityUtils customAuthorityUtils, ProviderRepository providerRepository) {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
         this.customAuthorityUtils = customAuthorityUtils;
+        this.providerRepository = providerRepository;
     }
     public Member createMember(Member member) {
 
         verifyExistsEmail(member.getEmail());
 
-        String encryptedPassword = passwordEncoder.encode(member.getPassword());
-        member.setPassword(encryptedPassword);
+        if (member.getProvider().getProviderName() == "MusicForecast"){
+            String encryptedPassword = passwordEncoder.encode(member.getPassword());
+            member.setPassword(encryptedPassword);
+            member.setProvider(providerRepository.findByProviderName("MusicForecast"));
 
-        List<String> roles = customAuthorityUtils.createRoles();
-        member.setRoles(roles);
+            List<String> roles = customAuthorityUtils.createRoles(member.getEmail());
+            member.setRoles(roles);
+        }else {
+            List<String> roles = customAuthorityUtils.createRoles(member.getEmail());
+            member.setRoles(roles);
+        }
 
         Member savedMember = memberRepository.save(member);
 

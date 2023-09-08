@@ -9,6 +9,8 @@ import mainproject.musicforecast.domain.member.auth.handler.MemberAuthentication
 import mainproject.musicforecast.domain.member.auth.jwt.JwtTokenizer;
 import mainproject.musicforecast.domain.member.auth.utils.CustomAuthorityUtils;
 import mainproject.musicforecast.domain.member.service.MemberService;
+import mainproject.musicforecast.domain.provider.ProviderRepository;
+import mainproject.musicforecast.oauth2_jwt.auth.handler.OAuth2MemberSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -21,6 +23,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -38,13 +41,17 @@ public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final MemberService memberService;
+    private final ProviderRepository providerRepository;
 
     public SecurityConfiguration(JwtTokenizer jwtTokenizer,
                                  CustomAuthorityUtils authorityUtils,
-                                 @Lazy MemberService memberService) {
+                                 @Lazy MemberService memberService,
+                                 @Lazy ProviderRepository providerRepository
+                                 ) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
         this.memberService = memberService;
+        this.providerRepository = providerRepository;
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -65,10 +72,14 @@ public class SecurityConfiguration {
                 .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
+                .apply(new CustomOauthFilterConfigurer())
+                .and()
                 .authorizeHttpRequests(authorize -> authorize
                         //.antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
                         .anyRequest().permitAll()
-                );
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils, memberService, providerRepository)));
         return http.build();
     }
 
@@ -82,7 +93,7 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedOrigins(Arrays.asList("*", "https://seb45-main-005.vercel.app/"));
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.setExposedHeaders(List.of("*"));
@@ -109,6 +120,17 @@ public class SecurityConfiguration {
             builder
                     .addFilter(jwtAuthenticationFilter)
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
+        }
+
+
+    }
+
+    public class CustomOauthFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
+        @Override
+        public void configure(HttpSecurity builder) throws Exception {
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils, memberService);
+
+            builder.addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class); // (2)
         }
     }
 }
