@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Music from '../../assets/images/music.jpg';
 import List from '../../assets/images/list.jpg';
 import Mubti from '../../assets/images/mubti.png';
@@ -56,22 +57,26 @@ const Contents = () => {
                   </div>
                 </div>
                 <div>
-                  <img src={Mubti} alt="" />
-                  <div className="text-white mt-12">
-                    <span className="text-2xl">MUBTI</span>
-                    <p className="text-lg">
-                      비, 눈, 맑음, 흐림에따라 날씨별 노래 추천이 다르게 나타납니다.
-                    </p>
-                  </div>
+                  <Link to="/mubti">
+                    <img src={Mubti} alt="" />
+                    <div className="text-white mt-12">
+                      <span className="text-2xl">MUBTI</span>
+                      <p className="text-lg">
+                        비, 눈, 맑음, 흐림에따라 날씨별 노래 추천이 다르게 나타납니다.
+                      </p>
+                    </div>
+                  </Link>
                 </div>
                 <div>
-                  <img src={List} alt="" />
-                  <div className="text-white mt-12">
-                    <span className="text-2xl">날씨에 따른 음악 추천</span>
-                    <p className="text-lg">
-                      자신의 플레이리스트, 애청곡 등을 자유롭게 공유해 봅시다 !!
-                    </p>
-                  </div>
+                  <Link to="/weatherRecommend">
+                    <img src={List} alt="" />
+                    <div className="text-white mt-12">
+                      <span className="text-2xl">날씨에 따른 음악 추천</span>
+                      <p className="text-lg">
+                        자신의 플레이리스트, 애청곡 등을 자유롭게 공유해 봅시다 !!
+                      </p>
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>

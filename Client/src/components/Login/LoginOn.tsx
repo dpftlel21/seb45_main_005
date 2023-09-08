@@ -9,7 +9,8 @@ import Logo from '../../assets/images/logo.png';
 import Email from '../../assets/images/email.svg';
 import Lock from '../../assets/images/lock.svg';
 import { RootState } from '../../redux/store';
-// import GoogleOauth from './GoogleOauth';
+import GoogleOauth from './GoogleOauth';
+import SocialKakao from './KakaoLogin';
 
 interface Formvalue {
   username: string;
@@ -57,13 +58,6 @@ const LoginOn = () => {
       console.error('로그인 실패:', error);
     }
   };
-
-  // const handleLogout = () => {
-  //   localStorage.removeItem('accessToken');
-  //   localStorage.removeItem('refreshToken');
-  //   setAccessToken('');
-  //   setRefreshToken('');
-  // };
 
   useEffect(() => {
     const refreshAccessToken = async () => {
@@ -155,7 +149,7 @@ const LoginOn = () => {
               />
               <div className="flex flex-row justify-between w-[275px] mt-6">
                 <div>아이디 찾기</div>
-                <div>비밀번호 찾기 질문</div>
+                <div>비밀번호 찾기</div>
                 <div>
                   <Link to="/signup">회원가입</Link>
                 </div>
@@ -168,8 +162,8 @@ const LoginOn = () => {
               </button>
             </form>
             <div className="flex flex-row justify-between ml-56 mt-5 w-52 mb-24">
-              {/* <GoogleOauth /> */}
-              <div>카카오</div>
+              <GoogleOauth />
+              <SocialKakao />
               <div>네이버</div>
             </div>
           </div>

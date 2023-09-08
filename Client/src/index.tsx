@@ -19,7 +19,6 @@ root.render(
         <GoogleOAuthProvider
           clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
           onScriptLoadError={() => console.log('실패')}
-          onScriptLoadSuccess={() => console.log('성공')}
         >
           <App />
         </GoogleOAuthProvider>
