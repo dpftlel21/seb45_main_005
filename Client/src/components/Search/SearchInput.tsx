@@ -10,7 +10,9 @@ const SearchInput = () => {
 
   const handleSearch = () => {
     axios
-      .get(`/song/search?keyword=${keyword}&song=10`)
+      .get(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/song/search?keyword=${keyword}&song=10`
+      )
       .then((res) => {
         dispatch(songlistInfo(res.data));
         console.log(res.data);

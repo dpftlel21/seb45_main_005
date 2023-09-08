@@ -36,7 +36,7 @@ const PlaylistModal = () => {
 
   useEffect(() => {
     axios
-      .get('/playlist')
+      .get('http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist')
       .then((res) => {
         dispatch(playlistInfo(res.data.data));
         console.log(res.data.data);

@@ -24,7 +24,7 @@ const ToastModal = ({ setReRendering }: PlaylistInfo) => {
   const handleAddPlaylist = () => {
     axios
       .post(
-        '/playlist',
+        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist',
         { title, public: true },
         {
           headers: {
