@@ -17,6 +17,9 @@ export type PlaylistInfo = {
 };
 
 const PlaylistsShowAll = () => {
+  const headers = {
+    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+  };
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState<string>('');
@@ -33,7 +36,8 @@ const PlaylistsShowAll = () => {
   useEffect(() => {
     axios
       .get(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist?page=1&size=80'
+        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist?page=1&size=80',
+        { headers }
       )
       .then((res) => {
         dispatch(playlistInfo(res.data.data));

@@ -34,7 +34,9 @@ const Write = () => {
         },
         {
           headers: {
-            Authorization: accessToken,
+            'Authorization': accessToken,
+            'Access-Control-Allow-Origin':
+              'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
           },
         }
       );

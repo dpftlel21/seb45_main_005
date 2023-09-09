@@ -42,18 +42,23 @@ const LoginOn = () => {
     }
   }, []);
 
+  const headers = {
+    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+  };
+
   const handleLogin = async (username: string, password: string) => {
     try {
       const response = await axios.post(
         'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/auth/login',
         { username, password },
-        { withCredentials: true }
+        { headers }
       );
       console.log(response.headers);
 
       dispatch(setAccessToken(response.headers.authorization));
       console.log(response.headers.authorization);
       dispatch(setRefreshToken(response.headers.refreshtoken));
+      window.location.href = '/';
     } catch (error) {
       console.error('로그인 실패:', error);
     }

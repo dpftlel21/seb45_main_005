@@ -30,6 +30,9 @@ const CommunityDetail = () => {
   // const refreshToken = useSelector((state: RootState) => state.login.refreshToken);
   // const dispatch = useDispatch();
   const navigate = useNavigate();
+  const headers = {
+    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+  };
 
   const handleLikeClick = () => {
     setIsLiked((prevIsLiked) => !prevIsLiked);
@@ -38,7 +41,8 @@ const CommunityDetail = () => {
   useEffect(() => {
     axios
       .get(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts?page=1&size=10'
+        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts?page=1&size=10',
+        { headers }
       )
       .then((res) => {
         console.log(res);

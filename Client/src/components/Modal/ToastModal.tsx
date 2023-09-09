@@ -28,7 +28,9 @@ const ToastModal = ({ setReRendering }: PlaylistInfo) => {
         { title, public: true },
         {
           headers: {
-            Authorization: token,
+            'Authorization': token,
+            'Access-Control-Allow-Origin':
+              'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
           },
         }
       )

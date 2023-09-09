@@ -17,7 +17,9 @@ const PlaylistUpdateBtn = ({ title }: updateProps) => {
         { title, public: true, tag: ['신나는', '발라드'] },
         {
           headers: {
-            Authorization: token,
+            'Authorization': token,
+            'Access-Control-Allow-Origin':
+              'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
           },
         }
       )
