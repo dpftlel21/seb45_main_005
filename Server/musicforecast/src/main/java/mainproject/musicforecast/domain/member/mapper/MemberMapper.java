@@ -1,5 +1,6 @@
 package mainproject.musicforecast.domain.member.mapper;
 
+import mainproject.musicforecast.domain.member.dto.MemberIntroResponseDto;
 import mainproject.musicforecast.domain.member.dto.MemberPatchDto;
 import mainproject.musicforecast.domain.member.dto.MemberPostDto;
 import mainproject.musicforecast.domain.member.dto.MemberResponseDto;
@@ -11,4 +12,5 @@ public interface MemberMapper {
     Member memberPostDtoToMember(MemberPostDto memberPostDto);
     Member memberPatchDtoToMember(MemberPatchDto memberPatchDto);
     MemberResponseDto memberToMemberResponseDto(Member member);
+    MemberIntroResponseDto memberToMemberIntroResponseDto(Member member);
 }

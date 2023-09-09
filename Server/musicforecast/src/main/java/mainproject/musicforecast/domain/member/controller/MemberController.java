@@ -41,7 +41,7 @@ public class MemberController {
         return new ResponseEntity<>(mapper.memberToMemberResponseDto(response), HttpStatus.CREATED);
     }
     //회원정보 수정
-    @PatchMapping("/profile/{memberId}")
+    @PatchMapping("/mypage/{memberId}")
     public ResponseEntity patchMember(@PathVariable("memberId") @Positive long memberId,
                                       @Valid @RequestBody MemberPatchDto memberPatchDto,
                                       @AuthenticationPrincipal Member user) {
@@ -54,13 +54,13 @@ public class MemberController {
 
         return new ResponseEntity<>(mapper.memberToMemberResponseDto(response), HttpStatus.OK);
     }
-    //회원 자기소개글 목록 조회 기능
-    @GetMapping("/profile/{memberId}?intro={intro}")
+    //회원 자기소개글 조회 기능
+    @GetMapping("/mypage/{memberId}")
     public ResponseEntity getMemberIntro(@PathVariable("memberId") @Positive long memberId){
 
         Member response = memberService.findMemberIntro(memberId);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(mapper.memberToMemberIntroResponseDto(response), HttpStatus.OK);
     }
     //회원 플레이리스트 목록 조회 기능
     @GetMapping("/{memberId}")
@@ -76,9 +76,11 @@ public class MemberController {
     }
     //회원 탈퇴 기능
     @DeleteMapping("/delete/{memberId}")
-    public ResponseEntity deleteMember(@PathVariable("memberId") @Positive long memberId) {
+    public ResponseEntity deleteMember(@PathVariable("memberId") @Positive long memberId
+                                       /*@AuthenticationPrincipal Member user*/) {
 
         memberService.deleteMember(memberId);
+//        memberService.deleteMember(memberId, user);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

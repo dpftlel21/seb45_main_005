@@ -63,6 +63,8 @@ public class MemberService {
                 .ifPresent(intro -> findMember.setIntro(intro));
         Optional.ofNullable(member.getNickname())
                 .ifPresent(nickname -> findMember.setNickname(nickname));
+        Optional.ofNullable(member.getImage())
+                .ifPresent(image -> findMember.setImage(image));
 
         return memberRepository.save(findMember);
     }
@@ -85,12 +87,16 @@ public class MemberService {
     }
 
     public void deleteMember(long memberId) {
-        // 지금은 void
-        // 탈퇴 회원 정보를 삭제하지 않고 상태만 변경할 경우 return 타입 변경 필요
 
+        //회원 존재 여부 확인
         Member findMember = findVerifiedMember(memberId);
 
-        //TODO 삭제 할 때 본인이 맞는지 확인하는 로직 구현하기
+//        //본인이 맞는지 확인
+//        if(findMember.getMemberId() != user.getMemberId()){
+//            throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
+//        }
+
+        //TODO 지금은 완전 삭제라 재가입 가능, 회원 상태를 만든다면 탈퇴계정인걸 알면 같은 이메일로 재가입 불가
 
         memberRepository.delete(findMember);
     }
