@@ -5,7 +5,9 @@ const PlaylistsSlice = createSlice({
   initialState: {
     value: [],
     detailInfo: [],
+    detailData: [],
     selectedPlaylistId: null,
+    selectedMemberId: null,
   },
   reducers: {
     playlistInfo: (state, action) => {
@@ -14,12 +16,24 @@ const PlaylistsSlice = createSlice({
     playlistDetail: (state, action) => {
       state.detailInfo = action.payload;
     },
+    setDetailData: (state, action) => {
+      state.detailData = action.payload;
+    },
     setSelectedPlaylistId: (state, action) => {
       state.selectedPlaylistId = action.payload;
+    },
+    setSelectedMemberId: (state, action) => {
+      state.selectedMemberId = action.payload;
     },
   },
 });
 
 export default PlaylistsSlice;
 
-export const { playlistInfo, playlistDetail, setSelectedPlaylistId } = PlaylistsSlice.actions;
+export const {
+  playlistInfo,
+  playlistDetail,
+  setSelectedPlaylistId,
+  setSelectedMemberId,
+  setDetailData,
+} = PlaylistsSlice.actions;

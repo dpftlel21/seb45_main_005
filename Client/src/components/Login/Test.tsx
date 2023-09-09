@@ -1,106 +1,78 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import jwtDecode from 'jwt-decode';
-import axios from 'axios';
-import { useForm } from 'react-hook-form';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { setAccessToken, setRefreshToken } from '../../redux/slice/LoginSlice';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
 import Logo from '../../assets/images/logo.png';
 import Email from '../../assets/images/email.svg';
 import Lock from '../../assets/images/lock.svg';
-import { RootState } from '../../redux/store';
-import GoogleOauth from './GoogleOauth';
-import SocialKakao from './KakaoLogin';
 
 interface Formvalue {
   username: string;
   password: string;
 }
-interface DecodedToken {
-  exp: number;
-}
 
-const LoginOn = () => {
-  const dispatch = useDispatch();
-  const accessToken = useSelector((state: RootState) => state.login.accessToken);
-  const refreshToken = useSelector((state: RootState) => state.login.refreshToken);
+const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 액세스 토큰 만료 시간 (24시간 밀리 초로 표현)
+
+const Test = () => {
   const {
-    register,
     handleSubmit,
+    register,
     formState: { errors, isSubmitting },
+    reset, // 추가: 폼 제출 후에 입력 필드 초기화를 위한 함수
   } = useForm<Formvalue>();
 
-  // 초기 로딩 시, 로컬 스토리지에서 토큰 가져오기
+  const [accessToken, setAccessToken] = useState('');
+
+  const onSilentRefresh = async () => {
+    if (!accessToken) {
+      return;
+    }
+    try {
+      const response = await axios.post(`/auth/login`, null, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const newAccessToken = response.data.accessToken;
+      setAccessToken(newAccessToken);
+      localStorage.setItem('accessToken', newAccessToken);
+      setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
+    } catch (error) {
+      console.error('토큰 갱신 실패:', error);
+    }
+  };
+
   useEffect(() => {
     const storedAccessToken = localStorage.getItem('accessToken');
-    const storedRefreshToken = localStorage.getItem('refreshToken');
     if (storedAccessToken) {
       setAccessToken(storedAccessToken);
-    }
-    if (storedRefreshToken) {
-      setRefreshToken(storedRefreshToken);
+      onSilentRefresh();
     }
   }, []);
 
-  const handleLogin = async (username: string, password: string) => {
+  const onLogin = async (email: string, password: string) => {
+    const data = {
+      email,
+      password,
+    };
     try {
-      const response = await axios.post(
-        '/auth/login',
-        { username, password },
-        { withCredentials: true }
-      );
-      console.log(response.headers);
-
-      dispatch(setAccessToken(response.headers.authorization));
-      console.log(response.headers.authorization);
-      dispatch(setRefreshToken(response.headers.refreshtoken));
+      const response = await axios.post(`/auth/login`, data);
+      const acToken = response.data.accessToken;
+      setAccessToken(acToken);
+      localStorage.setItem('accessToken', acToken);
+      setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
     } catch (error) {
       console.error('로그인 실패:', error);
     }
   };
 
-  useEffect(() => {
-    const refreshAccessToken = async () => {
-      try {
-        if (!refreshToken) {
-          return;
-        }
-        const response = await axios.post('/auth/login', { refreshToken });
-        const newAccessToken = response.data.accessToken;
-
-        localStorage.setItem('accessToken', newAccessToken);
-
-        setAccessToken(newAccessToken);
-      } catch (error) {
-        console.error('Access Token 갱신 실패:', error);
-      }
-    };
-
-    const checkAccessTokenExpiration = () => {
-      if (!accessToken) {
-        return;
-      }
-      const decodedToken: DecodedToken = jwtDecode(accessToken);
-      const currentTime = Date.now() / 1000;
-      if (decodedToken.exp <= currentTime) {
-        refreshAccessToken();
-      }
-    };
-
-    // 주기적으로 Access Token 유효성 확인 및 갱신
-    const interval = setInterval(() => {
-      checkAccessTokenExpiration();
-    }, 60000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [accessToken, refreshToken]);
-
   const onSubmit = async (data: Formvalue) => {
-    console.log(data);
+    // 폼 데이터를 이용하여 로그인 처리 등을 수행
+    const { username, password } = data;
+    onLogin(username, password);
 
-    handleLogin(data.username, data.password);
+    // 폼 입력 필드 초기화
+    reset();
   };
 
   return (
@@ -149,7 +121,7 @@ const LoginOn = () => {
               />
               <div className="flex flex-row justify-between w-[275px] mt-6">
                 <div>아이디 찾기</div>
-                <div>비밀번호 찾기</div>
+                <div>비밀번호 찾기 질문</div>
                 <div>
                   <Link to="/signup">회원가입</Link>
                 </div>
@@ -162,8 +134,8 @@ const LoginOn = () => {
               </button>
             </form>
             <div className="flex flex-row justify-between ml-56 mt-5 w-52 mb-24">
-              <GoogleOauth />
-              <SocialKakao />
+              {/* <GoogleOauth /> */}
+              <div>카카오</div>
               <div>네이버</div>
             </div>
           </div>
@@ -173,4 +145,4 @@ const LoginOn = () => {
   );
 };
 
-export default LoginOn;
+export default Test;

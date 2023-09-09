@@ -1,23 +1,39 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { closeSongLists, openPlaylists } from '../../redux/slice/ModalSlice';
+import { closeSongLists } from '../../redux/slice/ModalSlice';
 import { playlistDetail } from '../../redux/slice/PlaylistsSlice';
 import { RootState } from '../../redux/store';
-import SongAdd from './SongAdd';
 import backbtn from '../../assets/images/backbtn.png';
 import Album from '../../assets/images/Album.png';
 import Logo from '../../assets/images/logo.png';
+import PlaylistUpdateBtn from './Button/PlaylistUpdateBtn';
 
 type PlaylistDetailInfo = {
   playlistSongs: [];
   playlistTagId: number;
 };
 
-const PlaylistsDetail = () => {
+export type PlaylistData = {
+  title: string;
+  views: number;
+  playlistId: number;
+  memberId: number;
+  playlistSongs: [];
+  playlistTagId: number;
+};
+
+export type TitleProps = {
+  title: string;
+  setTitle: any;
+};
+
+const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
+  const [detailData, setDetailData] = useState<PlaylistData | null>(null);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
+
   const dispatch = useDispatch();
 
-  const isCreateOpen = useSelector((state: RootState) => state.modal.isCreateOpen);
   const playlistId = useSelector((state: RootState) => state.playlists.selectedPlaylistId);
   const DetailInfo: PlaylistDetailInfo[] = useSelector(
     (state: RootState) => state.playlists.detailInfo
@@ -27,18 +43,13 @@ const PlaylistsDetail = () => {
     dispatch(closeSongLists());
   };
 
-  const handleOpenCreateLists = () => {
-    dispatch(openPlaylists());
-  };
-
   useEffect(() => {
     axios
-      .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/${playlistId}`
-      )
+      .get(`/playlist/${playlistId}`)
       .then((res) => {
+        setDetailData(res.data.data);
+        setTitle(res.data.data.title);
         dispatch(playlistDetail(res.data.data.playlistSongs));
-        console.log(res.data.data.playlistSongs);
       })
       .catch((err) => {
         console.log(err);
@@ -63,16 +74,22 @@ const PlaylistsDetail = () => {
                   className="w-[528px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
                 ></input>
               </div>
-              <button onClick={handleOpenCreateLists} className="mt-8">
-                노래 추가
-              </button>
             </div>
             {/* 앨범표지 */}
             <div className="w-full flex justify-start mt-8 bg-[#444] opacity-80 ">
               <img src={Album} className="w-[150px] h-[150px] ml-12" />
               <div className="w-[500px] flex flex-col justify-around">
                 <p>Playlist</p>
-                <h1 className="text-4xl font-['Anton-Regular']">플리 제목</h1>
+                {!isClicked ? (
+                  <h1 className="text-4xl font-['Anton-Regular']">{detailData?.title}</h1>
+                ) : (
+                  <input
+                    onChange={(e) => setTitle(e.target.value)}
+                    value={title}
+                    type="text"
+                    className="w-[500px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
+                  />
+                )}
                 <p>플리 내용</p>
                 <div className="flex items-center">
                   <img src={Logo} className="w-[100px] h-[30px]" />
@@ -113,18 +130,21 @@ const PlaylistsDetail = () => {
                 </li>
               ))}
             </ul>
-            <div className="flex justify-center my-8">
-              <button className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white">
-                수정
-              </button>
-              <button className="w-[150px] h-[50px] mb-4 ml-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white">
-                삭제
-              </button>
+            <div className="flex justify-center mt-8">
+              {isClicked ? (
+                <PlaylistUpdateBtn title={title} />
+              ) : (
+                <button
+                  onClick={() => setIsClicked(true)}
+                  className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
+                >
+                  수정하기
+                </button>
+              )}
             </div>
           </div>
         </div>
       </div>
-      {isCreateOpen && <SongAdd />}
     </>
   );
 };
