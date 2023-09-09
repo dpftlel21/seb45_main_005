@@ -14,6 +14,9 @@ interface Formvalue {
 const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 액세스 토큰 만료 시간 (24시간 밀리 초로 표현)
 
 const Test = () => {
+  const headers = {
+    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+  };
   const {
     handleSubmit,
     register,
@@ -28,11 +31,15 @@ const Test = () => {
       return;
     }
     try {
-      const response = await axios.post(`/auth/login`, null, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const response = await axios.post(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/auth/login`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       const newAccessToken = response.data.accessToken;
       setAccessToken(newAccessToken);
       localStorage.setItem('accessToken', newAccessToken);
@@ -56,7 +63,11 @@ const Test = () => {
       password,
     };
     try {
-      const response = await axios.post(`/auth/login`, data);
+      const response = await axios.post(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/auth/login`,
+        data,
+        { headers }
+      );
       const acToken = response.data.accessToken;
       setAccessToken(acToken);
       localStorage.setItem('accessToken', acToken);

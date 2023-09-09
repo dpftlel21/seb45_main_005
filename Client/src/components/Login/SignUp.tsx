@@ -10,6 +10,9 @@ import Person from '../../assets/images/person.svg';
 import Calendar from '../../assets/images/calendar.svg';
 
 const SignUp = () => {
+  const headers = {
+    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+  };
   const generateID = () => {
     return uuidv4();
   };
@@ -36,7 +39,11 @@ const SignUp = () => {
     console.log(data);
 
     try {
-      const response = await axios.post('/members/signup', data);
+      const response = await axios.post(
+        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/signup',
+        data,
+        { headers }
+      );
 
       if (response.status === 200) {
         console.log('회원가입 성공');

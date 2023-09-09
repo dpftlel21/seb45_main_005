@@ -29,6 +29,9 @@ export type TitleProps = {
 };
 
 const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
+  const headers = {
+    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+  };
   const [detailData, setDetailData] = useState<PlaylistData | null>(null);
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
@@ -45,7 +48,10 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
 
   useEffect(() => {
     axios
-      .get(`/playlist/${playlistId}`)
+      .get(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/${playlistId}`,
+        { headers }
+      )
       .then((res) => {
         setDetailData(res.data.data);
         setTitle(res.data.data.title);
