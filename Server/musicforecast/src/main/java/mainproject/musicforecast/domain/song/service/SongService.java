@@ -2,6 +2,7 @@ package mainproject.musicforecast.domain.song.service;
 
 import mainproject.musicforecast.domain.song.entity.Song;
 import mainproject.musicforecast.domain.song.repository.SongRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,10 @@ public class SongService {
 
     public Optional<Song> findSongById(long songId) {
         return songRepository.findById(songId);
+    }
+
+    public Song findSongId(String title, String artistName, String albumName) {
+        return songRepository.findSongId(title, artistName, albumName);
     }
 
     public void findAndDeleteDuplicatedSong(String title, String albumName, String artistName) {
