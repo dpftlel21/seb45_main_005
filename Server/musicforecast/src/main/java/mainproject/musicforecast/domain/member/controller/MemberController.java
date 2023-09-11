@@ -71,13 +71,6 @@ public class MemberController {
 
         return new ResponseEntity<>(mapper.memberToMemberIntroResponseDto(response), HttpStatus.OK);
     }
-//    회원 플레이리스트 목록 조회 기능, playlist controller에 있음
-//    @GetMapping("/mypage/playlist")
-//    public ResponseEntity getMemberPlaylist(@AuthenticationPrincipal Member user) {
-//
-//        Member response = memberService.findMember(user.getMemberId());
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
 
     //회원 게시글 목록 조회 기능
     @GetMapping("/my_page/post")
