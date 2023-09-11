@@ -101,7 +101,7 @@ public class SecurityConfiguration {
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
-        configuration.setExposedHeaders(List.of("Authorization", "Refresh"));
+        configuration.setExposedHeaders(List.of("Authorization", "Refresh", "memberId"));
 
         //configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
 
