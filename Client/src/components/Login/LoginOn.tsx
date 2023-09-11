@@ -4,7 +4,12 @@ import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { setAccessToken, setRefreshToken, setMemberID } from '../../redux/slice/LoginSlice';
+import {
+  setAccessToken,
+  setRefreshToken,
+  setMemberID,
+  setLoginState,
+} from '../../redux/slice/LoginSlice';
 import Logo from '../../assets/images/logo.png';
 import Email from '../../assets/images/email.svg';
 import Lock from '../../assets/images/lock.svg';
@@ -62,8 +67,9 @@ const LoginOn = () => {
       console.log(response.headers.authorization);
       dispatch(setRefreshToken(response.headers.refreshtoken));
       dispatch(setMemberID(response.headers.Memberid));
+      dispatch(setLoginState(true));
       console.log(response.headers.memberid);
-      // window.location.href = '/';
+      window.location.href = '/';
     } catch (error) {
       console.error('로그인 실패:', error);
     }
