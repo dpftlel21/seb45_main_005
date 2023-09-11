@@ -23,4 +23,7 @@ public class PlaylistTag {
     @ManyToOne
     @JoinColumn(name = "TAG_ID")
     private Tag tag;
+
+    @Column
+    private String tagName;
 }
