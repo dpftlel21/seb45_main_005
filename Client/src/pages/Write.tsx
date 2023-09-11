@@ -14,9 +14,11 @@ const Write = () => {
   const [song, setSong] = useState('');
   const navigate = useNavigate();
   const accessToken = useSelector((state: RootState) => state.login.accessToken);
+  const memberId = useSelector((state: RootState) => state.login.memberId);
   // const refreshToken = useSelector((state: RootState) => state.login.refreshToken);
   // const dispatch = useDispatch();
   console.log(accessToken);
+  console.log(memberId);
 
   const handleCancel = () => {
     navigate('../community');
@@ -28,7 +30,7 @@ const Write = () => {
       const response = await axios.post(
         'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts',
         {
-          memberId: 25,
+          memberId,
           title,
           text: content,
         },
