@@ -69,7 +69,12 @@ public interface PlaylistMapper {
         List<PlaylistDto.PlaylistSongResponse> playlistSongResponses = playlistSongs.stream()
                         .map(playlistSong -> PlaylistDto.PlaylistSongResponse.builder()
                                 .playlistSongId(playlistSong.getPlaylistSongId())
-                                .songId(playlistSong.getSong().getSongId()).build())
+                                .songId(playlistSong.getSong().getSongId())
+                                .title(playlistSong.getSongTitle())
+                                .albumName(playlistSong.getAlbumName())
+                                .artistName(playlistSong.getArtistName())
+                                .imageUrl(playlistSong.getImageUrl())
+                                .build())
                                 .collect(Collectors.toList());
 
         response.setPlaylistTags(playlistTagResponses);

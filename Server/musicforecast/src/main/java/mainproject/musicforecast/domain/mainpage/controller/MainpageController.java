@@ -27,7 +27,7 @@ public class MainpageController {
 
     @GetMapping("/weather")
     public ResponseEntity clickWeather(HttpServletRequest request) {
-        return mainpageService.redirectPage(request, "/auth/login", "/weather/result");
+        return mainpageService.redirectPage(request, "/auth/login", "/weatherRecommend");
     }
 
     @GetMapping("/mubti")

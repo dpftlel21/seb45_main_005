@@ -83,6 +83,10 @@ public class PlaylistDto {
     public static class PlaylistSongResponse {
         private long playlistSongId;
         private long songId;
+        private String title;
+        private String albumName;
+        private String artistName;
+        private String imageUrl;
     }
 
 }
