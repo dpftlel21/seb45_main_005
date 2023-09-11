@@ -25,4 +25,8 @@ public interface SongRepository extends JpaRepository<Song, Long> {
 
     @Query("SELECT p FROM PlaylistSong p WHERE p.song.songId=:songId AND p.playlist.playlistId=:playlistId")
     PlaylistSong findExistSong(long songId, long playlistId);
+
+
+    @Query("SELECT s FROM Song s WHERE s.title=:title AND s.artistName=:artistName AND s.albumName=:albumName")
+    Song findSongId(@Param("title") String title, @Param("artistName") String artistName, @Param("albumName") String albumName);
 }

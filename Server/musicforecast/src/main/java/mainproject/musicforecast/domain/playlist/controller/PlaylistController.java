@@ -114,4 +114,15 @@ public class PlaylistController {
         playlistLikeService.likePlaylist(playlistId, PlaylistLike.LikeType.Like, member);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity searchPlaylist(@RequestParam(required = false, defaultValue = "1") int page,
+                                         @RequestParam(required = false, defaultValue = "10") int size,
+                                         @RequestParam String keyword) {
+        Page<Playlist> playlistPage = playlistService.searchPlaylist(page - 1, size, keyword);
+        List<Playlist> playlists = playlistPage.getContent();
+        return new ResponseEntity<>(
+                new Utils.MultiResponseDto<>(mapper.playlistToPlaylistResponseDtos(playlists), playlistPage), HttpStatus.OK
+        );
+    }
 }

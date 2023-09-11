@@ -121,4 +121,10 @@ public class PlaylistService {
     public Optional<Playlist> findPlaylistById(long playlistId) {
         return playlistRepository.findById(playlistId);
     }
+
+    public Page<Playlist> searchPlaylist(int page, int size, String keyword) {
+        return playlistRepository.findByKeyword(
+                PageRequest.of(page, size, Sort.by("playlistId").descending()), keyword
+        );
+    }
 }
