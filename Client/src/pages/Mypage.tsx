@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import MyPlayList from '../components/MyPlayList';
 import Profile from '../components/Profile';
 import MyCommunity from '../components/MyCommunity';
@@ -8,6 +9,12 @@ import PlaylistIcon from '../components/Playlist/PlaylistIcon';
 const Mypage = () => {
   const [selectedButton, setSelectedButton] = useState<number>(0);
   const [selectedComponent, setSelectedComponent] = useState<number>(0);
+  const [memberId, setMemberId] = useState('');
+  setMemberId('d');
+
+  const headers = {
+    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+  };
 
   const handleButtonClick = (buttonIndex: number) => {
     setSelectedButton(buttonIndex);
@@ -19,6 +26,18 @@ const Mypage = () => {
       selectedButton === buttonIndex ? 'bg-[#ac8af5]' : 'text-[black]'
     }`;
   };
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/profile/${memberId}`,
+        { headers }
+      )
+      .then((res) => {
+        console.log(res);
+      });
+  }, []);
+
   return (
     <>
       <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] h-[1024px]">

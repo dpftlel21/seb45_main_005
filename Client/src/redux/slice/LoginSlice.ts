@@ -6,6 +6,7 @@ const LoginSlice = createSlice({
     accessToken: '',
     refreshToken: '',
     loginState: false,
+    memberId: '',
   },
   reducers: {
     setAccessToken: (state, action) => {
@@ -17,6 +18,9 @@ const LoginSlice = createSlice({
     setLoginState: (state, action) => {
       state.loginState = action.payload;
     },
+    setMemberID: (state, action) => {
+      state.memberId = action.payload;
+    },
     logout: (state) => {
       state.accessToken = '';
       state.refreshToken = '';
@@ -27,4 +31,5 @@ const LoginSlice = createSlice({
 
 export default LoginSlice.reducer;
 
-export const { setAccessToken, setRefreshToken, setLoginState, logout } = LoginSlice.actions;
+export const { setAccessToken, setRefreshToken, setLoginState, logout, setMemberID } =
+  LoginSlice.actions;
