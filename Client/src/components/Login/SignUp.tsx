@@ -48,6 +48,7 @@ const SignUp = () => {
       }
     } catch (error) {
       console.error('오류 발생:', error);
+      // history('/signup')
     }
   };
 
@@ -125,12 +126,13 @@ const SignUp = () => {
 
               <div className="flex flex-col items-baseline mt-8">
                 <div className="text-xl">비밀번호 찾기 질문</div>
-                <input
-                  type="text"
-                  id="auth_que"
-                  {...register('auth_que')}
-                  className="w-[330px] h-8"
-                ></input>
+                <select {...register('auth_que', { required: true })} className="w-[330px] h-8">
+                  <option value=""></option>
+                  <option value="food">가장 좋아하는 음식이 무엇인가요?</option>
+                  <option value="song">가장 좋아하는 노래는?</option>
+                  <option value="travel">가장 여행하고 싶은 나라는?</option>
+                </select>
+                {errors.auth_que && <span className="text-red-500">필수 항목입니다.</span>}
               </div>
 
               <div className="flex flex-col items-baseline mt-8">

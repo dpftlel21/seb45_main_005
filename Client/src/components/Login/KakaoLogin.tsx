@@ -2,6 +2,7 @@ import React from 'react';
 import KakaoLogin from 'react-kakao-login';
 import { useDispatch } from 'react-redux';
 import { setAccessToken, setLoginState } from '../../redux/slice/LoginSlice';
+import kakaoLogin from '../../assets/images/kakao.png';
 
 const SocialKakao = () => {
   const dispatch = useDispatch();
@@ -17,9 +18,21 @@ const SocialKakao = () => {
   };
   return (
     <>
-      <KakaoLogin token={kakaoClientId} onSuccess={kakaoOnSuccess} onFail={kakaoOnFailure}>
-        <div>카카오</div>
-      </KakaoLogin>
+      <KakaoLogin
+        token={kakaoClientId}
+        onSuccess={kakaoOnSuccess}
+        onFail={kakaoOnFailure}
+        render={({ onClick }) => (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              onClick();
+            }}
+          >
+            <img src={kakaoLogin} alt="" />
+          </button>
+        )}
+      ></KakaoLogin>
     </>
   );
 };

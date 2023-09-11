@@ -22,6 +22,8 @@ import LoginOn from './components/Login/LoginOn';
 import Main from './components/Main/Main';
 import Test from './components/Login/Test';
 import EditProfile from './pages/EditProfile';
+import IdFind from './components/Login/IdFind';
+import PwdFind from './components/Login/PwdFind';
 
 const App = () => {
   return (
@@ -45,6 +47,8 @@ const App = () => {
         <Route path={RouteConst.Test} element={<Test />} />
         <Route path={RouteConst.EditProfile} element={<EditProfile />} />
         <Route path={RouteConst.Search} element={<SearchSongs />} />
+        <Route path={RouteConst.IdFind} element={<IdFind />} />
+        <Route path={RouteConst.PwdFind} element={<PwdFind />} />
       </Routes>
     </BrowserRouter>
   );
