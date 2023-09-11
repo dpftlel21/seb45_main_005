@@ -76,6 +76,7 @@ public class PlaylistDto {
         private long playlistTagId;
         private long playlistId;
         private long tagId;
+        private String tagName;
     }
 
     @Builder
