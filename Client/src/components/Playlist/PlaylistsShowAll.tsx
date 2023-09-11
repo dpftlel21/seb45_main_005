@@ -73,9 +73,8 @@ const PlaylistsShowAll = () => {
             </div>
             {/* 플리 앨범, 제목, 내용 */}
             <ul className="w-full h-[550px] mt-6 flex flex-wrap overflow-y-scroll">
-              {playlistsInfo.map((el, index) => (
+              {playlistsInfo.map((el) => (
                 <Playlists
-                  key={index}
                   setReRendering={setReRendering}
                   el={el}
                   playlistId={el.playlistId}

@@ -19,7 +19,6 @@ const SearchInput = () => {
       )
       .then((res) => {
         dispatch(songlistInfo(res.data));
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -38,7 +37,7 @@ const SearchInput = () => {
       <div className="w-[528px] h-[50px] flex items-center bg-[#faf7f7e8] rounded-3xl  mt-8">
         <input
           type="text"
-          placeholder="노래 제목을 입력해주세요"
+          placeholder="노래 제목을 입력, 영어로 검색시 정확도가 높아요!"
           className="w-[468px] h-[50px] pl-4 bg-[#faf7f7e8] rounded-3xl border border-gray-500"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}

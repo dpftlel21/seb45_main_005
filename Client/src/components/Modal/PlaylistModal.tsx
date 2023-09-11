@@ -44,7 +44,6 @@ const PlaylistModal = () => {
       })
       .then((res) => {
         dispatch(playlistInfo(res.data.data));
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -84,7 +83,6 @@ const PlaylistModal = () => {
                 <div className="ml-2 cursor-pointer">
                   <img src={Album} />
                   <h1 className="mt-4">플리 제목</h1>
-                  <p className="mt-4">플리 내용</p>
                 </div>
               </li>
             </ul>
@@ -107,7 +105,6 @@ const PlaylistModal = () => {
                       <div className="ml-2 cursor-pointer">
                         <img src={Album} />
                         <h1 className="mt-4">{el.title}</h1>
-                        <p className="mt-4">플리 내용</p>
                       </div>
                     </li>
                   );

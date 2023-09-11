@@ -9,11 +9,6 @@ import Album from '../../assets/images/Album.png';
 import Logo from '../../assets/images/logo.png';
 import PlaylistUpdateBtn from './Button/PlaylistUpdateBtn';
 
-type PlaylistDetailInfo = {
-  playlistSongs: [];
-  playlistTagId: number;
-};
-
 export type PlaylistData = {
   title: string;
   views: number;
@@ -28,6 +23,14 @@ export type TitleProps = {
   setTitle: any;
 };
 
+export type SongInfo = {
+  songId: number;
+  title: string;
+  artistName: string;
+  albumName: string;
+  imageUrl: string;
+};
+
 const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
   const headers = {
     'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
@@ -38,9 +41,7 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
   const dispatch = useDispatch();
 
   const playlistId = useSelector((state: RootState) => state.playlists.selectedPlaylistId);
-  const DetailInfo: PlaylistDetailInfo[] = useSelector(
-    (state: RootState) => state.playlists.detailInfo
-  );
+  const selectedSongs: SongInfo = useSelector((state: RootState) => state.songlists.songInfo);
 
   const handleCloseSong = () => {
     dispatch(closeSongLists());
@@ -54,6 +55,7 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
       )
       .then((res) => {
         setDetailData(res.data.data);
+        console.log(res.data.data);
         setTitle(res.data.data.title);
         dispatch(playlistDetail(res.data.data.playlistSongs));
       })
@@ -115,26 +117,18 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
             </div>
             {/* 플리 노래목록 */}
             <ul className="w-full h-[440px] mt-8 flex flex-col overflow-x-hidden z">
-              {DetailInfo.map((e) => (
-                <li className="w-full grid grid-cols-5 items-center text-center border-t-2 border-solid border-gray-200 border-opacity-20 hover:bg-[#47464680]">
-                  {/* No */}
-                  <h3 className="">1</h3>
-                  {/* Title */}
-                  <div className="flex justify-center items-center text-center">
-                    <img src={Album} className="w-[50px] h-[50px]" />
-                    <div className="h-[50px] flex flex-col items-center my-4">
-                      <p className="text-sm">{e.playlistTagId}</p>
-                      <p className="mt-2 text-sm"></p>
-                    </div>
+              <li className="w-full grid grid-cols-5 items-center text-center border-t-2 border-solid border-gray-200 border-opacity-20 hover:bg-[#47464680]">
+                {/* No */}
+                <h3 className="">1</h3>
+                {/* Title */}
+                <div className="flex justify-center items-center text-center">
+                  <img src={Album} className="w-[50px] h-[50px]" />
+                  <div className="h-[50px] flex flex-col items-center my-4">
+                    <p className="text-sm">{selectedSongs.title}</p>
+                    <p className="mt-2 text-sm"></p>
                   </div>
-                  {/* Album */}
-                  {/* <h3 className="">앨범 이름</h3> */}
-                  {/* Dated added */}
-                  {/* <h3 className="">1 Week ago</h3> */}
-                  {/* 실행시간 */}
-                  {/* <h3 className="">3:12</h3> */}
-                </li>
-              ))}
+                </div>
+              </li>
             </ul>
             <div className="flex justify-center mt-8">
               {isClicked ? (
