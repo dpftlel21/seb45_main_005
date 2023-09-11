@@ -1,17 +1,18 @@
 package mainproject.musicforecast.domain.post.mapper;
 
 import mainproject.musicforecast.domain.comment.mapper.CommentMapper;
-import mainproject.musicforecast.domain.post.dto.*;
-import mainproject.musicforecast.domain.post.entity.Post;
 import mainproject.musicforecast.domain.member.dto.MemberResponseDto;
 import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.member.mapper.MemberMapper;
 import mainproject.musicforecast.domain.member.service.MemberService;
+import mainproject.musicforecast.domain.post.dto.PostPatchDto;
+import mainproject.musicforecast.domain.post.dto.PostPostDto;
+import mainproject.musicforecast.domain.post.dto.PostResponseDto;
+import mainproject.musicforecast.domain.post.entity.Post;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,17 +49,17 @@ public interface PostMapper {
 
         return post;
     }
-
-    default Post postVoteToPost(PostVoteDto postVoteDto) {
-        if ( postVoteDto == null ) {
-            return null;
-        }
-
-        Post post = new Post();
-        post.setPostId( postVoteDto.getPostId() );
-
-        return post;
-    }
+//
+//    default Post postVoteToPost(PostVoteDto postVoteDto) {
+//        if ( postVoteDto == null ) {
+//            return null;
+//        }
+//
+//        Post post = new Post();
+//        post.setPostId( postVoteDto.getPostId() );
+//
+//        return post;
+//    }
 
 
     default PostResponseDto postToPostResponse(MemberMapper memberMapper, Post post, CommentMapper commentMapper) {
@@ -73,7 +74,8 @@ public interface PostMapper {
         postResponseDto.setText( post.getText() );
         postResponseDto.setComments(post.getComments().stream()
                 .map(comment -> commentMapper.CommentToCommentResponseDto(comment)).collect(Collectors.toList()));
-        postResponseDto.setVoteCount( post.getVoteCount() );
+        //postResponseDto.setVoteCount( post.getVoteCount() );
+        postResponseDto.setLikeCount( post.getLikeCount() );
         postResponseDto.setViewCount(post.getViewCount());
         postResponseDto.setCreatedAt(post.getCreatedAt());
 
@@ -107,7 +109,8 @@ public interface PostMapper {
         postResponseDto.setPostId( post.getPostId() );
         postResponseDto.setTitle( post.getTitle() );
         postResponseDto.setText( post.getText() );
-        postResponseDto.setVoteCount( post.getVoteCount() );
+        //postResponseDto.setVoteCount( post.getVoteCount() );
+        postResponseDto.setLikeCount( post.getLikeCount() );
         postResponseDto.setViewCount( post.getViewCount());
         postResponseDto.setCreatedAt( post.getCreatedAt() );
 

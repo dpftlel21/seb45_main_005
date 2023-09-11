@@ -1,12 +1,13 @@
 package mainproject.musicforecast.domain.post.entity;
 
-import mainproject.musicforecast.domain.comment.entity.Comment;
-import mainproject.musicforecast.domain.audit.Auditable;
-import mainproject.musicforecast.domain.member.entity.Member;
-import lombok.NoArgsConstructor;
-import lombok.Getter;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mainproject.musicforecast.domain.audit.Auditable;
+import mainproject.musicforecast.domain.comment.entity.Comment;
+import mainproject.musicforecast.domain.member.entity.Member;
+import mainproject.musicforecast.domain.postLike.entity.PostLike;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -34,7 +35,11 @@ public class Post extends Auditable {
     @Column(nullable = false)
     private String text;
 
-    private int voteCount;
+    //private int voteCount;
+
+    @Column(nullable = false)
+    private int likeCount = 0;
+
 
     private int viewCount;
 
@@ -43,6 +48,9 @@ public class Post extends Auditable {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<PostLike> postLikes;
 
     // 연관 관계 메서드
     public void setMember(Member member) {
