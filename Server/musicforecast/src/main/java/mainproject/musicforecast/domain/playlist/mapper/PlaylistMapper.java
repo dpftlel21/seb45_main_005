@@ -53,6 +53,7 @@ public interface PlaylistMapper {
                 .title(playlist.getTitle())
                 .isPublic(playlist.isPublic())
                 .view(playlist.getView())
+                .like(playlist.getLikeCount())
                 .memberId(playlist.getMember().getMemberId())
                 .build();
 

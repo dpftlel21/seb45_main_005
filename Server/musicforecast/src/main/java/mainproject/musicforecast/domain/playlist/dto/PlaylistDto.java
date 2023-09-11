@@ -65,6 +65,7 @@ public class PlaylistDto {
         private String title;
         private boolean isPublic;
         private int view;
+        private int like;
         private long memberId;
         private List<PlaylistTagResponse> playlistTags;
         private List<PlaylistSongResponse> playlistSongs;
