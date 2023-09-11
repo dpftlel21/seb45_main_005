@@ -4,7 +4,12 @@ import mainproject.musicforecast.domain.member.auth.utils.CustomAuthorityUtils;
 import mainproject.musicforecast.domain.member.dto.MemberResponseDto;
 import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.member.repository.MemberRepository;
+import mainproject.musicforecast.domain.post.entity.Post;
+import mainproject.musicforecast.domain.post.repository.PostRepository;
+import mainproject.musicforecast.domain.provider.Provider;
 import mainproject.musicforecast.domain.provider.ProviderRepository;
+import mainproject.musicforecast.domain.question.Question;
+import mainproject.musicforecast.domain.question.QuestionService;
 import mainproject.musicforecast.global.exception.BusinessLogicException;
 import mainproject.musicforecast.global.exception.ExceptionCode;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,23 +28,37 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils customAuthorityUtils;
     private final ProviderRepository providerRepository;
-    public MemberService(MemberRepository memberRepository,PasswordEncoder passwordEncoder, CustomAuthorityUtils customAuthorityUtils, ProviderRepository providerRepository) {
+    private final PostRepository postRepository;
+    private final QuestionService questionService;
+    public MemberService(MemberRepository memberRepository,
+                         PasswordEncoder passwordEncoder,
+                         CustomAuthorityUtils customAuthorityUtils,
+                         ProviderRepository providerRepository,
+                         PostRepository postRepository,
+                         QuestionService questionService) {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
         this.customAuthorityUtils = customAuthorityUtils;
         this.providerRepository = providerRepository;
+        this.postRepository = postRepository;
+        this.questionService = questionService;
     }
     public Member createMember(Member member) {
 
         verifyExistsEmail(member.getEmail());
 
-        if (member.getProvider().getProviderName() == "MusicForecast"){
+        Provider provider = member.getProvider();
+
+        if (provider.getProviderName() != "Google"){
             String encryptedPassword = passwordEncoder.encode(member.getPassword());
             member.setPassword(encryptedPassword);
-            member.setProvider(providerRepository.findByProviderName("MusicForecast"));
 
             List<String> roles = customAuthorityUtils.createRoles(member.getEmail());
             member.setRoles(roles);
+
+            Question question = questionService.findVerifiedQuestion(member.getQuestionNumber());
+
+            member.setQuestion(question);
         }else {
             List<String> roles = customAuthorityUtils.createRoles(member.getEmail());
             member.setRoles(roles);
@@ -75,15 +94,14 @@ public class MemberService {
 
         return findMember;
     }
+//    playlist에 있음
+//    public Member findMemberPlaylist(long memberId) {
+//        Member member = new Member();
+//        return member;
+//    }
 
-    public Member findMemberPlaylist(long memberId) {
-        Member member = new Member();
-        return member;
-    }
-
-    public Member findMemberPost(long memberId) {
-        Member member = new Member();
-        return member;
+    public List<Post> findMemberPost(Member user) {
+        return postRepository.findAllByMember(user);
     }
 
     public void deleteMember(long memberId) {

@@ -5,7 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mainproject.musicforecast.domain.playlist.entity.Playlist;
 import mainproject.musicforecast.domain.playlistLike.entity.PlaylistLike;
+import mainproject.musicforecast.domain.post.entity.Post;
 import mainproject.musicforecast.domain.provider.Provider;
+import mainproject.musicforecast.domain.question.Question;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -22,12 +24,6 @@ public class Member {
     private Long memberId;
 
     @Column
-    private Long questionId;
-
-    @Column
-    private String Id;
-
-    @Column
     @Email
     private String email;
 
@@ -39,6 +35,9 @@ public class Member {
 
     @Column
     private Long birthdate;
+
+    @Column
+    private Long questionNumber;
 
     @Column
     private String auth_answer;
@@ -58,7 +57,14 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<PlaylistLike> playlistLikes;
 
+    @OneToMany(mappedBy = "member")
+    private List<Post> post;
+
     @OneToOne
     @JoinColumn(name = "PROVIDER_ID")
     private Provider provider;
+
+    @OneToOne
+    @JoinColumn(name = "QUESTION_ID")
+    private Question question;
 }
