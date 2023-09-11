@@ -29,7 +29,9 @@ public class CustomAuthorityUtils {
         return authorities;
     }
 
-    public List<String> createRoles() { // 이메일이 관리자 이메일인지 확인하려면 파라미터로 이메일 받아서 관리자 이메일이랑 비교해야함.
+    public List<String> createRoles(String email) {
+        // 이메일이 관리자 이메일인지 확인하려면 파라미터로 이메일 받아서 관리자 이메일이랑 비교해야함.
+        // 하지만 등록해둔 관리자 이메일이 없기 때문에 굳이 email을 사용하지 않는다.
 
         return USER_ROLES_STRING;
     }

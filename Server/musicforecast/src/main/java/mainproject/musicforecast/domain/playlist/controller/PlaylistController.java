@@ -110,6 +110,7 @@ public class PlaylistController {
 
     @PatchMapping("/{playlist-id}/like")
     public ResponseEntity likePlaylist(@PathVariable("playlist-id") long playlistId,
+                                       @RequestBody PlaylistDto.Like playlistLikeDto,
                                        @AuthenticationPrincipal Member member) {
         playlistLikeService.likePlaylist(playlistId, PlaylistLike.LikeType.Like, member);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
