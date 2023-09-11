@@ -19,6 +19,7 @@ const SignUp = () => {
     password: string;
     nickname: string;
     birthdate: string;
+    auth_que: string;
     auth_answer: string;
   }
 
@@ -30,9 +31,10 @@ const SignUp = () => {
   } = useForm<IFormInput>();
 
   const onSubmit = async (data: IFormInput) => {
+    data.id = generateID();
+    data.id = data.id.replace(/-/g, '');
     data.birthdate = data.birthdate.replace(/-/g, '');
 
-    data.id = generateID();
     console.log(data);
 
     try {
@@ -120,19 +122,33 @@ const SignUp = () => {
                 {...register('birthdate', { required: '생년월일은 필수 입니다.' })}
               />
               {errors.birthdate && <span className="text-red-500">{errors.birthdate.message}</span>}
+
               <div className="flex flex-col items-baseline mt-8">
                 <div className="text-xl">비밀번호 찾기 질문</div>
                 <input
                   type="text"
-                  id="auth_answer"
-                  {...register('auth_answer')}
+                  id="auth_que"
+                  {...register('auth_que')}
                   className="w-[330px] h-8"
                 ></input>
+              </div>
+
+              <div className="flex flex-col items-baseline mt-8">
+                <div className="text-xl">비밀번호 찾기 입력</div>
+                <input
+                  type="text"
+                  id="auth_answer"
+                  {...register('auth_answer', { required: '비밀번호 찾기 입력은 필수 입니다.' })}
+                  className={`w-[330px] h-8 ${errors.birthdate ? 'border-red-500' : ''}`}
+                ></input>
+                {errors.auth_answer && (
+                  <span className="text-red-500">{errors.auth_answer.message}</span>
+                )}
               </div>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="ml-16 mt-12 bg-[#C487F4] w-[270px] h-10 rounded-xl hover:bg-opacity-90 hover:bg-[#C487F4]"
+                className="ml-10 mt-12 bg-[#C487F4] w-[250px] h-10 rounded-xl hover:bg-opacity-90 hover:bg-[#C487F4]"
               >
                 회원가입
               </button>
