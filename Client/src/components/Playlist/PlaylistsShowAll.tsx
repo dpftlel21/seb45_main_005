@@ -17,8 +17,12 @@ export type PlaylistInfo = {
 };
 
 const PlaylistsShowAll = () => {
+  const headers = {
+    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+  };
   const dispatch = useDispatch();
 
+  const [title, setTitle] = useState<string>('');
   const [reRendering, setReRendering] = useState<string>('');
 
   const isDetailOpen = useSelector((state: RootState) => state.modal.isSongOpen);
@@ -31,15 +35,17 @@ const PlaylistsShowAll = () => {
 
   useEffect(() => {
     axios
-      .get('/playlist?page=1&size=80')
+      .get(
+        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist?page=1&size=80',
+        { headers }
+      )
       .then((res) => {
         dispatch(playlistInfo(res.data.data));
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [reRendering, setReRendering]);
+  }, [reRendering, setReRendering, title, setTitle]);
 
   return (
     <>
@@ -67,8 +73,9 @@ const PlaylistsShowAll = () => {
             </div>
             {/* 플리 앨범, 제목, 내용 */}
             <ul className="w-full h-[550px] mt-6 flex flex-wrap overflow-y-scroll">
-              {playlistsInfo.map((el) => (
+              {playlistsInfo.map((el, index) => (
                 <Playlists
+                  key={index}
                   setReRendering={setReRendering}
                   el={el}
                   playlistId={el.playlistId}
@@ -80,7 +87,7 @@ const PlaylistsShowAll = () => {
           </div>
         </div>
       </div>
-      {isDetailOpen && <PlaylistsDetail />}
+      {isDetailOpen && <PlaylistsDetail title={title} setTitle={setTitle} />}
       {isOpenToast && <ToastModal setReRendering={setReRendering} />}
     </>
   );

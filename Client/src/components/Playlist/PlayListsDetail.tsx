@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { closeSongLists } from '../../redux/slice/ModalSlice';
 import { playlistDetail } from '../../redux/slice/PlaylistsSlice';
@@ -14,7 +14,27 @@ type PlaylistDetailInfo = {
   playlistTagId: number;
 };
 
-const PlaylistsDetail = () => {
+export type PlaylistData = {
+  title: string;
+  views: number;
+  playlistId: number;
+  memberId: number;
+  playlistSongs: [];
+  playlistTagId: number;
+};
+
+export type TitleProps = {
+  title: string;
+  setTitle: any;
+};
+
+const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
+  const headers = {
+    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+  };
+  const [detailData, setDetailData] = useState<PlaylistData | null>(null);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
+
   const dispatch = useDispatch();
 
   const playlistId = useSelector((state: RootState) => state.playlists.selectedPlaylistId);
@@ -28,8 +48,13 @@ const PlaylistsDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`/playlist/${playlistId}`)
+      .get(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/${playlistId}`,
+        { headers }
+      )
       .then((res) => {
+        setDetailData(res.data.data);
+        setTitle(res.data.data.title);
         dispatch(playlistDetail(res.data.data.playlistSongs));
       })
       .catch((err) => {
@@ -61,7 +86,16 @@ const PlaylistsDetail = () => {
               <img src={Album} className="w-[150px] h-[150px] ml-12" />
               <div className="w-[500px] flex flex-col justify-around">
                 <p>Playlist</p>
-                <h1 className="text-4xl font-['Anton-Regular']">플리 제목</h1>
+                {!isClicked ? (
+                  <h1 className="text-4xl font-['Anton-Regular']">{detailData?.title}</h1>
+                ) : (
+                  <input
+                    onChange={(e) => setTitle(e.target.value)}
+                    value={title}
+                    type="text"
+                    className="w-[500px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
+                  />
+                )}
                 <p>플리 내용</p>
                 <div className="flex items-center">
                   <img src={Logo} className="w-[100px] h-[30px]" />
@@ -102,7 +136,18 @@ const PlaylistsDetail = () => {
                 </li>
               ))}
             </ul>
-            <PlaylistUpdateBtn />
+            <div className="flex justify-center mt-8">
+              {isClicked ? (
+                <PlaylistUpdateBtn title={title} />
+              ) : (
+                <button
+                  onClick={() => setIsClicked(true)}
+                  className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
+                >
+                  수정하기
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

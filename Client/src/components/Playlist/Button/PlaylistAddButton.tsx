@@ -13,7 +13,7 @@ const PlaylistAddButton = () => {
         onClick={handleOpenToast}
         className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
       >
-        추가
+        플레이리스트 추가
       </button>
     </div>
   );

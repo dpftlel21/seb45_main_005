@@ -2,17 +2,27 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { RootState } from '../../../redux/store';
 
-const PlaylistUpdateBtn = () => {
+export type updateProps = {
+  title: string;
+};
+
+const PlaylistUpdateBtn = ({ title }: updateProps) => {
   const playlistId = useSelector((state: RootState) => state.playlists.selectedPlaylistId);
   const token = useSelector((state: RootState) => state.login.accessToken);
 
   const handleUpdate = () => {
     axios
-      .patch(`/playlist/${playlistId}`, {
-        headers: {
-          Authorization: token,
-        },
-      })
+      .patch(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/${playlistId}`,
+        { title, public: true, tag: ['신나는', '발라드'] },
+        {
+          headers: {
+            'Authorization': token,
+            'Access-Control-Allow-Origin':
+              'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+          },
+        }
+      )
       .then((res) => {
         console.log('수정 성공 !', res);
       })
@@ -22,17 +32,12 @@ const PlaylistUpdateBtn = () => {
   };
 
   return (
-    <div className="flex justify-center my-8">
-      <button
-        onClick={handleUpdate}
-        className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
-      >
-        수정
-      </button>
-      <button className="w-[150px] h-[50px] mb-4 ml-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white">
-        삭제
-      </button>
-    </div>
+    <button
+      onClick={handleUpdate}
+      className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
+    >
+      완료
+    </button>
   );
 };
 

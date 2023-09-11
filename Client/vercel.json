@@ -1,0 +1,9 @@
+{
+    "routes": [
+      {
+        "src": "/ec2-15-164-171-149(/.*)?",
+        "dest": "http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/api/:splat",
+        "methods": ["GET", "POST", "PATCH", "DELETE", ""]
+      }
+    ]
+  }

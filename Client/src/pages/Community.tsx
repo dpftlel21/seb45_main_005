@@ -17,6 +17,9 @@ interface Post {
 }
 
 const Community = () => {
+  const headers = {
+    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+  };
   const [searchQuery, setSearchQuery] = useState('');
   const [posts, setPosts] = useState<Post[]>([]);
   const navigate = useNavigate();
@@ -55,7 +58,10 @@ const Community = () => {
 
   useEffect(() => {
     axios
-      .get(`/posts?page=${currentPage}&size=10`)
+      .get(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts?page=${currentPage}&size=10`,
+        { headers }
+      )
       .then((res) => {
         console.log(res);
         setPosts(res.data.data);
