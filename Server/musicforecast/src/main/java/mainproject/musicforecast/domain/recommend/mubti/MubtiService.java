@@ -78,13 +78,13 @@ public class MubtiService {
                     genre.add("신나는");
                     break;
                 case 4:
-                    genre.add("신나는");
+                    // adminSuggest
                     break;
                 default:
                     break;
             }
         } else {
-            return null;
+            // redirect
         }
         return genre;
     }
