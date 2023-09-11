@@ -1,13 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/slice/LoginSlice';
 import Logo from '../../assets/images/logo.png';
 import { RootState } from '../../redux/store';
 
 const MainHead = () => {
+  const history = useNavigate();
   const dispatch = useDispatch();
   const loginState = useSelector((state: RootState) => state.login.loginState);
+
+  const signupHandler = () => {
+    history('/signup');
+  };
+
+  const loginHandler = () => {
+    history('/login');
+  };
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -31,11 +40,17 @@ const MainHead = () => {
             </>
           ) : (
             <>
-              <button className="bg-[#C487F4] mr-5 rounded-xl w-32 h-10 hover:bg-opacity-90 hover:bg-[#C487F4]">
-                <Link to="/login">log in</Link>
+              <button
+                className="bg-[#C487F4] mr-5 rounded-xl w-32 h-10 hover:bg-opacity-90 hover:bg-[#C487F4]"
+                onClick={loginHandler}
+              >
+                log in
               </button>
-              <button className="text-white  w-20 h-10  rounded-xl hover:opacity-80">
-                <Link to="/signup">sign up</Link>
+              <button
+                className="text-white  w-20 h-10  rounded-xl hover:opacity-80"
+                onClick={signupHandler}
+              >
+                sign up
               </button>
             </>
           )}

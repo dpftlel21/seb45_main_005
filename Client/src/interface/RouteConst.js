@@ -17,4 +17,6 @@ export const RouteConst = {
   Test: '/test',
   EditProfile: '/mypage/edit',
   Search: '/search',
+  IdFind: '/idfind',
+  PwdFind: '/pwdfind',
 };

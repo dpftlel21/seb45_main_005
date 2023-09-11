@@ -139,7 +139,7 @@ const LoginOn = () => {
                     message: '이메일 형식에 맞지 않습니다.',
                   },
                 })}
-                className={`w-[300px] h-8 border-2 border-solid border-white shadow-lg ${
+                className={`w-[280px] h-8 border-2 border-solid border-white shadow-lg ${
                   errors.password ? 'border-red-500' : ''
                 }`}
               />
@@ -156,28 +156,31 @@ const LoginOn = () => {
                     message: '비밀번호는 영문 숫자 8자리 이상이여야 합니다.',
                   },
                 })}
-                className={`w-[300px] h-8 border-2 border-solid border-white shadow-lg ${
+                className={`w-[280px] h-8 border-2 border-solid border-white shadow-lg ${
                   errors.password?.message ? 'border-red-500' : ''
                 }`}
               />
               <div className="flex flex-row justify-between w-[275px] mt-6">
-                <div>아이디 찾기</div>
-                <div>비밀번호 찾기</div>
+                <div>
+                  <Link to="/idfind">아이디 찾기</Link>
+                </div>
+                <div>
+                  <Link to="/pwdfind">비밀번호 찾기</Link>
+                </div>
                 <div>
                   <Link to="/signup">회원가입</Link>
                 </div>
               </div>
               <button
                 disabled={isSubmitting}
-                className=" mt-12 bg-[#C487F4] w-[270px] h-10 rounded-xl hover:bg-opacity-90 hover:bg-[#C487F4]"
+                className="ml-2 mt-12 bg-[#C487F4] w-[250px] h-10 rounded-xl hover:bg-opacity-90 hover:bg-[#C487F4]"
               >
                 로그인
               </button>
             </form>
-            <div className="flex flex-row justify-between ml-56 mt-5 w-52 mb-24">
+            <div className="flex flex-row justify-between ml-60 mt-5 w-52 mb-24">
               <GoogleOauth />
               <SocialKakao />
-              <div>네이버</div>
             </div>
           </div>
         </div>

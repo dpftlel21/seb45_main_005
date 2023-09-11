@@ -22,6 +22,7 @@ const SignUp = () => {
     password: string;
     nickname: string;
     birthdate: string;
+    auth_que: string;
     auth_answer: string;
   }
 
@@ -33,9 +34,10 @@ const SignUp = () => {
   } = useForm<IFormInput>();
 
   const onSubmit = async (data: IFormInput) => {
+    data.id = generateID();
+    data.id = data.id.replace(/-/g, '');
     data.birthdate = data.birthdate.replace(/-/g, '');
 
-    data.id = generateID();
     console.log(data);
 
     try {
@@ -53,6 +55,7 @@ const SignUp = () => {
       }
     } catch (error) {
       console.error('오류 발생:', error);
+      // history('/signup')
     }
   };
 
@@ -127,19 +130,34 @@ const SignUp = () => {
                 {...register('birthdate', { required: '생년월일은 필수 입니다.' })}
               />
               {errors.birthdate && <span className="text-red-500">{errors.birthdate.message}</span>}
+
               <div className="flex flex-col items-baseline mt-8">
                 <div className="text-xl">비밀번호 찾기 질문</div>
+                <select {...register('auth_que', { required: true })} className="w-[330px] h-8">
+                  <option value=""></option>
+                  <option value="food">가장 좋아하는 음식이 무엇인가요?</option>
+                  <option value="song">가장 좋아하는 노래는?</option>
+                  <option value="travel">가장 여행하고 싶은 나라는?</option>
+                </select>
+                {errors.auth_que && <span className="text-red-500">필수 항목입니다.</span>}
+              </div>
+
+              <div className="flex flex-col items-baseline mt-8">
+                <div className="text-xl">비밀번호 찾기 입력</div>
                 <input
                   type="text"
                   id="auth_answer"
-                  {...register('auth_answer')}
-                  className="w-[330px] h-8"
+                  {...register('auth_answer', { required: '비밀번호 찾기 입력은 필수 입니다.' })}
+                  className={`w-[330px] h-8 ${errors.birthdate ? 'border-red-500' : ''}`}
                 ></input>
+                {errors.auth_answer && (
+                  <span className="text-red-500">{errors.auth_answer.message}</span>
+                )}
               </div>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="ml-16 mt-12 bg-[#C487F4] w-[270px] h-10 rounded-xl hover:bg-opacity-90 hover:bg-[#C487F4]"
+                className="ml-10 mt-12 bg-[#C487F4] w-[250px] h-10 rounded-xl hover:bg-opacity-90 hover:bg-[#C487F4]"
               >
                 회원가입
               </button>
