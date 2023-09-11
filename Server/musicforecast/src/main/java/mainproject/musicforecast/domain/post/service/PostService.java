@@ -44,17 +44,17 @@ public class PostService {
             throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
         }
     }
-
-    public Post votePost(Post post, Boolean vote) {
-        Post findPost = postRepository.findByPostId(post.getPostId());
-        if (vote.equals(true)) {
-            findPost.setVoteCount(findPost.getVoteCount() + 1);
-        } else {
-            findPost.setVoteCount(findPost.getVoteCount() - 1);
-        }
-        Post post1 = postRepository.save(findPost);
-        return post1;
-    }
+//
+//    public Post votePost(Post post, Boolean vote) {
+//        Post findPost = postRepository.findByPostId(post.getPostId());
+//        if (vote.equals(true)) {
+//            findPost.setVoteCount(findPost.getVoteCount() + 1);
+//        } else {
+//            findPost.setVoteCount(findPost.getVoteCount() - 1);
+//        }
+//        Post post1 = postRepository.save(findPost);
+//        return post1;
+//    }
 
     public Post findPost(Long postId) {
         return findVerifyPost(postId);

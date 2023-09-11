@@ -9,6 +9,8 @@ import mainproject.musicforecast.domain.post.entity.Post;
 import mainproject.musicforecast.domain.post.mapper.PostMapper;
 import mainproject.musicforecast.domain.post.repository.PostRepository;
 import mainproject.musicforecast.domain.post.service.PostService;
+import mainproject.musicforecast.domain.postLike.entity.PostLike;
+import mainproject.musicforecast.domain.postLike.service.PostLikeService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,13 +38,16 @@ public class PostController {
 
     private final PostRepository postRepository;
 
-    public PostController(PostService postService, PostMapper mapper, MemberService memberService, MemberMapper memberMapper, CommentMapper commentMapper, PostRepository postRepository) {
+    private final PostLikeService postLikeService;
+
+    public PostController(PostService postService, PostMapper mapper, MemberService memberService, MemberMapper memberMapper, CommentMapper commentMapper, PostRepository postRepository, PostLikeService postLikeService) {
         this.postService = postService;
         this.mapper = mapper;
         this.memberService = memberService;
         this.memberMapper = memberMapper;
         this.commentMapper = commentMapper;
         this.postRepository = postRepository;
+        this.postLikeService = postLikeService;
     }
 
     // 글 등록
@@ -70,19 +75,19 @@ public class PostController {
                 HttpStatus.OK);
     }
 
-    // 투표하기 Vote=true +1, 투표 취소하기 Vote=false -1
-    @PatchMapping("/{post-id}/vote")
-    public ResponseEntity patchVote(@PathVariable("post-id") @Positive Long postId,
-                                    @RequestParam Boolean vote,
-                                    @Valid @RequestBody PostVoteDto postVoteDto) {
-        postVoteDto.setPostId(postId);
-
-        Post post = postService.votePost(mapper.postVoteToPost(postVoteDto),
-                vote);
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.postToPostResponse(memberMapper, post, commentMapper))
-                , HttpStatus.OK);
-    }
+//    // 투표하기 Vote=true +1, 투표 취소하기 Vote=false -1
+//    @PatchMapping("/{post-id}/vote")
+//    public ResponseEntity patchVote(@PathVariable("post-id") @Positive Long postId,
+//                                    @RequestParam Boolean vote,
+//                                    @Valid @RequestBody PostVoteDto postVoteDto) {
+//        postVoteDto.setPostId(postId);
+//
+//        Post post = postService.votePost(mapper.postVoteToPost(postVoteDto),
+//                vote);
+//        return new ResponseEntity<>(
+//                new SingleResponseDto<>(mapper.postToPostResponse(memberMapper, post, commentMapper))
+//                , HttpStatus.OK);
+//    }
 
     // 특정 게시글 조회
     @GetMapping("/{post-id}")
@@ -134,5 +139,13 @@ public class PostController {
         return new ResponseEntity<>(
                 new MultiResponseDto<>(response, pagePosts),
                 HttpStatus.OK);
+    }
+//좋아요기능 (table분리해서 다시만듬)
+    @PatchMapping("/{post-id}/like")
+    public ResponseEntity likePost(@PathVariable("post-id") long postId,
+                                       @RequestBody Like postLikeDto,
+                                       @AuthenticationPrincipal Member member) {
+        postLikeService.likePost(postId, PostLike.LikeType.Like, member);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
