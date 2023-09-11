@@ -7,7 +7,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 @Slf4j
 public class MemberAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     @Override

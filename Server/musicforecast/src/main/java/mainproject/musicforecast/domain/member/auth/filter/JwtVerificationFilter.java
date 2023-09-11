@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
+//로그인 또는 OAuth2 인증에 성공하면 Authorization header에 실어 보내는 Access Token에 대한 검증을 수행하는 Filter
 @Slf4j
 public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;

@@ -7,6 +7,5 @@ import lombok.Setter;
 @Setter
 public class MemberResponseDto {
     private long memberId;
-    private String id;
     private String nickname;
 }
