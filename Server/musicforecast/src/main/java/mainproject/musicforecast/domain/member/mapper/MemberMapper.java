@@ -1,9 +1,6 @@
 package mainproject.musicforecast.domain.member.mapper;
 
-import mainproject.musicforecast.domain.member.dto.MemberIntroResponseDto;
-import mainproject.musicforecast.domain.member.dto.MemberPatchDto;
-import mainproject.musicforecast.domain.member.dto.MemberPostDto;
-import mainproject.musicforecast.domain.member.dto.MemberResponseDto;
+import mainproject.musicforecast.domain.member.dto.*;
 import mainproject.musicforecast.domain.member.entity.Member;
 import org.mapstruct.Mapper;
 
@@ -13,4 +10,6 @@ public interface MemberMapper {
     Member memberPatchDtoToMember(MemberPatchDto memberPatchDto);
     MemberResponseDto memberToMemberResponseDto(Member member);
     MemberIntroResponseDto memberToMemberIntroResponseDto(Member member);
+    Member findMemberDto(FindMemberDto findMemberDto);
+    FindMemberDto memberToFindMemberDto(Member member);
 }

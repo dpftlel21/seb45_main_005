@@ -53,6 +53,7 @@ public interface PlaylistMapper {
                 .title(playlist.getTitle())
                 .isPublic(playlist.isPublic())
                 .view(playlist.getView())
+                .like(playlist.getLikeCount())
                 .memberId(playlist.getMember().getMemberId())
                 .build();
 
@@ -63,13 +64,20 @@ public interface PlaylistMapper {
                         .map(playlistTag -> PlaylistDto.PlaylistTagResponse.builder()
                                 .playlistTagId(playlistTag.getPlaylistTagId())
                                 .playlistId(playlistTag.getPlaylist().getPlaylistId())
-                                .tagId(playlistTag.getTag().getTagId()).build())
+                                .tagId(playlistTag.getTag().getTagId())
+                                .tagName(playlistTag.getTag().getTagName())
+                                .build())
                                 .collect(Collectors.toList());
 
         List<PlaylistDto.PlaylistSongResponse> playlistSongResponses = playlistSongs.stream()
                         .map(playlistSong -> PlaylistDto.PlaylistSongResponse.builder()
                                 .playlistSongId(playlistSong.getPlaylistSongId())
-                                .songId(playlistSong.getSong().getSongId()).build())
+                                .songId(playlistSong.getSong().getSongId())
+                                .title(playlistSong.getSongTitle())
+                                .albumName(playlistSong.getAlbumName())
+                                .artistName(playlistSong.getArtistName())
+                                .imageUrl(playlistSong.getImageUrl())
+                                .build())
                                 .collect(Collectors.toList());
 
         response.setPlaylistTags(playlistTagResponses);

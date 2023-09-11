@@ -99,6 +99,7 @@ public class PlaylistService {
                     PlaylistTag playlistTag = new PlaylistTag();
                     playlistTag.setPlaylist(playlist);
                     playlistTag.setTag(tag);
+                    playlistTag.setTagName(tag.getTagName());
                     newTags.add(playlistTag);
                 }
             }
