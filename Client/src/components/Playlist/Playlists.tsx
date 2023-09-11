@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -17,6 +18,9 @@ type PlaylistProps = {
 const Playlists = ({ el, setReRendering }: PlaylistProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // 삭제 버튼 클릭시 opacity 변경을 위한 상태
+  const [isHovered, setIsHovered] = useState(false);
 
   const token = useSelector((state: RootState) => state.login.accessToken);
 
@@ -57,12 +61,24 @@ const Playlists = ({ el, setReRendering }: PlaylistProps) => {
 
   return (
     <>
-      <li className="h-[230px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out ">
-        <button onClick={handleListDelete}>x</button>
+      <li
+        className="w-[200px] h-[230px] relative flex flex-col justify-center items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out "
+        onMouseEnter={() => setIsHovered(true)} // 호버 상태에 들어갈 때
+        onMouseLeave={() => setIsHovered(false)} // 호버 상태에서 나올 때
+      >
+        <button
+          onClick={handleListDelete}
+          className={`w-[25px] h-[25px] flex justify-center text-center items-center relative top-12 -right-16 bg-[#fa1f1f81] text-white text-lg rounded-full ${
+            isHovered ? 'opacity-100' : 'opacity-0' // 상태에 따라 opacity 변경
+          }`}
+          style={{ transition: 'opacity 0.3s' }}
+        >
+          X
+        </button>
         {/* 플리 리스트들 */}
         <div onClick={handleOpenDetail} className="ml-2">
           <img src={Album} />
-          <h1 className="mt-4">{el.title}</h1>
+          <h1 className="mt-4 text-sm">{el.title}</h1>
         </div>
       </li>
     </>
