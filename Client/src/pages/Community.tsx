@@ -39,7 +39,7 @@ const Community = () => {
     console.log('검색어:', searchQuery);
     axios
       .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts?type=${searchQuery}`,
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts/search?page=${currentPage}size=10&keyword=${searchQuery}`,
         {}
       )
       .then((res) => {

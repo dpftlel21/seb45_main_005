@@ -8,6 +8,14 @@ import usericon from '../assets/images/user.png';
 import musicicon from '../assets/images/Rectangle(1).png';
 import PlaylistIcon from '../components/Playlist/PlaylistIcon';
 
+interface Comment {
+  commentId: number;
+  memberId: number;
+  nickname: string;
+  postId: number;
+  text: string;
+}
+
 interface Post {
   postId: number;
   title: string;
@@ -16,6 +24,7 @@ interface Post {
   text: string;
   nickName: string;
   memberId: number;
+  comments: [];
 }
 
 const CommunityDetail = () => {
@@ -28,15 +37,20 @@ const CommunityDetail = () => {
     text: '',
     nickName: '',
     memberId: 0,
+    comments: [],
   });
+  const [comment, setComment] = useState('');
   const currentUrl = new URL(document.location.toString());
   const communityParam = currentUrl.pathname.split('/').pop() || '';
   const postId = parseInt(communityParam, 10);
   console.log(postId);
   const accessToken = useSelector((state: RootState) => state.login.accessToken);
+  const memberid = useSelector((state: RootState) => state.login.memberid);
   // const accessToken = useSelector((state: RootState) => state.login.accessToken);
   // const refreshToken = useSelector((state: RootState) => state.login.refreshToken);
   // const dispatch = useDispatch();
+  const savedComment: Comment[] = posts.comments;
+  console.log(savedComment);
   const navigate = useNavigate();
   const headers = {
     'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
@@ -61,6 +75,24 @@ const CommunityDetail = () => {
         console.log(err);
       });
   }, [postId]);
+
+  const handleComment = () => {
+    axios.post(
+      `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/comments`,
+      {
+        memberid,
+        postId,
+        text: comment,
+      },
+      {
+        headers: {
+          'Authorization': accessToken,
+          'Access-Control-Allow-Origin':
+            'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+        },
+      }
+    );
+  };
 
   const handleDelete = () => {
     const confirmDelete = window.confirm('삭제하시겠습니까?');
@@ -181,23 +213,33 @@ const CommunityDetail = () => {
             </div>
           </div>
         </div>
-
-        <hr />
         <div>
           <div className="flex flex-col justify-center items-center">
-            <form action="">
-              <label id="answer">댓글</label>
+            <form>
+              <label id="answer">댓글 작성</label>
               <input
                 type="text"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
                 id="answer"
                 className="border-2 border-solid border-black w-[500px] h-[40px]"
               />
+              <button onClick={handleComment}>등록</button>
             </form>
           </div>
-          <div>
-            <table></table>
-          </div>
         </div>
+        {/* 댓글내용 */}
+        <div>
+          {savedComment.map((item, idx) => (
+            <div key={idx} className="flex flex-col justify-center items-center">
+              <span className="w-[700px] h-[30px]">{item.nickname}</span>
+              <span className="w-[700px] h-[50px]">{item.text}</span>
+            </div>
+          ))}
+        </div>
+
+        <hr />
+
         <PlaylistIcon />
       </div>
     </>
