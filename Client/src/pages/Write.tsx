@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../redux/store';
 import Header from '../components/Header';
 import PlaylistIcon from '../components/Playlist/PlaylistIcon';
 

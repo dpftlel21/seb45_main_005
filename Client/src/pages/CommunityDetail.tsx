@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from 'src/redux/store';
 import axios from 'axios';
+import { RootState } from '../redux/store';
 import Header from '../components/Header';
 import usericon from '../assets/images/user.png';
 import musicicon from '../assets/images/Rectangle(1).png';

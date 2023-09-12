@@ -1,5 +1,6 @@
 import React from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
+// import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import google from '../../assets/images/google.svg';
 import { setAccessToken, setLoginState } from '../../redux/slice/LoginSlice';
@@ -11,7 +12,7 @@ const GoogleOauth = () => {
       console.log(tokenResponse);
       dispatch(setAccessToken(tokenResponse.access_token));
       console.log('Login Success:', tokenResponse.access_token);
-      window.location.href = '/';
+      // window.location.href = '/';
       dispatch(setLoginState(true));
     },
     onError: () => {

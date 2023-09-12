@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 import Logo from '../../assets/images/logo.png';
 import Email from '../../assets/images/email.svg';
 import Lock from '../../assets/images/lock.svg';
@@ -13,16 +12,13 @@ const SignUp = () => {
   const headers = {
     'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
   };
-  const generateID = () => {
-    return uuidv4();
-  };
+
   interface IFormInput {
-    id: string;
     email: string;
     password: string;
     nickname: string;
     birthdate: string;
-    auth_que: string;
+    questionNumber: string;
     auth_answer: string;
   }
 
@@ -34,8 +30,6 @@ const SignUp = () => {
   } = useForm<IFormInput>();
 
   const onSubmit = async (data: IFormInput) => {
-    data.id = generateID();
-    data.id = data.id.replace(/-/g, '');
     data.birthdate = data.birthdate.replace(/-/g, '');
 
     console.log(data);
@@ -47,7 +41,7 @@ const SignUp = () => {
         { headers }
       );
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         console.log('회원가입 성공');
         history('/login');
       } else {
@@ -133,13 +127,16 @@ const SignUp = () => {
 
               <div className="flex flex-col items-baseline mt-8">
                 <div className="text-xl">비밀번호 찾기 질문</div>
-                <select {...register('auth_que', { required: true })} className="w-[330px] h-8">
+                <select
+                  {...register('questionNumber', { required: true })}
+                  className="w-[330px] h-8"
+                >
                   <option value=""></option>
-                  <option value="food">가장 좋아하는 음식이 무엇인가요?</option>
-                  <option value="song">가장 좋아하는 노래는?</option>
-                  <option value="travel">가장 여행하고 싶은 나라는?</option>
+                  <option value="1">가장 좋아하는 음식이 무엇인가요?</option>
+                  <option value="2">가장 좋아하는 노래는?</option>
+                  <option value="3">가장 여행하고 싶은 나라는?</option>
                 </select>
-                {errors.auth_que && <span className="text-red-500">필수 항목입니다.</span>}
+                {errors.questionNumber && <span className="text-red-500">필수 항목입니다.</span>}
               </div>
 
               <div className="flex flex-col items-baseline mt-8">

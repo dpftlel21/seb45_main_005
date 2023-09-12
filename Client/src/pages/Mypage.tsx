@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
 import axios from 'axios';
+import { RootState } from '../redux/store';
 
 import MyPlayList from '../components/MyPlayList';
 import Profile from '../components/Profile';

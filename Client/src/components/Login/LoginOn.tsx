@@ -66,11 +66,10 @@ const LoginOn = () => {
       dispatch(setAccessToken(response.headers.authorization));
       console.log(response.headers.authorization);
       dispatch(setRefreshToken(response.headers.refreshtoken));
-      dispatch(setMemberID(response.headers.memberid));
-      console.log(response.headers.memberid);
+      dispatch(setMemberID(response.headers.Memberid));
       dispatch(setLoginState(true));
-      // dispatch(setUserName(res))
-      window.location.href = '/';
+      console.log(response.headers.memberid);
+      // window.location.href = '/';
     } catch (error) {
       console.error('로그인 실패:', error);
     }

@@ -7,6 +7,7 @@ import playlistimg from '../assets/images/Rectangle 64.png';
 import { setCurrentPage } from '../redux/slice/CommunitySlice';
 import 'animate.css';
 import PlaylistIcon from '../components/Playlist/PlaylistIcon';
+import Wrapper from '../components/Wrapper/Wrapper';
 
 interface Post {
   postId: number;
@@ -90,77 +91,82 @@ const Community = () => {
         <div className="">
           <Header />
         </div>
-        <div className="flex flex-col w-full h-[800px] items-center mt-4">
-          <div className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#000000] justify-center">
-            <button className="w-[140px] text-center text-xs underline" onClick={handleWriteButton}>
-              글쓰기
-            </button>
+        <Wrapper>
+          <div className="flex flex-col w-full h-[800px] items-center mt-4">
+            <div className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#000000] justify-center">
+              <button
+                className="w-[140px] text-center text-xs underline"
+                onClick={handleWriteButton}
+              >
+                글쓰기
+              </button>
 
-            <form onSubmit={handleSearchSubmit} className=" w-[700px] ">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={handleSearchChange}
-                className="text-center text-xs w-[300px] ml-10 rounded-xl h-[30px] border-1 border-solid border-[#000000]"
-                placeholder="게시글 검색"
-              />
-            </form>
+              <form onSubmit={handleSearchSubmit} className=" w-[700px] ">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  className="text-center text-xs w-[300px] ml-10 rounded-xl h-[30px] border-1 border-solid border-[#000000]"
+                  placeholder="게시글 검색"
+                />
+              </form>
 
-            <button className="w-[50px] text-center text-xs underline">조회순</button>
+              <button className="w-[50px] text-center text-xs underline">조회순</button>
+            </div>
+            <div>
+              <table className="flex flex-col w-[875px] items-center justify-center ">
+                {posts &&
+                  posts.map((item, idx) => (
+                    <tr
+                      className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#bdc2f8] justify-center"
+                      key={item.postId}
+                    >
+                      <td className="w-[50px] text-center text-xs">{idx + currentPage * 10 - 9}</td>
+                      <td className="w-[100px]">
+                        <img src={playlistimg} alt="임시사진" />
+                      </td>
+
+                      <td className="w-[700px] text-start text-xs ml-10">
+                        <a href={`./community/${item.postId}`}>{item.title}</a>
+                      </td>
+                      <td className="w-[50px] text-center text-xs">
+                        {Math.floor(item.viewCount / 2)}
+                      </td>
+                    </tr>
+                  ))}
+              </table>
+            </div>
           </div>
-          <div>
-            <table className="flex flex-col w-[875px] items-center justify-center ">
-              {posts &&
-                posts.map((item, idx) => (
-                  <tr
-                    className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#bdc2f8] justify-center"
-                    key={item.postId}
-                  >
-                    <td className="w-[50px] text-center text-xs">{idx + currentPage * 10 - 9}</td>
-                    <td className="w-[100px]">
-                      <img src={playlistimg} alt="임시사진" />
-                    </td>
-
-                    <td className="w-[700px] text-start text-xs ml-10">
-                      <a href={`./community/${item.postId}`}>{item.title}</a>
-                    </td>
-                    <td className="w-[50px] text-center text-xs">
-                      {Math.floor(item.viewCount / 2)}
-                    </td>
-                  </tr>
-                ))}
-            </table>
-          </div>
-        </div>
-        <div className="flex justify-center mt-4">
-          <button
-            className="mr-2 px-2 py-1 border rounded"
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-          >
-            이전
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => (
+          <div className="flex justify-center mt-4">
             <button
-              key={i}
-              className={`mx-2 px-2 py-1 border rounded ${
-                currentPage === i + 1 ? 'bg-gray-300' : ''
-              }`}
-              onClick={() => handlePageChange(i + 1)}
+              className="mr-2 px-2 py-1 border rounded"
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
             >
-              {i + 1}
+              이전
             </button>
-          ))}
-          <button
-            className="ml-2 px-2 py-1 border rounded"
-            onClick={handleNextPage}
-            // disabled={currentPage === totalPages}
-          >
-            다음
-          </button>
-        </div>
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i}
+                className={`mx-2 px-2 py-1 border rounded ${
+                  currentPage === i + 1 ? 'bg-gray-300' : ''
+                }`}
+                onClick={() => handlePageChange(i + 1)}
+              >
+                {i + 1}
+              </button>
+            ))}
+            <button
+              className="ml-2 px-2 py-1 border rounded"
+              onClick={handleNextPage}
+              // disabled={currentPage === totalPages}
+            >
+              다음
+            </button>
+          </div>
 
-        <PlaylistIcon />
+          <PlaylistIcon />
+        </Wrapper>
       </div>
     </>
   );
