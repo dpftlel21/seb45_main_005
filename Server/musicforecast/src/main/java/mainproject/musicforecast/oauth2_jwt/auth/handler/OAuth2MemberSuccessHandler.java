@@ -82,8 +82,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         String uri = createURI(accessToken, refreshToken).toString();   // (6-3)
 
         //헤더에 토큰 넣기
-        response.setHeader("Authorization", "Bearer " + accessToken);
-        response.setHeader("Refresh", refreshToken);
+        response.addHeader("Authorization", "Bearer " + accessToken);
+        response.addHeader("Refresh", refreshToken);
 
         getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
     }
@@ -122,8 +122,9 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("http")
-                .host("musicforecast.s3-website.ap-northeast-2.amazonaws.com")
-//                .port(8080) http://localhost:8080/oauth2/authorization/google
+                //.host("musicforecast.s3-website.ap-northeast-2.amazonaws.com")
+                .host("localhost")
+                .port(8080)
                 .path("/")
                 .queryParams(queryParams)
                 .build()
