@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import playlistimg from '../assets/images/Rectangle 64.png';
+import { setCurrentPage } from '../redux/slice/CommunitySlice';
 import 'animate.css';
 import PlaylistIcon from '../components/Playlist/PlaylistIcon';
 
@@ -23,8 +25,9 @@ const Community = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [posts, setPosts] = useState<Post[]>([]);
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setcurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const dispatch = useDispatch();
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -34,6 +37,14 @@ const Community = () => {
     event.preventDefault();
     // 여기서 검색어(searchQuery)를 활용하여 검색 로직을 구현할 수 있습니다.
     console.log('검색어:', searchQuery);
+    axios
+      .get(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts?type=${searchQuery}`,
+        {}
+      )
+      .then((res) => {
+        console.log(res);
+      });
   };
 
   const handleWriteButton = () => {
@@ -41,18 +52,18 @@ const Community = () => {
   };
 
   const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
+    setcurrentPage(pageNumber);
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+      setcurrentPage(currentPage + 1);
     }
   };
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      setcurrentPage(currentPage - 1);
     }
   };
 
@@ -66,6 +77,7 @@ const Community = () => {
         console.log(res);
         setPosts(res.data.data);
         setTotalPages(res.data.pageInfo.totPages);
+        dispatch(setCurrentPage(currentPage));
       })
       .catch((err) => {
         console.log(err);
@@ -95,7 +107,6 @@ const Community = () => {
             </form>
 
             <button className="w-[50px] text-center text-xs underline">조회순</button>
-            <button className="w-[50px] text-center text-xs underline">추천순</button>
           </div>
           <div>
             <table className="flex flex-col w-[875px] items-center justify-center ">
@@ -113,8 +124,9 @@ const Community = () => {
                     <td className="w-[700px] text-start text-xs ml-10">
                       <a href={`./community/${item.postId}`}>{item.title}</a>
                     </td>
-                    <td className="w-[50px] text-center text-xs">{item.viewCount}</td>
-                    <td className="w-[50px] text-center text-xs">{item.voteCount}</td>
+                    <td className="w-[50px] text-center text-xs">
+                      {Math.floor(item.viewCount / 2)}
+                    </td>
                   </tr>
                 ))}
             </table>
