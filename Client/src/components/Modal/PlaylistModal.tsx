@@ -52,12 +52,12 @@ const PlaylistModal = () => {
 
   return (
     <>
-      <div className="fixed w-full h-full flex justify-center items-center bottom-0 bg-[#182129f1] bg-opacity-80 ">
-        <div className="animate-fadeInBottomRight-fast">
-          <div className="w-[1100px] h-[850px] rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca] animate-scale-anim  ">
+      <div className="w-[600px] h-[670px] fixed bottom-0 flex justify-center bg-opacity-1 ">
+        <div className="w-[600px] h-[670px] mt-12 animate-fadeInBottomRight-fast fixed right-8 top-40">
+          <div className="h-[670px] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca] animate-scale-anim  ">
             {/* 플레이리스트 상단 */}
-            <div className="flex justify-around mt-2">
-              <button onClick={handleCloseModal} className="mr-20 mt-8 ">
+            <div className="flex justify-around">
+              <button onClick={handleCloseModal} className="mr-10 mt-8 ">
                 <img src={xbtn} className="w-[35px]" />
               </button>
               {/* 검색칸 */}
@@ -65,7 +65,7 @@ const PlaylistModal = () => {
                 <input
                   type="text"
                   placeholder="   플레이리스트 이름을 입력해주세요"
-                  className="w-[528px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
+                  className="w-[400px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
                 ></input>
               </div>
               <button className="mt-8"></button>
@@ -78,10 +78,10 @@ const PlaylistModal = () => {
               </button>
             </div>
             {/* 플리 앨범, 제목, 내용 */}
-            <ul className="w-full mt-6 flex">
-              <li className="w-full h-[230px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out">
-                <div className="ml-2 cursor-pointer">
-                  <img src={Album} />
+            <ul className="w-[550px] mt-6 flex">
+              <li className="w-[100px] h-[150px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out">
+                <div className="cursor-pointer">
+                  <img src={Album} className="h-[100px] w-[100px]" />
                   <h1 className="mt-4">플리 제목</h1>
                 </div>
               </li>
@@ -94,17 +94,17 @@ const PlaylistModal = () => {
               </button>
             </div>
             {/* 플리 앨범, 제목, 내용 */}
-            <ul className="w-full mt-6 flex">
+            <ul className="w-[550px] mt-2 flex justify-center">
               {playlistsInfo.map((el, index) => {
                 if (index <= 4) {
                   return (
                     <li
                       onClick={() => handleOpenListDetail(el.playlistId)}
-                      className="h-[230px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
+                      className="h-[150px] w-[150px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
                     >
-                      <div className="ml-2 cursor-pointer">
-                        <img src={Album} />
-                        <h1 className="mt-4">{el.title}</h1>
+                      <div className=" cursor-pointer w-[100px] h-[100px]">
+                        <img src={Album} className=" cursor-pointer w-[100px] h-[100px]" />
+                        <h1 className="mt-4 text-xs">{el.title}</h1>
                       </div>
                     </li>
                   );
@@ -112,6 +112,7 @@ const PlaylistModal = () => {
                 return <></>;
               })}
             </ul>
+            <div className="w-[150px] h-[30px] mb-4 mt-8"></div>
           </div>
         </div>
       </div>
