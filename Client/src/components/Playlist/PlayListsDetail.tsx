@@ -23,12 +23,11 @@ export type TitleProps = {
   setTitle: any;
 };
 
-export type SongInfo = {
-  songId: number;
+export type SongData = {
   title: string;
-  artistName: string;
-  albumName: string;
   imageUrl: string;
+  album: string;
+  artistName: string;
 };
 
 const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
@@ -41,7 +40,7 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
   const dispatch = useDispatch();
 
   const playlistId = useSelector((state: RootState) => state.playlists.selectedPlaylistId);
-  const selectedSongs: SongInfo = useSelector((state: RootState) => state.songlists.songInfo);
+  const addedSongs: SongData[] = useSelector((state: RootState) => state.playlists.detailInfo);
 
   const handleCloseSong = () => {
     dispatch(closeSongLists());
@@ -55,7 +54,6 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
       )
       .then((res) => {
         setDetailData(res.data.data);
-        console.log(res.data.data);
         setTitle(res.data.data.title);
         dispatch(playlistDetail(res.data.data.playlistSongs));
       })
@@ -66,69 +64,65 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
 
   return (
     <>
-      <div className="fixed w-full h-full flex justify-center items-center top-1 bg-[#182129f1] bg-opacity-80 ">
-        <div className="animate-fadeInBottomRight-fast">
-          <div className="w-[1100px] rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca] animate-scale-anim">
+      <div className="w-[600px] h-[670px] fixed bottom-0 flex justify-center bg-opacity-1 ">
+        <div className="w-[600px] h-[670px] mt-12 fixed right-8 top-40">
+          <div className="h-[670px] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca]  ">
             {/* 플레이리스트 상단 */}
             <div className="flex justify-around mt-4">
-              <button onClick={handleCloseSong} className="mr-20 mt-8 ">
+              <button onClick={handleCloseSong} className="mr-10 mt-8 ">
                 <img src={backbtn} className="w-[35px]" />
               </button>
               {/* 검색칸 */}
               <div className="flex mt-8">
-                <input
-                  type="text"
-                  placeholder="   플레이리스트 이름을 입력해주세요"
-                  className="w-[528px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
-                ></input>
-              </div>
-            </div>
-            {/* 앨범표지 */}
-            <div className="w-full flex justify-start mt-8 bg-[#444] opacity-80 ">
-              <img src={Album} className="w-[150px] h-[150px] ml-12" />
-              <div className="w-[500px] flex flex-col justify-around">
-                <p>Playlist</p>
                 {!isClicked ? (
-                  <h1 className="text-4xl font-['Anton-Regular']">{detailData?.title}</h1>
+                  <h1 className="text-xl font-['Anton-Regular']">{detailData?.title}</h1>
                 ) : (
                   <input
                     onChange={(e) => setTitle(e.target.value)}
                     value={title}
                     type="text"
-                    className="w-[500px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
+                    className="w-[200px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
                   />
                 )}
-                <p>플리 내용</p>
+              </div>
+            </div>
+            {/* 앨범표지 */}
+            <div className="w-full flex justify-start mt-8 bg-[#444] opacity-80 ">
+              <img src={Album} className="w-[150px] h-[150px] ml-12" />
+              <div className="w-full h-[150px] flex flex-col justify-around">
+                <p>Album : </p>
+                <p>Title : </p>
+                <p>Artist : </p>
                 <div className="flex items-center">
                   <img src={Logo} className="w-[100px] h-[30px]" />
                   <p className="ml-4">~ likes</p>
                   <p className="mx-4">~ songs</p>
-                  <p>about ~ hours ago</p>
                 </div>
               </div>
             </div>
             {/* 플리 앨범, 제목, 내용 */}
-            <div className="w-full grid grid-cols-5 text-center mt-4 font-['Anton-Regular']">
+            <div className="w-full grid grid-cols-5 text-center my-2 font-['Anton-Regular']">
               <h3>No.</h3>
+              <h3>Album Image</h3>
               <h3>Title</h3>
-              <h3>Album</h3>
-              <h3>Dated added</h3>
-              <h3>Time</h3>
+              <h3>Artist Name</h3>
+              <h3>Edit</h3>
             </div>
-            {/* 플리 노래목록 */}
-            <ul className="w-full h-[440px] mt-8 flex flex-col overflow-x-hidden z">
-              <li className="w-full grid grid-cols-5 items-center text-center border-t-2 border-solid border-gray-200 border-opacity-20 hover:bg-[#47464680]">
-                {/* No */}
-                <h3 className="">1</h3>
-                {/* Title */}
-                <div className="flex justify-center items-center text-center">
-                  <img src={Album} className="w-[50px] h-[50px]" />
-                  <div className="h-[50px] flex flex-col items-center my-4">
-                    <p className="text-sm">{selectedSongs.title}</p>
-                    <p className="mt-2 text-sm"></p>
+            {/* 플리 노래목록 맵핑 */}
+            <ul className="w-full h-[700px] flex flex-col overflow-x-hidden ">
+              {addedSongs.map((selectedSongs, index) => (
+                <li className="w-full h-[70px]  grid grid-cols-5 items-center text-center border-t-2 border-solid border-gray-200 border-opacity-20 hover:bg-[#47464680]">
+                  {/* No */}
+                  <h3 className="">{index + 1}</h3>
+                  <div className="flex justify-center items-center">
+                    <img src={selectedSongs.imageUrl} className="w-[50px] h-[50px]" />
                   </div>
-                </div>
-              </li>
+                  {/* Title */}
+                  <p className="text-sm">{selectedSongs.title}</p>
+                  {/* Artist Name */}
+                  <p className="text-sm">{selectedSongs.artistName}</p>
+                </li>
+              ))}
             </ul>
             <div className="flex justify-center mt-8">
               {isClicked ? (

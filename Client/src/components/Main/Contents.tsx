@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 import Music from '../../assets/images/music.jpg';
 import List from '../../assets/images/list.jpg';
 import Mubti from '../../assets/images/mubti.png';
-import Mainbg from '../../assets/images/main.jpeg';
 import Vector from '../../assets/images/vector.svg';
-import MainHead from './MainHead';
+import Header from '../Header';
 
 const Contents = () => {
   const [bton, setBton] = useState<boolean>(false);
@@ -19,13 +18,10 @@ const Contents = () => {
 
   return (
     <>
-      <MainHead />
-      <header
-        className="bg-cover bg-center h-screen "
-        style={{ backgroundImage: `url(${Mainbg})` }}
-      >
-        <div className="w-full h-full bg-black bg-opacity-70">
-          <div className="w-full text-white flex flex-col justify-center items-center ">
+      <div className=" bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] ">
+        <Header />
+        <header className="w-[1140] bg-center " style={{ backgroundRepeat: 'no-repeat' }}>
+          <div className="w-full  flex flex-col justify-center items-center ">
             <h2 className="text-6xl h-40 font-sigmar-one mt-20">Welcome to “MUSIC FORECAST” !!</h2>
             <span className="text-2xl font">
               날씨와 더불어 유저가 처한 상황 (운동, 기분)에 따라 음악 추천을 해주고, 유저들끼리
@@ -37,19 +33,19 @@ const Contents = () => {
             <button onClick={handleButton} className="flex flex-row ">
               <img
                 src={Vector}
-                className={`mr-6 ${imageFlipped ? 'transform scale-y-[-1]' : ''}`}
+                className={`mr-6 ${imageFlipped ? 'transform scale-y-[-1]' : ''} `}
               ></img>
-              <span className="text-white">{bton ? '컨텐츠 닫힘' : '컨텐츠 열림'}</span>
+              <span>{bton ? '컨텐츠 닫힘' : '컨텐츠 열림'}</span>
             </button>
           </div>
 
           {/* 컨텐츠 */}
           {!bton && (
             <div>
-              <div className="flex flex-row justify-between mx-60 mr-12 mt-12 ">
+              <div className="flex flex-row justify-between mx-60 mr-12 mt-12">
                 <div className="hover:opacity-90">
                   <img src={Music} alt="" />
-                  <div className="text-white mt-12 ">
+                  <div className=" mt-12">
                     <span className="text-2xl">노래 차트</span>
                     <p className="text-lg">
                       비, 눈, 맑음, 흐림에따라 날씨별 노래 추천이 다르게 나타납니다.
@@ -59,7 +55,7 @@ const Contents = () => {
                 <div className="hover:opacity-90">
                   <Link to="/mubti">
                     <img src={Mubti} alt="" />
-                    <div className="text-white mt-12">
+                    <div className=" mt-12">
                       <span className="text-2xl">MUBTI</span>
                       <p className="text-lg">
                         비, 눈, 맑음, 흐림에따라 날씨별 노래 추천이 다르게 나타납니다.
@@ -70,7 +66,7 @@ const Contents = () => {
                 <div className="hover:opacity-90">
                   <Link to="/weatherRecommend">
                     <img src={List} alt="" />
-                    <div className="text-white mt-12">
+                    <div className=" mt-12">
                       <span className="text-2xl">날씨에 따른 음악 추천</span>
                       <p className="text-lg">
                         자신의 플레이리스트, 애청곡 등을 자유롭게 공유해 봅시다 !!
@@ -81,8 +77,8 @@ const Contents = () => {
               </div>
             </div>
           )}
-        </div>
-      </header>
+        </header>
+      </div>
     </>
   );
 };

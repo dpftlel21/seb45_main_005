@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from 'src/redux/store';
 import axios from 'axios';
+import { RootState } from '../redux/store';
 import Header from '../components/Header';
 import usericon from '../assets/images/user.png';
 import musicicon from '../assets/images/Rectangle(1).png';
@@ -85,7 +85,7 @@ const CommunityDetail = () => {
 
   return (
     <>
-      <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] h-[1024px]">
+      <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] h-screen">
         <Header />
         {posts.map((item) => (
           <div className="flex flex-col items-center" key={item.postId}>

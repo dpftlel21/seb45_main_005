@@ -1,8 +1,6 @@
 import React from 'react';
 import Time from '../../assets/images/time.svg';
 import album from '../../assets/images/chart.png';
-import Mainbg from '../../assets/images/main.jpeg';
-import MainHead from './MainHead';
 // import axios from 'axios';
 
 const Chart = () => {
@@ -10,16 +8,15 @@ const Chart = () => {
 
   return (
     <>
-      <MainHead />
       <header
-        className="bg-cover bg-center h-screen "
-        style={{ backgroundImage: `url(${Mainbg})` }}
+        className="bg-cover bg-center h-screen  bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed]"
+        style={{}}
       >
-        <div className="w-full h-full bg-black bg-opacity-70">
+        <div className="w-full h-full  bg-opacity-70">
           <div className="flex flex-col justify-center items-center ">
-            <div className="text-white font-sigmar-one text-8xl mt-20 ">HOT Chart 100</div>
+            <div className=" font-sigmar-one text-8xl mt-20 ">슬라이드로 변경 예정</div>
             <div className="hover:bg-gray-custom-2">
-              <div className="w-[1200px] h-10 text-white bg-slate-950 flex flex-row items-center p-6  mt-12">
+              <div className="w-[1200px] h-10  bg-slate-950 flex flex-row items-center p-6  mt-12">
                 <div className=" w-10">#</div>
                 <div className=" w-1/2 text-center">title</div>
                 <div className="w-80">Album</div>
@@ -28,7 +25,7 @@ const Chart = () => {
                   <img src={Time} className="w-6 h-6"></img>
                 </div>
               </div>
-              <table className="text-white w-full bg-black bg-opacity-30 ">
+              <table className=" w-full bg-black bg-opacity-30 ">
                 <tbody>
                   <tr className="flex items-center">
                     <td className="w-14 ml-6">1</td>

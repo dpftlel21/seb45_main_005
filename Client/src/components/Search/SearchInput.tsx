@@ -34,7 +34,7 @@ const SearchInput = () => {
   return (
     <div className="flex justify-around my-4">
       {/* 검색칸 */}
-      <div className="w-[528px] h-[50px] flex items-center bg-[#faf7f7e8] rounded-3xl  mt-8">
+      <div className="w-[528px] h-[50px] flex items-center bg-[#faf7f7e8] rounded-3xl  ">
         <input
           type="text"
           placeholder="노래 제목을 입력, 영어로 검색시 정확도가 높아요!"
