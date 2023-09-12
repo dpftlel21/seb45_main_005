@@ -14,7 +14,7 @@ const Write = () => {
   const [song, setSong] = useState('');
   const navigate = useNavigate();
   const accessToken = useSelector((state: RootState) => state.login.accessToken);
-  const memberId = useSelector((state: RootState) => state.login.memberId);
+  const memberId = useSelector((state: RootState) => state.login.memberid);
   // const refreshToken = useSelector((state: RootState) => state.login.refreshToken);
   // const dispatch = useDispatch();
   console.log(accessToken);
