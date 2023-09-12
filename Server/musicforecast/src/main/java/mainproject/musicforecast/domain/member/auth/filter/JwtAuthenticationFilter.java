@@ -48,6 +48,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) throws ServletException, IOException {
         Member member = (Member) authResult.getPrincipal();
         String memberId = Long.toString(member.getMemberId());
+        String nickname = member.getNickname();
 
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
@@ -55,6 +56,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
         response.addHeader("memberId", memberId);
+        response.addHeader("nickname", nickname);
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
