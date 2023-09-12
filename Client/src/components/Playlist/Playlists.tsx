@@ -62,13 +62,13 @@ const Playlists = ({ el, setReRendering }: PlaylistProps) => {
   return (
     <>
       <li
-        className="w-[200px] h-[230px] relative flex flex-col justify-center items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out "
+        className="w-[100px] h-[150px] relative flex flex-col justify-center items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out "
         onMouseEnter={() => setIsHovered(true)} // 호버 상태에 들어갈 때
         onMouseLeave={() => setIsHovered(false)} // 호버 상태에서 나올 때
       >
         <button
           onClick={handleListDelete}
-          className={`w-[25px] h-[25px] flex justify-center text-center items-center relative top-12 -right-16 bg-[#fa1f1f81] text-white text-lg rounded-full ${
+          className={`w-[25px] h-[25px] flex justify-center text-center items-center relative top-9 -right-7 bg-[#fa1f1f81] text-white text-lg rounded-full ${
             isHovered ? 'opacity-100' : 'opacity-0' // 상태에 따라 opacity 변경
           }`}
           style={{ transition: 'opacity 0.3s' }}
@@ -76,9 +76,9 @@ const Playlists = ({ el, setReRendering }: PlaylistProps) => {
           X
         </button>
         {/* 플리 리스트들 */}
-        <div onClick={handleOpenDetail} className="ml-2">
-          <img src={Album} />
-          <h1 className="mt-4 text-sm">{el.title}</h1>
+        <div onClick={handleOpenDetail} className="h-[100px]">
+          <img src={Album} className="w-[100px] h-[100px]" />
+          <h1 className="mt-4 text-xs">{el.title}</h1>
         </div>
       </li>
     </>

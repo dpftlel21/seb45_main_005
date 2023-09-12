@@ -24,6 +24,7 @@ const Weather = () => {
         .then(({ data }) => {
           const { temperature, weatherDescription } = data;
           setWeather({ temperature, weatherDescription });
+          console.log(data);
         })
         .catch((err) => {
           console.log(err);

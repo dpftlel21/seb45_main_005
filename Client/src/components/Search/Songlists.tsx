@@ -23,7 +23,7 @@ const SongLists = () => {
   return (
     <>
       {/* 플리 앨범, 제목, 내용 */}
-      <div className="w-full h-[80px] grid grid-cols-10 text-center items-center mt-8 font-['Anton-Regular'] border-y-2 border-solid border-gray-400">
+      <div className="w-full h-[80px] grid grid-cols-10 text-center items-center font-['Anton-Regular'] border-y-2 border-solid border-gray-400">
         <h3 className="col-span-1">#</h3>
         <h3 className="col-span-1">No.</h3>
         <h3 className="col-span-2">Artist</h3>
@@ -33,10 +33,10 @@ const SongLists = () => {
       </div>
 
       {/* 플리 노래목록 */}
-      <ul className="w-full h-[500px] flex flex-col overflow-y-scroll">
+      <ul className="w-full h-[350px] flex flex-col overflow-y-scroll">
         {SongData.map((el, index) => (
           <li
-            className={`w-full h-[100px] grid grid-cols-10 items-center text-center border-b-2 border-solid border-gray-400 border-opacity-20 ${
+            className={`w-full h-[70px] grid grid-cols-10 items-center text-center border-b-2 border-solid border-gray-400 border-opacity-20 ${
               selectedItems.includes(el) ? 'bg-blue-200' : ''
             }`}
             key={index}
