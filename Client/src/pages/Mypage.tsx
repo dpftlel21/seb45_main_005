@@ -1,5 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/redux/store';
 import axios from 'axios';
+
 import MyPlayList from '../components/MyPlayList';
 import Profile from '../components/Profile';
 import MyCommunity from '../components/MyCommunity';
@@ -9,11 +12,14 @@ import PlaylistIcon from '../components/Playlist/PlaylistIcon';
 const Mypage = () => {
   const [selectedButton, setSelectedButton] = useState<number>(0);
   const [selectedComponent, setSelectedComponent] = useState<number>(0);
-  const [memberId, setMemberId] = useState('');
-  setMemberId('d');
+  const accessToken = useSelector((state: RootState) => state.login.accessToken);
+  const memberid = useSelector((state: RootState) => state.login.memberid);
+  console.log(memberid);
+  console.log(accessToken);
 
   const headers = {
     'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+    'Authorization': accessToken,
   };
 
   const handleButtonClick = (buttonIndex: number) => {
@@ -30,7 +36,7 @@ const Mypage = () => {
   useEffect(() => {
     axios
       .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/profile/${memberId}`,
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/profile/${memberid}`,
         { headers }
       )
       .then((res) => {
