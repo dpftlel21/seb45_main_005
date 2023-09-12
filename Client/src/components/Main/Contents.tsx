@@ -33,7 +33,7 @@ const Contents = () => {
             </span>
           </div>
 
-          <div className="flex flex-row justify-start  mx-60 mt-6 hover:opacity-90">
+          <div className="flex flex-row justify-start  mx-60 mt-6 hover:opacity-50">
             <button onClick={handleButton} className="flex flex-row ">
               <img
                 src={Vector}
@@ -46,17 +46,17 @@ const Contents = () => {
           {/* 컨텐츠 */}
           {!bton && (
             <div>
-              <div className="flex flex-row justify-between mx-60 mr-12 mt-12">
-                <div>
+              <div className="flex flex-row justify-between mx-60 mr-12 mt-12 ">
+                <div className="hover:opacity-90">
                   <img src={Music} alt="" />
-                  <div className="text-white mt-12">
+                  <div className="text-white mt-12 ">
                     <span className="text-2xl">노래 차트</span>
                     <p className="text-lg">
                       비, 눈, 맑음, 흐림에따라 날씨별 노래 추천이 다르게 나타납니다.
                     </p>
                   </div>
                 </div>
-                <div>
+                <div className="hover:opacity-90">
                   <Link to="/mubti">
                     <img src={Mubti} alt="" />
                     <div className="text-white mt-12">
@@ -67,7 +67,7 @@ const Contents = () => {
                     </div>
                   </Link>
                 </div>
-                <div>
+                <div className="hover:opacity-90">
                   <Link to="/weatherRecommend">
                     <img src={List} alt="" />
                     <div className="text-white mt-12">

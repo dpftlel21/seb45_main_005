@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/slice/LoginSlice';
 import Logo from '../../assets/images/logo.png';
@@ -26,7 +26,9 @@ const MainHead = () => {
     <>
       <div className="w-[1440] flex flex-row  ml-[250px] mt-2  fixed">
         <div>
-          <img src={Logo} alt="" />
+          <Link to="/">
+            <img src={Logo} alt="" />
+          </Link>
         </div>
         <div className="text-black flex flex-row ml-[800px] items-center justify-end text-xl">
           {loginState ? (

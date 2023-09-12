@@ -6,12 +6,12 @@ import jeon from '../../assets/images/jeon.png';
 import na from '../../assets/images/na.png';
 import im from '../../assets/images/im.png';
 import Mainbg from '../../assets/images/main.jpeg';
-import MainHead from './MainHead';
+// import MainHead from './MainHead';
 
 const Footer = () => {
   return (
     <>
-      <MainHead />
+      {/* <MainHead /> */}
       <header
         className="bg-cover bg-center h-screen "
         style={{ backgroundImage: `url(${Mainbg})` }}

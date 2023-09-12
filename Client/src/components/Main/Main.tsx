@@ -15,7 +15,8 @@ const Main = () => {
         keyboard={true}
         direction="vertical"
         slidesPerView={1}
-        mousewheel={true}
+        speed={2500}
+        mousewheel={{ sensitivity: 0.9, thresholdDelta: 150 }}
         navigation
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true, verticalClass: 'swiper-scrollbar-vertical' }}
