@@ -5,6 +5,7 @@ const ModalSlice = createSlice({
   initialState: {
     isOpen: false,
     isDetailOpen: false,
+    isMyShowAll: false,
     isToastOpen: false,
     isAlbumDetailOpen: false,
     isSongOpen: false,
@@ -22,6 +23,12 @@ const ModalSlice = createSlice({
     },
     closeDetailModal: (state) => {
       state.isDetailOpen = false;
+    },
+    openMyShowAll: (state) => {
+      state.isMyShowAll = true;
+    },
+    closeShowAll: (state) => {
+      state.isMyShowAll = false;
     },
     openToastModal: (state) => {
       state.isToastOpen = true;
@@ -57,6 +64,8 @@ export const {
   closeModal,
   openDetailModal,
   closeDetailModal,
+  openMyShowAll,
+  closeShowAll,
   openToastModal,
   closeToastModal,
   openAlbumDetailModal,

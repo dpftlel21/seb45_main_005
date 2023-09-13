@@ -14,7 +14,7 @@ const PlaylistUpdateBtn = ({ title }: updateProps) => {
     axios
       .patch(
         `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/${playlistId}`,
-        { title, public: true, tag: ['신나는', '발라드'] },
+        { title, public: true, tag: [] },
         {
           headers: {
             'Authorization': token,
