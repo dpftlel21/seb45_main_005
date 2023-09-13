@@ -45,8 +45,8 @@ const Write = () => {
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    event.preventDefault();
     if (event.key === 'Enter') {
+      event.preventDefault();
       handleSearch();
     }
   };
