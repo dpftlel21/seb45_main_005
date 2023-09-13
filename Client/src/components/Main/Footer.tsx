@@ -15,7 +15,7 @@ const Footer = () => {
       >
         <div className="w-full h-full ">
           <div className="flex flex-col justify-center items-center ">
-            <div className=" font-sigmar-one text-7xl mt-24">Thank You For Coming!! </div>
+            <div className=" font-['Anton-Regular'] text-7xl mt-24">Thank You For Coming!! </div>
           </div>
 
           <div className="ml-[300px] w-[1200px] h-[200px] flex flex-row  justify-center items-center my-12">

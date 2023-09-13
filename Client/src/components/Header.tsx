@@ -50,32 +50,33 @@ const Header = () => {
           <h2 className={buttonClasses('/search')}>Search Songs</h2>
         </Link>
       </div>
-      <div className="w-[400px] flex justify-around items-center">
+      <div className="w-[250px] flex justify-around items-center text-lg ">
         {loginState ? (
           <>
             <Link to="/mypage">
-              <div className="flex w-[200px] items-center">
-                <img src={userImg} alt="유저이미지" className="mr-4 w-[32px] h-[32px]" />
-                <span>UserInfo 님 반갑습니다.</span>
+              <div className="flex items-center">
+                <img
+                  src={userImg}
+                  alt="유저이미지"
+                  className="mr-4 w-[32px] h-[32px] hover:text-sky-400"
+                />
+                <span className=" hover:text-sky-400">UserInfo</span>
               </div>
             </Link>
-            <button
-              onClick={logoutHandler}
-              className="bg-[#C487F4] ml-20 rounded-xl w-32 h-10 hover:bg-opacity-90 hover:bg-opacity-50"
-            >
+            <button onClick={logoutHandler} className=" rounded-xl w-32 h-10 hover:text-sky-400">
               Logout
             </button>
           </>
         ) : (
           <>
             <button
-              className=" ml-52 rounded-xl w-32 h-10 hover:bg-opacity-50 hover:text-sky-400"
+              className=" ml-12 rounded-xl w-24 h-10 hover:bg-opacity-50 hover:text-sky-400"
               onClick={loginHandler}
             >
               log in
             </button>
             <button
-              className=" mr-10  w-20 h-10  rounded-xl hover:opacity-50 hover:text-sky-400"
+              className="   w-24 h-10  rounded-xl hover:opacity-50 hover:text-sky-400"
               onClick={signupHandler}
             >
               sign up
