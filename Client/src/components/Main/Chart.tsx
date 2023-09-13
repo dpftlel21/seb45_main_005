@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRef } from 'react';
 import { useScroll, motion } from 'framer-motion';
-import List from '../../assets/images/list.jpg';
+import { Link } from 'react-router-dom';
+// import List from '../../assets/images/list.jpg';
 
 const Chart = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -14,7 +15,7 @@ const Chart = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (scrollYProgress.get() > 0.9) {
+      if (scrollYProgress.get() > 0.1) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -44,19 +45,30 @@ const Chart = () => {
 
   return (
     <>
-      <header className="bg-cover bg-center h-screen  bg-white " style={{}}>
+      <header className="bg-cover bg-center h-screen bg-[#71b8f6]-500" style={{}}>
         <div className="w-full h-full  bg-opacity-70">
-          <div className="flex flex-col justify-center items-center ">
+          <div className="flex flex-col justify-center items-center font-spoqa-han-san-neo font-medium ">
             <motion.div ref={ref} {...textMotion}>
-              <div className=" font-sigmar-one text-5xl mt-20 ">
+              <div className="   text-5xl mt-20 ">
                 <p>당신이 어디에 있든</p>
                 <p>당신의 기분에 따라</p>
-                <span>날시에 따라</span>
-                <p>자기의 노래를 추천하는</p>
+                <span>날씨에 따라</span>
+                <p>
+                  <p className="text-[#86abe0]">자기의</p> 노래를 추천하는
+                </p>
               </div>
             </motion.div>
             <motion.div {...imageMotion}>
-              <img src={List} alt="" className="w-[300px] h-[300px] mt-24" />
+              <img
+                src="https://i.pinimg.com/originals/84/b9/78/84b978023e61d0787c1b7f9af335ae23.gif"
+                alt=""
+                className="w-[350px] h-[300px] my-24 "
+              />
+              <Link to="/weatherRecommend">
+                <div className="w-[200px] h-12 bg-[#D5E5F0] font-spoqa-han-san-neo text-2xl ml-16 rounded-lg  flex items-center justify-center hover:opacity-90">
+                  노래 찾으러 가기
+                </div>
+              </Link>
             </motion.div>
           </div>
         </div>
