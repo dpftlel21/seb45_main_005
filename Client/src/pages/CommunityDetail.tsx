@@ -152,7 +152,7 @@ const CommunityDetail = () => {
                   <button className="text-xl ml-2" onClick={handleLikeClick}>
                     {isLiked ? '❤️' : '🤍'}
                   </button>
-                  <span className="ml-2">{Math.floor(posts.viewCount / 2)}</span>
+                  <span className="ml-2">{posts.viewCount}</span>
                   <span className="ml-2">views</span>
                 </div>
               </div>
