@@ -78,7 +78,7 @@ public class MemberController {
 
         List<Post> response = memberService.findMemberPost(user);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(mapper.memberToMemberPostResponseDto(user, response), HttpStatus.OK);
     }
     //회원 탈퇴 기능
     @DeleteMapping("/delete/{memberId}")

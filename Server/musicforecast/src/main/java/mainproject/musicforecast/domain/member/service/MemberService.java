@@ -94,11 +94,6 @@ public class MemberService {
 
         return findMember;
     }
-//    playlist에 있음
-//    public Member findMemberPlaylist(long memberId) {
-//        Member member = new Member();
-//        return member;
-//    }
 
     public List<Post> findMemberPost(Member user) {
         return postRepository.findAllByMember(user);
