@@ -6,7 +6,7 @@ const LoginSlice = createSlice({
     accessToken: '',
     refreshToken: '',
     loginState: false,
-    memberid: '',
+    memberid: null,
   },
   reducers: {
     setAccessToken: (state, action) => {
