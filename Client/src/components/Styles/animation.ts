@@ -7,6 +7,7 @@ export const pageEffect = {
       type: 'spring', // spring 효과 사용
       damping: 10, // 감쇠 설정
       stiffness: 100, // 강성 설정
+      duration: 0.5, // 0.5초 동안 애니메이션 진행
     },
   },
   out: {
@@ -16,6 +17,7 @@ export const pageEffect = {
       type: 'spring', // spring 효과 사용
       damping: 100, // 감쇠 설정
       stiffness: 100, // 강성 설정
+      duration: 0.5, // 0.5초 동안 애니메이션 진행
     },
   },
 };
