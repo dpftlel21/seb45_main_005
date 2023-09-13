@@ -1,45 +1,34 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Music from '../../assets/images/music.jpg';
-import List from '../../assets/images/list.jpg';
-import Mubti from '../../assets/images/mubti.png';
-import Vector from '../../assets/images/vector.svg';
+import React from 'react';
+// import { Link } from 'react-router-dom';
+
+// import Music from '../../assets/images/music.jpg';
+// import List from '../../assets/images/list.jpg';
+// import Mubti from '../../assets/images/mubti.png';
+// import Vector from '../../assets/images/vector.svg';
 import Header from '../Header';
 
 const Contents = () => {
-  const [bton, setBton] = useState<boolean>(false);
-  const [imageFlipped, setImageFlipped] = useState<boolean>(false);
-
-  const handleButton = (): void => {
-    setBton(!bton);
-    setImageFlipped(!imageFlipped);
-    console.log(bton);
-  };
-
   return (
     <>
-      <div className=" bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] ">
+      <div className=" bg-gradient-to-b h-screen from-[#d8e6ef] to-[#87c4ed]  ">
         <Header />
-        <header className="w-[1140] bg-center " style={{ backgroundRepeat: 'no-repeat' }}>
-          <div className="w-full  flex flex-col justify-center items-center ">
-            <h2 className="text-6xl h-40 font-sigmar-one mt-20">Welcome to “MUSIC FORECAST” !!</h2>
-            <span className="text-2xl font">
-              날씨와 더불어 유저가 처한 상황 (운동, 기분)에 따라 음악 추천을 해주고, 유저들끼리
-              자신의 플레이리스트, 애청곡을 공유하는 웹 사이트 입니다.
-            </span>
+        <header className="w-[1140] bg-center flex ">
+          <div className="w-[1140]  flex flex-col justify-center ml-20 ">
+            <h2 className="text-6xl h-40 font-['Anton-Regular'] mt-40">MUSIC FORECAST</h2>
+            <div className="flex flex-col text-2xl font-medium font-spoqa-han-san-neo">
+              <span>날씨와 더불어 유저가 처한 상황 (운동, 기분)에 따라 음악 추천을 해주고,</span>
+              <span>유저들끼리 자신의 플레이리스트, 애청곡을 공유하는 웹 사이트 입니다.</span>
+            </div>
+          </div>
+          <div>
+            <img
+              src="https://cdn.discordapp.com/attachments/1123861236124229664/1151401600435372032/Weather_Forecast_Mobile_App_Concept-removebg-preview.png"
+              alt=""
+              className="w-[750px] h-[600px] mt-20 ml-52 transform transition-transform hover:scale-x-[-1] hover:transition-delay-2000 "
+            />
           </div>
 
-          <div className="flex flex-row justify-start  mx-60 mt-6 hover:opacity-50">
-            <button onClick={handleButton} className="flex flex-row ">
-              <img
-                src={Vector}
-                className={`mr-6 ${imageFlipped ? 'transform scale-y-[-1]' : ''} `}
-              ></img>
-              <span>{bton ? '컨텐츠 닫힘' : '컨텐츠 열림'}</span>
-            </button>
-          </div>
-
-          {/* 컨텐츠 */}
+          {/* 컨텐츠
           {!bton && (
             <div>
               <div className="flex flex-row justify-between mx-60 mr-12 mt-12">
@@ -76,7 +65,7 @@ const Contents = () => {
                 </div>
               </div>
             </div>
-          )}
+          )} */}
         </header>
       </div>
     </>

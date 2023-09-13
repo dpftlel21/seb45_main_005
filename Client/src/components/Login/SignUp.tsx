@@ -59,6 +59,9 @@ const SignUp = () => {
         <div className=" flex flex-col justify-center items-center ">
           <img src={Logo} alt="" className="my-14" />
           <div className="flex flex-col border-2 border-solid border-none shadow-2xl rounded-2xl">
+            <div className="text-center font-spoqa-han-san-neo ">
+              Music Forecast에 오신걸 환영합니다!
+            </div>
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col w-[550px] h-[700px] ml-48 mt-6"

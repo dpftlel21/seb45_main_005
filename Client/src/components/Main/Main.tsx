@@ -1,14 +1,17 @@
 import React from 'react';
+
 // import { Navigation, Pagination, Scrollbar, Mousewheel, Keyboard } from 'swiper';
 // import { Swiper, SwiperSlide } from 'swiper/react';
+
 import Chart from './Chart';
 import Contents from './Contents';
 import Footer from './Footer';
+import Wrapper from '../Wrapper/Wrapper';
 
 const Main = () => {
   // const slides = [<Contents />, <Chart />, <Footer />];
   return (
-    <div className="#D5E5F0 ">
+    <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] ">
       {/* <Swiper
         modules={[Navigation, Pagination, Scrollbar, Mousewheel, Keyboard]}
         style={{ height: '100vh' }}
@@ -25,7 +28,10 @@ const Main = () => {
           <SwiperSlide key={index}>{slide}</SwiperSlide>
         ))}
       </Swiper> */}
-      <Contents />, <Chart />, <Footer />
+      <Wrapper>
+        <Contents />
+      </Wrapper>
+      <Chart />, <Footer />
     </div>
   );
 };
