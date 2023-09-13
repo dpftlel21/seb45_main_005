@@ -129,9 +129,7 @@ const Community = () => {
                       <td className="w-[700px] text-start text-xs ml-10">
                         <a href={`./community/${item.postId}`}>{item.title}</a>
                       </td>
-                      <td className="w-[50px] text-center text-xs">
-                        {Math.floor(item.viewCount / 2)}
-                      </td>
+                      <td className="w-[50px] text-center text-xs">{item.viewCount}</td>
                     </tr>
                   ))}
               </table>

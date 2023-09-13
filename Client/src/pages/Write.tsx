@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../redux/store';
+import { selectedSonglist } from '../redux/slice/SonglistsSlice';
 import Header from '../components/Header';
 import PlaylistIcon from '../components/Playlist/PlaylistIcon';
 
@@ -11,7 +12,8 @@ import plicon from '../assets/images/plicon.png';
 const Write = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [song, setSong] = useState('');
+  const [SongData, setSongData] = useState([]);
+  // const [song, setSong] = useState('');
   const navigate = useNavigate();
   const accessToken = useSelector((state: RootState) => state.login.accessToken);
   const memberId = useSelector((state: RootState) => state.login.memberid);
@@ -19,6 +21,49 @@ const Write = () => {
   // const dispatch = useDispatch();
   console.log(accessToken);
   console.log(memberId);
+
+  const headers = {
+    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+  };
+  const [keyword, setKeyword] = useState('');
+  const dispatch = useDispatch();
+
+  const handleSearch = () => {
+    axios
+      .get(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/song/search?keyword=${keyword}&song=10`,
+        { headers }
+      )
+      .then((res) => {
+        // dispatch(songlistInfo(res.data));
+        setSongData(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  const [selectedItems, setSelectedItems] = useState([]); // 선택된 항목을 저장할 상태
+
+  // const SongData = useSelector((state: RootState) => state.songlists.value);
+
+  const handleSongClick = (el: object) => {
+    const isSelected = selectedItems.includes(el);
+    if (isSelected) {
+      setSelectedItems(selectedItems.filter((item) => item !== el));
+    } else {
+      setSelectedItems([...selectedItems, el]);
+      dispatch(selectedSonglist(el));
+    }
+  };
 
   const handleCancel = () => {
     navigate('../community');
@@ -89,18 +134,47 @@ const Write = () => {
                 placeholder="내용을 입력하세요."
               />
             </div>
-            <div className="flex flex-col w-[250px] items-center">
+            <div className="flex flex-col w-[300px] items-center">
               <img src={plicon} alt="플레이리스트아이콘" className="mt-2" />
             </div>
 
-            <div className="flex flex-col w-[250px] h-[462px] items-center shadow-lg rounded-md bg-white">
-              <input
-                type="text"
-                value={song}
-                onChange={(e) => setSong(e.target.value)}
-                className="mt-2 w-[200px] h-[50px] bg-white shadow-lg rounded-xl text-gray-700 border-2 border-solid-black text-center"
-                placeholder="노래제목 검색"
-              />
+            <div className="flex flex-col w-[300px] h-[462px] items-center shadow-lg rounded-md bg-white">
+              <div className="mt-2 w-[250px] h-[50px] bg-white shadow-lg rounded-xl text-gray-700 border-2 border-solid-black text-center flex justify-between items-center">
+                <input
+                  type="text"
+                  value={keyword}
+                  onChange={(e) => setKeyword(e.target.value)}
+                  className=""
+                  placeholder="노래제목 검색"
+                  onKeyPress={handleKeyPress}
+                />
+                <button onClick={handleSearch}>검색</button>
+              </div>
+              <ul className="w-[290px] h-[350px] overflow-y-scroll scroll-none">
+                {SongData.map((el, index) => (
+                  <li
+                    className="flex justify-between items-center"
+                    key={index}
+                    onClick={() => handleSongClick(el)} // li 요소 클릭 시 토글 함수 호출
+                  >
+                    <input
+                      type="checkbox"
+                      className="w-[10px]"
+                      onClick={() => handleSongClick(el)}
+                      checked={selectedItems.includes(el)}
+                    />
+                    <h3 className="text-xs w-[10px]">{index + 1}</h3>
+
+                    <div className="h-[50px] w-[50px] flex items-center ">
+                      <img src={el.imageUrl} className="w-[30px] h-[30px] " />
+                    </div>
+                    <div className="w-[220px]">
+                      <p className="text-xs">{el.artistName}</p>
+                      <h3 className="text-xs">{el.title}</h3>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </form>

@@ -69,7 +69,7 @@ const LoginOn = () => {
       dispatch(setMemberID(response.headers.Memberid));
       dispatch(setLoginState(true));
       console.log(response.headers.memberid);
-      // window.location.href = '/';
+      window.location.href = '/';
     } catch (error) {
       console.error('로그인 실패:', error);
     }
