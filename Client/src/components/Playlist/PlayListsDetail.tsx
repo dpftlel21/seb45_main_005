@@ -6,7 +6,7 @@ import { playlistDetail } from '../../redux/slice/PlaylistsSlice';
 import { RootState } from '../../redux/store';
 import backbtn from '../../assets/images/backbtn.png';
 import Album from '../../assets/images/Album.png';
-import Logo from '../../assets/images/logo.png';
+// import Logo from '../../assets/images/logo.png';
 import PlaylistUpdateBtn from './Button/PlaylistUpdateBtn';
 
 export type PlaylistData = {
@@ -15,7 +15,7 @@ export type PlaylistData = {
   playlistId: number;
   memberId: number;
   playlistSongs: [];
-  playlistTagId: number;
+  playlistTags: [];
 };
 
 export type TitleProps = {
@@ -54,6 +54,7 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
       )
       .then((res) => {
         setDetailData(res.data.data);
+        console.log(res.data.data);
         setTitle(res.data.data.title);
         dispatch(playlistDetail(res.data.data.playlistSongs));
       })
@@ -94,9 +95,10 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
                 <p>Title : </p>
                 <p>Artist : </p>
                 <div className="flex items-center">
-                  <img src={Logo} className="w-[100px] h-[30px]" />
-                  <p className="ml-4">~ likes</p>
-                  <p className="mx-4">~ songs</p>
+                  {/* {detailData.playlistTags.map((el) => (
+                    <img src={Logo} className="w-[100px] h-[30px]" />
+                  <p className="ml-4">{el.playlistTagId}</p>
+                  ))} */}
                 </div>
               </div>
             </div>

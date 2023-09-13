@@ -32,7 +32,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full h-[75px] flex justify-between items-center text-center font-['Anton-Regular'] border-b-2 border-gray-500 shadow-md ">
+    <header className="w-full h-[75px] flex justify-between items-center text-center font-['Anton-Regular']  shadow-md ">
       <div className="w-[750px] flex  items-center justify-around text-xl">
         <Link to="/">
           <img src={Logo} alt="Header Image" />

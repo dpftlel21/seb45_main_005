@@ -50,8 +50,7 @@ module.exports = {
       'scale-anim': 'scale-anim 2s ease-in-out',
       'fadeIn': 'fadeIn 1s linear',
       'slideOutUp-fast': 'slideOutUp 1s',
-      'fadeInBottomRight-fast':
-        'fadeInBottomRight 2s cubic-bezier(0.42, 0, 0.02, 0.96)',
+      'fadeInBottomRight-fast': 'fadeInBottomRight 2s cubic-bezier(0.42, 0, 0.02, 0.96)',
       'bounceIn': 'bounceIn 1s linear',
       'pulse': 'pulse 1s ease-in-out infinite',
     },

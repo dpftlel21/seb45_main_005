@@ -1,13 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { closeModal, openDetailModal, openSongLists } from '../../redux/slice/ModalSlice';
-import { setSelectedPlaylistId, playlistInfo } from '../../redux/slice/PlaylistsSlice';
+import {
+  closeModal,
+  openDetailModal,
+  openMyShowAll,
+  openSongLists,
+} from '../../redux/slice/ModalSlice';
+import { setSelectedPlaylistId, playlistInfo, myPlaylist } from '../../redux/slice/PlaylistsSlice';
 import { RootState } from '../../redux/store';
 import xbtn from '../../assets/images/xbtn.svg';
 import Album from '../../assets/images/Album.png';
 import PlaylistsShowAll from '../Playlist/PlaylistsShowAll';
 import PlaylistsDetail from '../Playlist/PlayListsDetail';
+import MyPlaylistsShowAll from '../Playlist/MyPlaylistsShowAll';
 
 export type PlaylistInfo = {
   title: string;
@@ -18,14 +24,23 @@ const PlaylistModal = () => {
   const headers = {
     'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
   };
+  const token = useSelector((state: RootState) => state.login.accessToken);
   const dispatch = useDispatch();
   const [title, setTitle] = useState<string>('');
   const isDetailOpen = useSelector((state: RootState) => state.modal.isSongOpen);
   const isShowAll = useSelector((state: RootState) => state.modal.isDetailOpen);
+  const isMyShowAll = useSelector((state: RootState) => state.modal.isMyShowAll);
   const playlistsInfo: PlaylistInfo[] = useSelector((state: RootState) => state.playlists.value);
+  const myPlaylistsInfo: PlaylistInfo[] = useSelector(
+    (state: RootState) => state.playlists.myPlaylist
+  );
 
   const handleOpenDetail = () => {
     dispatch(openDetailModal());
+  };
+
+  const handleMyShowAll = () => {
+    dispatch(openMyShowAll());
   };
 
   const handleCloseModal = () => {
@@ -36,7 +51,7 @@ const PlaylistModal = () => {
     dispatch(openSongLists());
     dispatch(setSelectedPlaylistId(playlistId));
   };
-
+  // 플레이리스트 받아오기
   useEffect(() => {
     axios
       .get('http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist', {
@@ -44,6 +59,28 @@ const PlaylistModal = () => {
       })
       .then((res) => {
         dispatch(playlistInfo(res.data.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // 마이 플리 받아오기
+  useEffect(() => {
+    axios
+      .get(
+        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/my?page=1&size=10',
+        {
+          headers: {
+            'Authorization': token,
+            'Access-Control-Allow-Origin':
+              'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+          },
+        }
+      )
+      .then((res) => {
+        dispatch(myPlaylist(res.data.data));
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -72,23 +109,33 @@ const PlaylistModal = () => {
             </div>
             {/* 플레이리스트 */}
             <div className="w-full h-[50px] flex justify-between items-center mt-8 font-['Anton-Regular']">
-              <h1 className="ml-8">Recommend</h1>
-              <button onClick={handleOpenDetail} className="mr-12">
+              <h1 className="ml-8">My Playlists</h1>
+              <button onClick={handleMyShowAll} className="mr-12">
                 더보기
               </button>
             </div>
             {/* 플리 앨범, 제목, 내용 */}
             <ul className="w-[550px] mt-6 flex">
-              <li className="w-[100px] h-[150px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out">
-                <div className="cursor-pointer">
-                  <img src={Album} className="h-[100px] w-[100px]" />
-                  <h1 className="mt-4">플리 제목</h1>
-                </div>
-              </li>
+              {myPlaylistsInfo.map((myEl, index) => {
+                if (index <= 4) {
+                  return (
+                    <li
+                      onClick={() => handleOpenListDetail(myEl.playlistId)}
+                      className="h-[150px] w-[150px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
+                    >
+                      <div className=" cursor-pointer w-[100px] h-[100px]">
+                        <img src={Album} className=" cursor-pointer w-[100px] h-[100px]" />
+                        <h1 className="mt-4 text-xs">{myEl.title}</h1>
+                      </div>
+                    </li>
+                  );
+                }
+                return <></>;
+              })}
             </ul>
             {/* 마이 플레이리스트 */}
             <div className="w-full h-[50px] flex justify-between items-center mt-12 font-['Anton-Regular']">
-              <h1 className="ml-8">My Playlists</h1>
+              <h1 className="ml-8">Recommend</h1>
               <button onClick={handleOpenDetail} className="mr-12">
                 더보기
               </button>
@@ -118,6 +165,7 @@ const PlaylistModal = () => {
       </div>
       {isDetailOpen && <PlaylistsDetail title={title} setTitle={setTitle} />}
       {isShowAll && <PlaylistsShowAll />}
+      {isMyShowAll && <MyPlaylistsShowAll />}
     </>
   );
 };
