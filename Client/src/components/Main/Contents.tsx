@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import Music from '../../assets/images/music.jpg';
 import List from '../../assets/images/list.jpg';
 import Mubti from '../../assets/images/mubti.png';
@@ -18,9 +19,9 @@ const Contents = () => {
 
   return (
     <>
-      <div className=" bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] ">
+      <div className=" bg-gradient-to-b h-screen from-[#D5E5F0] to-[#87c4ed] ">
         <Header />
-        <header className="w-[1140] bg-center " style={{ backgroundRepeat: 'no-repeat' }}>
+        <header className="w-[1140] bg-center ">
           <div className="w-full  flex flex-col justify-center items-center ">
             <h2 className="text-6xl h-40 font-sigmar-one mt-20">Welcome to “MUSIC FORECAST” !!</h2>
             <span className="text-2xl font">
