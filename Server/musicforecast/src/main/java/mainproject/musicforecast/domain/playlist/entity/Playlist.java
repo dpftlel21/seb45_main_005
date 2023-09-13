@@ -6,9 +6,10 @@ import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.playlistLike.entity.PlaylistLike;
 import mainproject.musicforecast.domain.playlistSong.entity.PlaylistSong;
 import mainproject.musicforecast.domain.playlistTag.entity.PlaylistTag;
-import mainproject.musicforecast.domain.song.entity.Song;
+import mainproject.musicforecast.domain.post.entity.Post;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -44,6 +45,9 @@ public class Playlist {
 
     @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
     private List<PlaylistSong> playlistSongs;
+
+    @ManyToMany(mappedBy = "playlists")
+    private Set<Post> posts = new HashSet<>();
 
     public void updateTags(List<PlaylistTag> newTags) {
         this.playlistTags.clear();

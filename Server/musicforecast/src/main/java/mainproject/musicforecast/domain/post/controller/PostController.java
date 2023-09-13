@@ -51,15 +51,30 @@ public class PostController {
     }
 
     // 글 등록
+//    @PostMapping
+//    public ResponseEntity postPost(@Valid @RequestBody PostPostDto postPostDto) {
+//
+//        Post post = postService.createPost(mapper.postPostToPost(memberService, postPostDto));
+//        return new ResponseEntity<>(
+//                new SingleResponseDto<>(mapper.postToPostResponse(memberMapper, post, commentMapper))
+//                , HttpStatus.CREATED);
+//    }
+
+    //글 등록
     @PostMapping
-    public ResponseEntity postPost(@Valid @RequestBody PostPostDto PostPostDto) {
+    public ResponseEntity postPost(
+            @Valid @RequestBody PostPostDto postPostDto
+    ) {
+        // PostPostDto로부터 Post 엔티티를 생성하고 저장합니다.
+        Post post = mapper.postPostToPost(memberService, postPostDto);
+        post = postService.createPost(post, postPostDto.getPlaylistId());
 
-        Post post = postService.createPost(mapper.postPostToPost(memberService, PostPostDto));
+
         return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.postToPostResponse(memberMapper, post, commentMapper))
-                , HttpStatus.CREATED);
+                new SingleResponseDto<>(mapper.postToPostResponse(memberMapper, post, commentMapper)),
+                HttpStatus.CREATED
+        );
     }
-
     // 글 수정
     @PatchMapping("/{post-id}")
     public ResponseEntity patchPost(@PathVariable("post-id") @Positive long postId,
