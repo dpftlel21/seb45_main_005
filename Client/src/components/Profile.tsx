@@ -1,8 +1,15 @@
 import { useNavigate } from 'react-router-dom';
+import { UserIntro } from 'src/pages/Mypage';
+// import { useEffect, useState } from 'react';
 import userphoto from '../assets/images/user.png';
 import 'animate.css';
 
-const Profile = () => {
+export type Profileprops = {
+  userIntro: UserIntro;
+  // setUserIntro: any;
+};
+
+const Profile = ({ userIntro }: Profileprops) => {
   const navigate = useNavigate();
   return (
     <>
@@ -12,7 +19,7 @@ const Profile = () => {
             <img className="w-[130px] h-[130px] " src={userphoto} alt="유저프로필" />
           </div>
           <div className="flex w-[600px] items-center justify-between">
-            <span className="w-40vw ml-4">이름</span>
+            <span className="w-40vw ml-4">{userIntro.nickname}</span>
             <div>
               <button
                 className="w-[150px] h-[30px] bg-white shadow-md hover:shadow-lg rounded-md"
@@ -24,7 +31,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="w-[875px] h-[120px] border-t-2 border-[#363636] border-solid">
-          내용 넣을것
+          {userIntro.intro}
         </div>
       </div>
     </>

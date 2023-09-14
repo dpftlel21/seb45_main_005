@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import playlistimg from '../assets/images/Rectangle 64.png';
 
-const MyCommunity = () => {
+export type InsideCommu = {
+  memberId: number;
+  nickName: string;
+  postId: number;
+  title: string;
+  text: string;
+  viewCount: number;
+};
+const MyCommunity = ({ myCommunity }: { myCommunity: InsideCommu[] }) => {
+  console.log(myCommunity);
   const [searchQuery, setSearchQuery] = useState('');
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -27,23 +36,24 @@ const MyCommunity = () => {
           </form>
           <div>
             <button className="w-[50px] text-center text-xs underline">조회순</button>
-            <button className="w-[50px] text-center text-xs underline">추천순</button>
+            {/* <button className="w-[50px] text-center text-xs underline">추천순</button> */}
           </div>
         </div>
         <div className="mt-5">
           <table className="flex flex-col w-[875px] items-center justify-center ">
-            <tr className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#bdc2f8] justify-center">
-              <td className="w-[50px] text-center text-xs">1</td>
-              <td className="w-[100px]">
-                <img src={playlistimg} alt="임시사진" />
-              </td>
+            {myCommunity.map((el, idx) => (
+              <tr className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#bdc2f8] justify-center">
+                <td className="w-[50px] text-center text-xs">{idx + 1}</td>
+                <td className="w-[100px]">
+                  <img src={playlistimg} alt="임시사진" />
+                </td>
 
-              <td className="w-[700px] text-start text-xs">
-                <a href="./community/1">컨텐츠 제목</a>
-              </td>
-              <td className="w-[50px] text-center text-xs">89</td>
-              <td className="w-[50px] text-center text-xs">190</td>
-            </tr>
+                <td className="w-[700px] text-start text-xs">
+                  <a href={`../community/${el.postId}`}>{el.title}</a>
+                </td>
+                <td className="w-[50px] text-center text-xs">{el.viewCount}</td>
+              </tr>
+            ))}
           </table>
         </div>
       </div>
