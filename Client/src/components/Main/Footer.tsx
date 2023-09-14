@@ -9,10 +9,7 @@ import im from '../../assets/images/im.png';
 const Footer = () => {
   return (
     <>
-      <header
-        className="bg-cover bg-center h-screen  bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed]"
-        style={{}}
-      >
+      <header className="bg-cover bg-center h-screen  bg-[#71b8f6]-500" style={{}}>
         <div className="w-full h-full ">
           <div className="flex flex-col justify-center items-center ">
             <div className=" font-['Anton-Regular'] text-7xl mt-24">Thank You For Coming!! </div>
