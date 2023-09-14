@@ -11,7 +11,7 @@ const SocialKakao = () => {
     console.log(data.response.access_token);
     dispatch(setAccessToken(data.response.access_token));
     dispatch(setLoginState(true));
-    window.location.href = '/';
+    // window.location.href = '/';
   };
   const kakaoOnFailure = (error: any) => {
     console.log(error);

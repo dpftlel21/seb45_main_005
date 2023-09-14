@@ -2,13 +2,10 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { RootState } from '../../../redux/store';
 
-export type updateProps = {
-  title: string;
-};
-
-const PlaylistUpdateBtn = ({ title }: updateProps) => {
+const PlaylistUpdateBtn = () => {
   const playlistId = useSelector((state: RootState) => state.playlists.selectedPlaylistId);
   const token = useSelector((state: RootState) => state.login.accessToken);
+  const title = useSelector((state: RootState) => state.playlists.playlistTitle);
 
   const handleUpdate = () => {
     axios

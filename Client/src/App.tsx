@@ -1,7 +1,10 @@
 import React from 'react';
 import './App.css';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RouteConst } from './interface/RouteConst';
+import PrivateRoute from './interface/PrivateRoute';
+import { RootState } from './redux/store';
 
 import MUBTIMain from './pages/MUBTI/MUBTIMain';
 import Survey from './pages/MUBTI/Survey/Survey';
@@ -24,33 +27,84 @@ import Test from './components/Login/Test';
 import EditProfile from './pages/EditProfile';
 import IdFind from './components/Login/IdFind';
 import PwdFind from './components/Login/PwdFind';
+import Motherplayer from './components/Main/Motherplayer';
 
 const App = () => {
+  const token = useSelector((state: RootState) => state.login.accessToken);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={RouteConst.WeatherRecommend} element={<WeatherRecommend />} />
-        <Route path={RouteConst.LoginOn} element={<LoginOn />} />
-        <Route path={RouteConst.SignUp} element={<SignUp />} />
-        <Route path={RouteConst.MyPage} element={<Mypage />} />
-        <Route path={RouteConst.Community} element={<Community />} />
-        <Route path={RouteConst.Write} element={<Write />} />
-        <Route path={RouteConst.Detail} element={<CommunityDetail />} />
-        <Route path={RouteConst.Main} element={<Main />} />
-        <Route path={RouteConst.MUBTI} element={<MUBTIMain />} />
-        <Route path={RouteConst.Survey} element={<Survey />} />
-        <Route path={RouteConst.Mood} element={<SurveyMood />} />
-        <Route path={RouteConst.Situation} element={<SurveySituation />} />
-        <Route path={RouteConst.Liking} element={<SurveyLiking />} />
-        <Route path={RouteConst.Loading} element={<SurveyLoading />} />
-        <Route path={RouteConst.Result} element={<SurveyResult />} />
-        <Route path={RouteConst.Test} element={<Test />} />
-        <Route path={RouteConst.EditProfile} element={<EditProfile />} />
-        <Route path={RouteConst.Search} element={<SearchSongs />} />
-        <Route path={RouteConst.IdFind} element={<IdFind />} />
-        <Route path={RouteConst.PwdFind} element={<PwdFind />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path={RouteConst.WeatherRecommend}
+            element={<PrivateRoute component={<WeatherRecommend />} authenticated={token} />}
+          />
+
+          <Route
+            path={RouteConst.MyPage}
+            element={<PrivateRoute component={<Mypage />} authenticated={token} />}
+          />
+          <Route
+            path={RouteConst.Community}
+            element={<PrivateRoute component={<Community />} authenticated={token} />}
+          />
+          <Route
+            path={RouteConst.Write}
+            element={<PrivateRoute component={<Write />} authenticated={token} />}
+          />
+          <Route
+            path={RouteConst.Detail}
+            element={<PrivateRoute component={<CommunityDetail />} authenticated={token} />}
+          />
+
+          <Route
+            path={RouteConst.MUBTI}
+            element={<PrivateRoute component={<MUBTIMain />} authenticated={token} />}
+          />
+          <Route
+            path={RouteConst.Survey}
+            element={<PrivateRoute component={<Survey />} authenticated={token} />}
+          />
+          <Route
+            path={RouteConst.Mood}
+            element={<PrivateRoute component={<SurveyMood />} authenticated={token} />}
+          />
+          <Route
+            path={RouteConst.Situation}
+            element={<PrivateRoute component={<SurveySituation />} authenticated={token} />}
+          />
+          <Route
+            path={RouteConst.Liking}
+            element={<PrivateRoute component={<SurveyLiking />} authenticated={token} />}
+          />
+          <Route
+            path={RouteConst.Loading}
+            element={<PrivateRoute component={<SurveyLoading />} authenticated={token} />}
+          />
+          <Route
+            path={RouteConst.Result}
+            element={<PrivateRoute component={<SurveyResult />} authenticated={token} />}
+          />
+          <Route path={RouteConst.Test} element={<Test />} />
+          <Route
+            path={RouteConst.EditProfile}
+            element={<PrivateRoute component={<EditProfile />} authenticated={token} />}
+          />
+          <Route
+            path={RouteConst.Search}
+            element={<PrivateRoute component={<SearchSongs />} authenticated={token} />}
+          />
+          <Route path={RouteConst.Main} element={<Main />} />
+          <Route path={RouteConst.LoginOn} element={<LoginOn />} />
+          <Route path={RouteConst.SignUp} element={<SignUp />} />
+          <Route path={RouteConst.IdFind} element={<IdFind />} />
+          <Route path={RouteConst.PwdFind} element={<PwdFind />} />
+        </Routes>
+      </BrowserRouter>
+      <div className=" w-[600px] fixed bottom-10">
+        <Motherplayer />
+      </div>
+    </>
   );
 };
 

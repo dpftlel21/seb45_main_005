@@ -38,18 +38,6 @@ const LoginOn = () => {
     formState: { errors, isSubmitting },
   } = useForm<Formvalue>();
 
-  // 초기 로딩 시, 로컬 스토리지에서 토큰 가져오기
-  useEffect(() => {
-    const storedAccessToken = localStorage.getItem('accessToken');
-    const storedRefreshToken = localStorage.getItem('refreshToken');
-    if (storedAccessToken) {
-      setAccessToken(storedAccessToken);
-    }
-    if (storedRefreshToken) {
-      setRefreshToken(storedRefreshToken);
-    }
-  }, []);
-
   const headers = {
     'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
   };
@@ -69,7 +57,7 @@ const LoginOn = () => {
       dispatch(setMemberID(response.headers.memberid));
       dispatch(setLoginState(true));
       console.log(response.headers.memberid);
-      // window.location.href = '/';
+      window.location.href = '/';
     } catch (error) {
       console.error('로그인 실패:', error);
     }

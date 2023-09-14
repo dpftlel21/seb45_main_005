@@ -4,7 +4,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'sigmar-one': ['Sigmar One', 'cursive'],
-        'spoqa-han-san-neo': ['Spoqa Han Sans Neo', 'sans-serif'],
+        'spoqa-hansans': ['Spoqa Han Sans Neo', 'sans-serif'],
       },
       width: {
         '1040': '1040px',

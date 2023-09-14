@@ -11,6 +11,8 @@ const SonglistsSlice = createSlice({
       artistName: '',
       albumName: '',
     },
+    songInfoList: [],
+    deletedSongs: [],
     addSong: {},
   },
   reducers: {
@@ -23,9 +25,16 @@ const SonglistsSlice = createSlice({
     addSongToPlaylist: (state, action) => {
       state.addSong = action.payload;
     },
+    setSelectedSongs: (state, action) => {
+      state.songInfoList = action.payload; // 선택된 노래 배열을 업데이트합니다
+    },
+    deletedSongs: (state, action) => {
+      state.deletedSongs.push(action.payload); // 삭제된 노래 배열을 업데이트합니다
+    },
   },
 });
 
 export default SonglistsSlice;
 
-export const { songlistInfo, selectedSonglist, addSongToPlaylist } = SonglistsSlice.actions;
+export const { songlistInfo, selectedSonglist, addSongToPlaylist, setSelectedSongs, deletedSongs } =
+  SonglistsSlice.actions;

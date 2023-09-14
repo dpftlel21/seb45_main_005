@@ -3,17 +3,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { openSongLists } from '../../redux/slice/ModalSlice';
-import { setSelectedMemberId, setSelectedPlaylistId } from '../../redux/slice/PlaylistsSlice';
+import {
+  setSelectedMemberId,
+  setSelectedPlaylistId,
+  myPlaylist,
+} from '../../redux/slice/PlaylistsSlice';
 import Album from '../../assets/images/Album.png';
 import { PlaylistInfo } from './PlaylistsShowAll';
 import { RootState } from '../../redux/store';
 
 type PlaylistProps = {
   el: PlaylistInfo;
-  setReRendering: any;
 };
 
-const MyPlaylists = ({ el, setReRendering }: PlaylistProps) => {
+const MyPlaylists = ({ el }: PlaylistProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // 삭제 버튼 클릭시 opacity 변경을 위한 상태
@@ -25,6 +28,26 @@ const MyPlaylists = ({ el, setReRendering }: PlaylistProps) => {
     dispatch(openSongLists());
     dispatch(setSelectedPlaylistId(el.playlistId));
     dispatch(setSelectedMemberId(el.memberId));
+  };
+
+  const getPlaylists = (): void => {
+    axios
+      .get(
+        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/my?page=1&size=10',
+        {
+          headers: {
+            'Authorization': token,
+            'Access-Control-Allow-Origin':
+              'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+          },
+        }
+      )
+      .then((res) => {
+        dispatch(myPlaylist(res.data.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleListDelete = () => {
@@ -43,8 +66,9 @@ const MyPlaylists = ({ el, setReRendering }: PlaylistProps) => {
           }
         )
         .then((res) => {
-          setReRendering(el.playlistId);
           console.log(res);
+          alert('플리가 삭제되었습니다.');
+          getPlaylists();
         })
         .catch((err) => {
           if (err.response.status === 500) {

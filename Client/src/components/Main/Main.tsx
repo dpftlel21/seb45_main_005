@@ -3,10 +3,11 @@ import React from 'react';
 // import { Navigation, Pagination, Scrollbar, Mousewheel, Keyboard } from 'swiper';
 // import { Swiper, SwiperSlide } from 'swiper/react';
 
-import Chart from './Chart';
+import Songfind from './Songfind';
 import Contents from './Contents';
 import Footer from './Footer';
 import Wrapper from '../Wrapper/Wrapper';
+import MbtiMain from './MbtiMain';
 
 const Main = () => {
   // const slides = [<Contents />, <Chart />, <Footer />];
@@ -31,7 +32,9 @@ const Main = () => {
       <Wrapper>
         <Contents />
       </Wrapper>
-      <Chart />, <Footer />
+      <Songfind />,
+      <MbtiMain />
+      <Footer />
     </div>
   );
 };
