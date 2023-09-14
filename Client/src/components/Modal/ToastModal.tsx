@@ -1,16 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { closeToastModal } from '../../redux/slice/ModalSlice';
-import { createPlaylist } from '../../redux/slice/PlaylistCRUDSlice';
+import { myPlaylist } from '../../redux/slice/PlaylistsSlice';
 import { RootState } from '../../redux/store';
 
-export type PlaylistInfo = {
-  setReRendering: any;
-};
-
-const ToastModal = ({ setReRendering }: PlaylistInfo) => {
-  const [isAddingPlaylist, setIsAddingPlaylist] = useState(false); // 추가 버튼 클릭 여부를 저장하는 상태
+const ToastModal = () => {
   const [title, setTitle] = useState('');
 
   const dispatch = useDispatch();
@@ -19,6 +14,26 @@ const ToastModal = ({ setReRendering }: PlaylistInfo) => {
 
   const handleCloseToast = () => {
     dispatch(closeToastModal());
+  };
+
+  const getPlaylists = (): void => {
+    axios
+      .get(
+        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/my?page=1&size=10',
+        {
+          headers: {
+            'Authorization': token,
+            'Access-Control-Allow-Origin':
+              'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+          },
+        }
+      )
+      .then((res) => {
+        dispatch(myPlaylist(res.data.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleAddPlaylist = () => {
@@ -35,23 +50,16 @@ const ToastModal = ({ setReRendering }: PlaylistInfo) => {
         }
       )
       .then((res) => {
-        // 성공적으로 요청을 처리한 후에 실행되는 코드
+        console.log(res);
         alert('플리가 추가되었습니다.');
-        dispatch(createPlaylist(res.data));
+        getPlaylists();
         dispatch(closeToastModal());
-        setReRendering(title);
       })
+
       .catch((err) => {
-        // 요청을 보낼 때 발생한 오류를 처리하는 코드
-        console.error(err);
+        console.log(err);
       });
   };
-
-  useEffect(() => {
-    if (isAddingPlaylist) {
-      handleAddPlaylist();
-    }
-  }, [isAddingPlaylist]);
 
   return (
     <div className="w-full h-full fixed top-0 flex flex-col justify-center items-center font-['Anton-Regular'] bg-[#4a4b4a42] text-[#838282]">
@@ -67,7 +75,7 @@ const ToastModal = ({ setReRendering }: PlaylistInfo) => {
         </div>
         <div>
           <button
-            onClick={() => setIsAddingPlaylist(true)}
+            onClick={handleAddPlaylist}
             className="w-[70px] h-[40px] mb-4 ml-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
           >
             추가

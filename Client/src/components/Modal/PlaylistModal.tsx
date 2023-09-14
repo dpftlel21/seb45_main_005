@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import {
   closeModal,
@@ -8,6 +8,7 @@ import {
   openSongLists,
 } from '../../redux/slice/ModalSlice';
 import { setSelectedPlaylistId, playlistInfo, myPlaylist } from '../../redux/slice/PlaylistsSlice';
+import { setPlaylistTitle } from '../../redux/slice/PlaylistsSlice';
 import { RootState } from '../../redux/store';
 import xbtn from '../../assets/images/xbtn.svg';
 import Album from '../../assets/images/Album.png';
@@ -26,7 +27,6 @@ const PlaylistModal = () => {
   };
   const token = useSelector((state: RootState) => state.login.accessToken);
   const dispatch = useDispatch();
-  const [title, setTitle] = useState<string>('');
   const isDetailOpen = useSelector((state: RootState) => state.modal.isSongOpen);
   const isShowAll = useSelector((state: RootState) => state.modal.isDetailOpen);
   const isMyShowAll = useSelector((state: RootState) => state.modal.isMyShowAll);
@@ -47,10 +47,37 @@ const PlaylistModal = () => {
     dispatch(closeModal());
   };
 
-  const handleOpenListDetail = (playlistId: number) => {
+  const handleOpenListDetail = (playlistId: number, title: string) => {
     dispatch(openSongLists());
     dispatch(setSelectedPlaylistId(playlistId));
+    dispatch(setPlaylistTitle(title));
   };
+
+  const getPlaylists = (): void => {
+    axios
+      .get(
+        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/my?page=1&size=10',
+        {
+          headers: {
+            'Authorization': token,
+            'Access-Control-Allow-Origin':
+              'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+          },
+        }
+      )
+      .then((res) => {
+        dispatch(myPlaylist(res.data.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // 마이 플리 받아오기
+  useEffect(() => {
+    getPlaylists();
+  }, []);
+
   // 플레이리스트 받아오기
   useEffect(() => {
     axios
@@ -65,31 +92,9 @@ const PlaylistModal = () => {
       });
   }, []);
 
-  // 마이 플리 받아오기
-  useEffect(() => {
-    axios
-      .get(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/my?page=1&size=10',
-        {
-          headers: {
-            'Authorization': token,
-            'Access-Control-Allow-Origin':
-              'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
-          },
-        }
-      )
-      .then((res) => {
-        dispatch(myPlaylist(res.data.data));
-        console.log(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   return (
     <>
-      <div className="w-[600px] h-[670px] fixed bottom-0 flex justify-center bg-opacity-1 ">
+      <div className="fixed bottom-0 flex justify-center bg-opacity-1 ">
         <div className="w-[600px] h-[670px] mt-12 animate-fadeInBottomRight-fast fixed right-8 top-40">
           <div className="h-[670px] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca] animate-scale-anim  ">
             {/* 플레이리스트 상단 */}
@@ -120,7 +125,7 @@ const PlaylistModal = () => {
                 if (index <= 4) {
                   return (
                     <li
-                      onClick={() => handleOpenListDetail(myEl.playlistId)}
+                      onClick={() => handleOpenListDetail(myEl.playlistId, myEl.title)}
                       className="h-[150px] w-[150px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
                     >
                       <div className=" cursor-pointer w-[100px] h-[100px]">
@@ -146,7 +151,7 @@ const PlaylistModal = () => {
                 if (index <= 4) {
                   return (
                     <li
-                      onClick={() => handleOpenListDetail(el.playlistId)}
+                      onClick={() => handleOpenListDetail(el.playlistId, el.title)}
                       className="h-[150px] w-[150px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
                     >
                       <div className=" cursor-pointer w-[100px] h-[100px]">
@@ -163,7 +168,7 @@ const PlaylistModal = () => {
           </div>
         </div>
       </div>
-      {isDetailOpen && <PlaylistsDetail title={title} setTitle={setTitle} />}
+      {isDetailOpen && <PlaylistsDetail />}
       {isShowAll && <PlaylistsShowAll />}
       {isMyShowAll && <MyPlaylistsShowAll />}
     </>

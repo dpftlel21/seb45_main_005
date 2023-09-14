@@ -1,23 +1,31 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { selectedSonglist } from '../../redux/slice/SonglistsSlice';
+import { setSelectedSongs, selectedSonglist } from '../../redux/slice/SonglistsSlice';
 
 const SongLists = () => {
   const [selectedItems, setSelectedItems] = useState([]); // 선택된 항목을 저장할 상태
-
   const SongData = useSelector((state: RootState) => state.songlists.value);
 
   const dispatch = useDispatch();
 
   const handleSongClick = (el: object) => {
     const isSelected = selectedItems.includes(el);
+
+    let updatedSelectedItems;
+
     if (isSelected) {
-      setSelectedItems(selectedItems.filter((item) => item !== el));
+      updatedSelectedItems = selectedItems.filter((item) => item !== el);
     } else {
-      setSelectedItems([...selectedItems, el]);
-      dispatch(selectedSonglist(el));
+      updatedSelectedItems = [...selectedItems, el];
     }
+
+    // setSelectedItems를 사용하여 selectedItems 배열을 업데이트합니다.
+    setSelectedItems(updatedSelectedItems);
+
+    // Redux 스토어에 업데이트된 selectedItems 배열을 전달합니다.
+    dispatch(setSelectedSongs(updatedSelectedItems));
+    dispatch(selectedSonglist(el));
   };
 
   return (

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import { closeDetailModal } from '../../redux/slice/ModalSlice';
 import { playlistInfo } from '../../redux/slice/PlaylistsSlice';
@@ -22,9 +22,6 @@ const PlaylistsShowAll = () => {
   };
   const dispatch = useDispatch();
 
-  const [title, setTitle] = useState<string>('');
-  const [reRendering, setReRendering] = useState<string>('');
-
   const isDetailOpen = useSelector((state: RootState) => state.modal.isSongOpen);
   const isOpenToast = useSelector((state: RootState) => state.modal.isToastOpen);
   const playlistsInfo: PlaylistInfo[] = useSelector((state: RootState) => state.playlists.value);
@@ -46,7 +43,7 @@ const PlaylistsShowAll = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [reRendering, setReRendering, title, setTitle]);
+  }, []);
 
   return (
     <>
@@ -75,20 +72,15 @@ const PlaylistsShowAll = () => {
             {/* 플리 앨범, 제목, 내용 */}
             <ul className="w-[550px] h-[450px] flex flex-wrap overflow-y-scroll">
               {playlistsInfo.map((el) => (
-                <Playlists
-                  setReRendering={setReRendering}
-                  el={el}
-                  playlistId={el.playlistId}
-                  memberId={el.memberId}
-                />
+                <Playlists el={el} playlistId={el.playlistId} memberId={el.memberId} />
               ))}
             </ul>
             <PlaylistAddButton />
           </div>
         </div>
       </div>
-      {isDetailOpen && <PlaylistsDetail title={title} setTitle={setTitle} />}
-      {isOpenToast && <ToastModal setReRendering={setReRendering} />}
+      {isDetailOpen && <PlaylistsDetail />}
+      {isOpenToast && <ToastModal />}
     </>
   );
 };
