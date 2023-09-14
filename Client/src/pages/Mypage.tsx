@@ -9,13 +9,41 @@ import MyCommunity from '../components/MyCommunity';
 import Header from '../components/Header';
 import PlaylistIcon from '../components/Playlist/PlaylistIcon';
 
+export type UserIntro = {
+  image: string;
+  intro: string;
+  memberId: number;
+  nickname: string;
+};
+
+export type InsidePly = {
+  title: string;
+  memberId: number;
+  playlistId: number;
+};
+
+export type Myprops = {
+  data: InsidePly;
+};
+
+export type InsideCommu = {
+  memberId: number;
+  nickName: string;
+  postId: number;
+  title: string;
+  text: string;
+  viewCount: number;
+};
+
 const Mypage = () => {
   const [selectedButton, setSelectedButton] = useState<number>(0);
   const [selectedComponent, setSelectedComponent] = useState<number>(0);
+
+  const [userIntro, setUserIntro] = useState<UserIntro | undefined>();
+  const [myPlayList, setMyPlayList] = useState<InsidePly[]>([]);
+  const [myCommunity, setMyCommunity] = useState<InsideCommu[]>([]);
+
   const accessToken = useSelector((state: RootState) => state.login.accessToken);
-  const memberid = useSelector((state: RootState) => state.login.memberid);
-  console.log(memberid);
-  console.log(accessToken);
 
   const headers = {
     'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
@@ -32,15 +60,45 @@ const Mypage = () => {
       selectedButton === buttonIndex ? 'bg-[#ac8af5]' : 'text-[black]'
     }`;
   };
-
+  // 플레이 리스트
   useEffect(() => {
     axios
       .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/profile/${memberid}`,
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/my?page=1&size=10`,
         { headers }
       )
       .then((res) => {
-        console.log(res);
+        setMyPlayList(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  // 자기소개글
+  useEffect(() => {
+    axios
+      .get(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/my_page/intro`,
+        { headers }
+      )
+      .then((res) => {
+        setUserIntro(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  // 유저의 게시글
+  useEffect(() => {
+    axios
+      .get(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/my_page/post`,
+        { headers }
+      )
+      .then((res) => {
+        console.log(res.data.post);
+        setMyCommunity(res.data.post);
+        // console.log(myCommunity);
       })
       .catch((err) => {
         console.log(err);
@@ -63,11 +121,13 @@ const Mypage = () => {
               내가 쓴 게시글
             </button>
           </div>
-          <div className="flex mt-10 w-full ">
-            {selectedComponent === 0 && <Profile />}
-            {selectedComponent === 1 && <MyPlayList />}
-            {selectedComponent === 2 && <MyCommunity />}
-          </div>
+          {userIntro && (
+            <div className="flex mt-10 w-full ">
+              {selectedComponent === 0 && <Profile userIntro={userIntro} />}
+              {selectedComponent === 1 && <MyPlayList myPlayList={myPlayList} />}
+              {selectedComponent === 2 && <MyCommunity myCommunity={myCommunity} />}
+            </div>
+          )}
         </div>
         <PlaylistIcon />
       </div>
