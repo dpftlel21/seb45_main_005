@@ -36,7 +36,7 @@ const Mypage = () => {
   useEffect(() => {
     axios
       .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/profile/${memberid}`,
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/my_page/intro`,
         { headers }
       )
       .then((res) => {

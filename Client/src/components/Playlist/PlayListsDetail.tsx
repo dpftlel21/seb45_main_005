@@ -8,6 +8,7 @@ import backbtn from '../../assets/images/backbtn.png';
 import Album from '../../assets/images/Album.png';
 // import Logo from '../../assets/images/logo.png';
 import PlaylistUpdateBtn from './Button/PlaylistUpdateBtn';
+import SongDeleteBtn from './Button/SongDeleteBtn';
 
 export type PlaylistData = {
   title: string;
@@ -18,19 +19,15 @@ export type PlaylistData = {
   playlistTags: [];
 };
 
-export type TitleProps = {
-  title: string;
-  setTitle: any;
-};
-
 export type SongData = {
   title: string;
   imageUrl: string;
   album: string;
   artistName: string;
+  songId: number;
 };
 
-const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
+const PlaylistsDetail = () => {
   const headers = {
     'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
   };
@@ -41,6 +38,8 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
 
   const playlistId = useSelector((state: RootState) => state.playlists.selectedPlaylistId);
   const addedSongs: SongData[] = useSelector((state: RootState) => state.playlists.detailInfo);
+  const deletedSongs: number[] = useSelector((state: RootState) => state.songlists.deletedSongs);
+  const filteredSongs = addedSongs.filter((song) => !deletedSongs.includes(song.songId));
 
   const handleCloseSong = () => {
     dispatch(closeSongLists());
@@ -54,8 +53,6 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
       )
       .then((res) => {
         setDetailData(res.data.data);
-        console.log(res.data.data);
-        setTitle(res.data.data.title);
         dispatch(playlistDetail(res.data.data.playlistSongs));
       })
       .catch((err) => {
@@ -65,7 +62,7 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
 
   return (
     <>
-      <div className="w-[600px] h-[670px] fixed bottom-0 flex justify-center bg-opacity-1 ">
+      <div className="fixed bottom-0 flex justify-center bg-opacity-1 ">
         <div className="w-[600px] h-[670px] mt-12 fixed right-8 top-40">
           <div className="h-[670px] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca]  ">
             {/* 플레이리스트 상단 */}
@@ -77,14 +74,13 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
               <div className="flex mt-8">
                 {!isClicked ? (
                   <h1 className="text-xl font-['Anton-Regular']">{detailData?.title}</h1>
-                ) : (
-                  <input
-                    onChange={(e) => setTitle(e.target.value)}
-                    value={title}
-                    type="text"
-                    className="w-[200px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
-                  />
-                )}
+                ) : // <input
+                //   onChange={(e) => setTitle(e.target.value)}
+                //   value={title}
+                //   type="text"
+                //   className="w-[200px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
+                // />
+                null}
               </div>
             </div>
             {/* 앨범표지 */}
@@ -112,7 +108,7 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
             </div>
             {/* 플리 노래목록 맵핑 */}
             <ul className="w-full h-[700px] flex flex-col overflow-x-hidden ">
-              {addedSongs.map((selectedSongs, index) => (
+              {filteredSongs.map((selectedSongs, index) => (
                 <li className="w-full h-[70px]  grid grid-cols-5 items-center text-center border-t-2 border-solid border-gray-200 border-opacity-20 hover:bg-[#47464680]">
                   {/* No */}
                   <h3 className="">{index + 1}</h3>
@@ -123,12 +119,13 @@ const PlaylistsDetail = ({ title, setTitle }: TitleProps) => {
                   <p className="text-sm">{selectedSongs.title}</p>
                   {/* Artist Name */}
                   <p className="text-sm">{selectedSongs.artistName}</p>
+                  {isClicked ? <SongDeleteBtn songId={selectedSongs.songId} /> : null}
                 </li>
               ))}
             </ul>
             <div className="flex justify-center mt-8">
               {isClicked ? (
-                <PlaylistUpdateBtn title={title} />
+                <PlaylistUpdateBtn />
               ) : (
                 <button
                   onClick={() => setIsClicked(true)}
