@@ -6,11 +6,11 @@ import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.playlistLike.entity.PlaylistLike;
 import mainproject.musicforecast.domain.playlistSong.entity.PlaylistSong;
 import mainproject.musicforecast.domain.playlistTag.entity.PlaylistTag;
-import mainproject.musicforecast.domain.song.entity.Song;
+import mainproject.musicforecast.domain.post.entity.Post;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -44,6 +44,9 @@ public class Playlist {
 
     @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
     private List<PlaylistSong> playlistSongs;
+
+    @OneToMany(mappedBy = "playlist", cascade = CascadeType.REMOVE)
+    private List<Post> posts = new ArrayList<>();
 
     public void updateTags(List<PlaylistTag> newTags) {
         this.playlistTags.clear();

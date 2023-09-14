@@ -1,16 +1,22 @@
 package mainproject.musicforecast.domain.post.service;
 
-import mainproject.musicforecast.global.exception.ExceptionCode;
-import mainproject.musicforecast.global.exception.BusinessLogicException;
-import mainproject.musicforecast.domain.post.entity.Post;
-import mainproject.musicforecast.domain.post.repository.PostRepository;
 import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.member.repository.MemberRepository;
 import mainproject.musicforecast.domain.member.service.MemberService;
-import org.springframework.data.domain.*;
+import mainproject.musicforecast.domain.playlist.entity.Playlist;
+import mainproject.musicforecast.domain.playlist.repository.PlaylistRepository;
+import mainproject.musicforecast.domain.post.entity.Post;
+import mainproject.musicforecast.domain.post.repository.PostRepository;
+import mainproject.musicforecast.global.exception.BusinessLogicException;
+import mainproject.musicforecast.global.exception.ExceptionCode;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -19,16 +25,35 @@ public class PostService {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
 
-    public PostService(PostRepository postRepository, MemberService memberService, MemberRepository memberRepository) {
+    private final PlaylistRepository playlistRepository;
+
+    public PostService(PostRepository postRepository, MemberService memberService, MemberRepository memberRepository, PlaylistRepository playlistRepository) {
         this.postRepository = postRepository;
         this.memberService = memberService;
         this.memberRepository = memberRepository;
+        this.playlistRepository = playlistRepository;
     }
 
+//    public Post createPost(Post post) {
+//        Member member = memberRepository.findByMemberId(post.getMember().getMemberId());
+//        post.setMember(member);
+//        return postRepository.save(post);
+//    }
 
-    public Post createPost(Post post) {
+    public Post createPost(Post post, Long playlistId) {
+        // 게시물 작성에 필요한 로직을 수행합니다.
+        // 플레이리스트 ID를 사용하여 해당 플레이리스트를 조회합니다.
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new EntityNotFoundException("플레이리스트를 찾을 수 없습니다."));
+
+        // 게시물과 플레이리스트를 연결합니다.
+        post.setPlaylists(playlist);
+
+        // 게시물을 작성한 회원을 조회하고 연결합니다.
         Member member = memberRepository.findByMemberId(post.getMember().getMemberId());
         post.setMember(member);
+
+        // 게시물을 저장합니다.
         return postRepository.save(post);
     }
 
