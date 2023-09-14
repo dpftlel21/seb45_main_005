@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -48,7 +47,7 @@ public class PostService {
                 .orElseThrow(() -> new EntityNotFoundException("플레이리스트를 찾을 수 없습니다."));
 
         // 게시물과 플레이리스트를 연결합니다.
-        post.setPlaylists(Collections.singleton(playlist));
+        post.setPlaylists(playlist);
 
         // 게시물을 작성한 회원을 조회하고 연결합니다.
         Member member = memberRepository.findByMemberId(post.getMember().getMemberId());

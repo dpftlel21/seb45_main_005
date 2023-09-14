@@ -9,9 +9,8 @@ import mainproject.musicforecast.domain.playlistTag.entity.PlaylistTag;
 import mainproject.musicforecast.domain.post.entity.Post;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -46,8 +45,8 @@ public class Playlist {
     @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
     private List<PlaylistSong> playlistSongs;
 
-    @ManyToMany(mappedBy = "playlists")
-    private Set<Post> posts = new HashSet<>();
+    @OneToMany(mappedBy = "playlist", cascade = CascadeType.REMOVE)
+    private List<Post> posts = new ArrayList<>();
 
     public void updateTags(List<PlaylistTag> newTags) {
         this.playlistTags.clear();
