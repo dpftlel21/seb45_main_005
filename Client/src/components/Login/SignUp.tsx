@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Logo from '../../assets/images/logo.png';
@@ -57,7 +57,9 @@ const SignUp = () => {
     <>
       <main className="bg-[#F2F2F2] h-screen">
         <div className=" flex flex-col justify-center items-center ">
-          <img src={Logo} alt="" className="my-14" />
+          <Link to="/">
+            <img src={Logo} alt="" className="my-14" />
+          </Link>
           <div className="flex flex-col border-2 border-solid border-none shadow-2xl rounded-2xl">
             <div className="text-center font-spoqa-han-san-neo ">
               Music Forecast에 오신걸 환영합니다!
