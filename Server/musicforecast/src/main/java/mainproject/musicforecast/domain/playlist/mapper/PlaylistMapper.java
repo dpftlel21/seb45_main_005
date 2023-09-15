@@ -77,6 +77,7 @@ public interface PlaylistMapper {
                                 .albumName(playlistSong.getAlbumName())
                                 .artistName(playlistSong.getArtistName())
                                 .imageUrl(playlistSong.getImageUrl())
+                                .youtubeUrl(playlistSong.getYoutubeUrl())
                                 .build())
                                 .collect(Collectors.toList());
 
