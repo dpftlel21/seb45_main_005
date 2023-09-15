@@ -32,7 +32,7 @@ const SearchInput = () => {
   };
 
   return (
-    <div className="flex justify-around my-4">
+    <div className="flex justify-around my-8">
       {/* 검색칸 */}
       <div className="w-[528px] h-[50px] flex items-center bg-[#faf7f7e8] rounded-3xl  ">
         <input

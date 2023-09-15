@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { closeSongLists } from '../../redux/slice/ModalSlice';
-import { playlistDetail } from '../../redux/slice/PlaylistsSlice';
+import { playlistDetail, setPlaylistTitle } from '../../redux/slice/PlaylistsSlice';
 import { RootState } from '../../redux/store';
 import backbtn from '../../assets/images/backbtn.png';
 import Album from '../../assets/images/Album.png';
@@ -31,7 +31,7 @@ const PlaylistsDetail = () => {
   const headers = {
     'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
   };
-  const [detailData, setDetailData] = useState<PlaylistData | null>(null);
+  // const [detailData, setDetailData] = useState<PlaylistData | null>(null);
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -40,6 +40,7 @@ const PlaylistsDetail = () => {
   const addedSongs: SongData[] = useSelector((state: RootState) => state.playlists.detailInfo);
   const deletedSongs: number[] = useSelector((state: RootState) => state.songlists.deletedSongs);
   const filteredSongs = addedSongs.filter((song) => !deletedSongs.includes(song.songId));
+  const title = useSelector((state: RootState) => state.playlists.playlistTitle);
 
   const handleCloseSong = () => {
     dispatch(closeSongLists());
@@ -52,7 +53,7 @@ const PlaylistsDetail = () => {
         { headers }
       )
       .then((res) => {
-        setDetailData(res.data.data);
+        // setDetailData(res.data.data);
         dispatch(playlistDetail(res.data.data.playlistSongs));
       })
       .catch((err) => {
@@ -73,14 +74,15 @@ const PlaylistsDetail = () => {
               {/* 검색칸 */}
               <div className="flex mt-8">
                 {!isClicked ? (
-                  <h1 className="text-xl font-['Anton-Regular']">{detailData?.title}</h1>
-                ) : // <input
-                //   onChange={(e) => setTitle(e.target.value)}
-                //   value={title}
-                //   type="text"
-                //   className="w-[200px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
-                // />
-                null}
+                  <h1 className="text-xl font-['Anton-Regular']">{title}</h1>
+                ) : (
+                  <input
+                    onChange={(e) => dispatch(setPlaylistTitle(e.target.value))}
+                    value={title}
+                    type="text"
+                    className="w-[200px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
+                  />
+                )}
               </div>
             </div>
             {/* 앨범표지 */}
