@@ -34,4 +34,7 @@ public class PlaylistSong {
 
     @Column
     private String imageUrl;
+
+    @Column
+    private String youtubeUrl;
 }

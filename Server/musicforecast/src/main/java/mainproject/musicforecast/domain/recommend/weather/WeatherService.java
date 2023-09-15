@@ -141,52 +141,42 @@ public class WeatherService {
 
         switch (weather) {
             case "Thunderstorm":
-                genre.add("신나는");
-                break;
             case "Drizzle":
-                genre.add("신나는");
-                break;
             case "Rain":
-                genre.add("신나는");
+                genre.add("잔잔한");
+                genre.add("감성적인");
+                genre.add("클래식");
+                genre.add("우울한");
+                genre.add("다크한");
                 break;
             case "Snow":
-                genre.add("신나는");
-                break;
-            case "Mist":
-                genre.add("신나는");
-                break;
-            case "Smoke":
-                genre.add("신나는");
-                break;
-            case "Haze":
-                genre.add("신나는");
-                genre.add("발라드");
-                break;
-            case "Dust":
-                genre.add("신나는");
-                break;
-            case "Fog":
-                genre.add("신나는");
-                break;
-            case "Sand":
-                genre.add("신나는");
-                break;
-            case "Ash":
-                genre.add("신나는");
-                break;
-            case "Squall":
-                genre.add("신나는");
-                break;
-            case "Tornado":
-                genre.add("신나는");
+                genre.add("몽글몽글한");
+                genre.add("편안한");
+                genre.add("행복한");
+                genre.add("설레이는");
+                genre.add("감성적인");
+                genre.add("잔잔한");
+                genre.add("포근한");
                 break;
             case "Clear":
                 genre.add("신나는");
+                genre.add("상쾌한");
+                genre.add("힙한");
+                genre.add("가벼운");
+                genre.add("설레이는");
+                genre.add("편안한");
+                genre.add("따뜻한");
+                genre.add("행복한");
                 break;
             case "Clouds":
-                genre.add("신나는");
+            case "Fog":
+            case "Haze":
+                genre.add("차분한");
+                genre.add("센치한");
+                genre.add("몽글몽글한");
                 break;
             default:
+                genre.add("신나는");
                 break;
         }
         return genre;
