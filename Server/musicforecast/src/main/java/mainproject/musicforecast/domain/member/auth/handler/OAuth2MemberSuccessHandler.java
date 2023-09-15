@@ -48,23 +48,42 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         var oAuth2User = (OAuth2User)authentication.getPrincipal();
 
         String email = String.valueOf(oAuth2User.getAttributes().get("email")); // (3)
+        String nickname = null;
 
-        List<String> authorities = authorityUtils.createRoles(email);           // (4)
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
 
-        Member member = saveMember(email);  // (5)
+        Member member = null;
+
+        if(optionalMember.isPresent()) {
+            member = optionalMember.get();
+        }else {
+            nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
+            if (nickname == null) {
+                int atIndex = email.indexOf("@"); // "@" 기호의 위치를 찾습니다.
+
+                if (atIndex != -1) {
+                    nickname = email.substring(0, atIndex); // "@" 기호 이전까지의 부분을 추출합니다.
+                } else {
+                    nickname = "닉네임을 입력해주세요.";
+                }
+            }
+            member = saveMember(email, nickname);
+        }
+
+        List<String> authorities = authorityUtils.createRoles(email);
 
         String accessToken = delegateAccessToken(member, authorities);  // (6-1)
         String refreshToken = delegateRefreshToken(member.getEmail());     // (6-2)
 
-        response.setHeader("Authorization", "Bearer " + accessToken);
-        response.setHeader("Refresh", refreshToken);
-
         redirect(request, response, member, authorities, accessToken, refreshToken);  // (6)
     }
 
-    private Member saveMember(String email) {
+    private Member saveMember(String email, String nickname) {
+
         Member member = new Member();
         member.setEmail(email);
+        member.setNickname(nickname);
+        member.setImage("https://cdn-icons-png.flaticon.com/512/1361/1361876.png");
         Provider provider = providerRepository.findByProviderName("Google");
         member.setProvider(provider);
         memberService.createMember(member);
@@ -73,7 +92,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
     private void redirect(HttpServletRequest request, HttpServletResponse response, Member member, List<String> authorities, String accessToken, String refreshToken) throws IOException {
 
-        String uri = createURI(accessToken, refreshToken).toString();   // (6-3)
+        String uri = createURI(accessToken, refreshToken, Long.toString(member.getMemberId()), member.getNickname()).toString();   // (6-3)
 
         getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
     }
@@ -103,10 +122,13 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         return refreshToken;
     }
 
-    private URI createURI(String accessToken, String refreshToken) {
+    private URI createURI(String accessToken, String refreshToken, String memberId, String nickname) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("access_token", "Bearer " + accessToken);
         queryParams.add("refresh_token", refreshToken);
+        queryParams.add("memberId", memberId);
+        //queryParams.add("nickname", nickname);
+
 
         //TODO Oauth2 성공 후 리다이렉트 할 주소 넣기
         return UriComponentsBuilder

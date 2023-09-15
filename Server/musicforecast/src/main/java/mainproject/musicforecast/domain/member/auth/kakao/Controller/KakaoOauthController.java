@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/oauth")
 public class KakaoOauthController {
@@ -19,16 +21,16 @@ public class KakaoOauthController {
         System.out.println(code);
         String token = kakaoOauthService.getKakaoAccessToken(code);
         MultiValueMap map = kakaoOauthService.createKakaoUser(token);
+        String jsonResponse = "nickname : " + map.get("nickname").toString();
+
+        map.remove("nickname");
 
         HttpHeaders tokenHeader = new HttpHeaders(map);
 
 //        String jsonResponse = (String) map.get("nickname");
-//
+
 //        map.remove("nickname");
         //String jsonResponse = "성공";
-
-        Object jsonResponse = map.get("nickname");
-
         return ResponseEntity.ok().headers(tokenHeader).body(jsonResponse);
     }
 }

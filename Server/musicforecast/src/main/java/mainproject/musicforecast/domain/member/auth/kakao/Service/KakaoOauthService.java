@@ -149,16 +149,14 @@ public class KakaoOauthService extends SimpleUrlAuthenticationSuccessHandler {
             Optional<Member> optionalMember = memberRepository.findByEmail(email);
 
             Member member = null;
-            List<String> authorities = null;
-
 
             if(optionalMember.isPresent()) {
                 member = optionalMember.get();
-                authorities = authorityUtils.createRoles(email);
             }else {
                 member = saveMember(email, nickname);
-                authorities = authorityUtils.createRoles(email);
             }
+
+            List<String> authorities = authorityUtils.createRoles(email);
 
             String accessToken = delegateAccessToken(member, authorities);
             String refreshToken = delegateRefreshToken(member.getEmail());
@@ -166,7 +164,7 @@ public class KakaoOauthService extends SimpleUrlAuthenticationSuccessHandler {
             map.put("Authorization", Collections.singletonList("Bearer " + accessToken));
             map.put("Refresh", Collections.singletonList(refreshToken));
             map.put("memberId", Collections.singletonList(Long.toString(member.getMemberId())));
-            //.put("nickname", Collections.singletonList(nickname));
+            map.put("nickname", Collections.singletonList(nickname));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -181,57 +179,16 @@ public class KakaoOauthService extends SimpleUrlAuthenticationSuccessHandler {
         member.setEmail(email);
         member.setNickname(nickname);
         member.setIntro("자기소개를 입력해주세요.");
-        member.setImage("이미지 URL");
+        member.setImage("https://cdn-icons-png.flaticon.com/512/1361/1361876.png");
 
         Provider provider = providerRepository.findByProviderName("KaKao");
         member.setProvider(provider);
 
-        memberService.findExistsEmail(email);
+        //memberService.findExistsEmail(email);
         memberService.createMember(member);
 
         return member;
     }
-//
-//    private void redirect(HttpServletRequest request, HttpServletResponse response, Member member, String accessToken, String refreshToken) throws IOException {
-////        String accessToken = delegateAccessToken(member, authorities);  // (6-1)
-////        String refreshToken = delegateRefreshToken(member.getEmail());     // (6-2)
-//
-//        String uri = createURI(accessToken, refreshToken).toString();   // (6-3)
-//
-//        //헤더에 토큰 넣기
-//        response.setHeader("Authorization", "Bearer " + accessToken);
-//        response.setHeader("Refresh", refreshToken);
-//
-//        getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
-//    }
-//
-//    private URI createURI(String accessToken, String refreshToken) {
-//        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-//        queryParams.add("access_token", "Bearer " + accessToken);
-//        queryParams.add("refresh_token", refreshToken);
-//
-//        //TODO Oauth2 성공 후 리다이렉트 할 주소 넣기
-//        return UriComponentsBuilder
-//                .newInstance()
-//                .scheme("http")
-//                //.host("musicforecast.s3-website.ap-northeast-2.amazonaws.com")
-//                .host("localhost")
-//                //.port(80)
-//                .path("/")
-//                .queryParams(queryParams)
-//                .build()
-//                .toUri();
-//
-////        return UriComponentsBuilder
-////                .newInstance()
-////                .scheme("http")
-////                .host("seb008stockholm.s3-website.ap-northeast-2.amazonaws.com")
-//////                .port(8080)
-////                .path("/")
-////                .queryParams(queryParams)
-////                .build()
-////                .toUri();
-//    }
 
     private String delegateAccessToken(Member member, List<String> authorities) {
         Map<String, Object> claims = new HashMap<>(); //토큰에 넣고싶은 member 정보
