@@ -5,6 +5,7 @@ import mainproject.musicforecast.domain.member.dto.MemberResponseDto;
 import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.member.mapper.MemberMapper;
 import mainproject.musicforecast.domain.member.service.MemberService;
+import mainproject.musicforecast.domain.playlist.entity.Playlist;
 import mainproject.musicforecast.domain.post.dto.PostPatchDto;
 import mainproject.musicforecast.domain.post.dto.PostPostDto;
 import mainproject.musicforecast.domain.post.dto.PostResponseDto;
@@ -35,6 +36,11 @@ public interface PostMapper {
         post.setText( postPostDto.getText() );
         post.setMember(memberService.findMember(member.getMemberId()));
         post.setCreatedAt(LocalDateTime.now());
+
+
+        Playlist playlist = new Playlist();
+        playlist.setPlaylistId(postPostDto.getPlaylistId());
+        post.setPlaylist(playlist);
 
         return post;
     }

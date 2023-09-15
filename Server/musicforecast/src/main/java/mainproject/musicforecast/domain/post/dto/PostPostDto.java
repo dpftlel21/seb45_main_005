@@ -17,6 +17,10 @@ public class PostPostDto {
     @NotBlank(message = "글을 작성해주세요.")
     private String text;
 
+    @Positive
+    private Long playlistId; // 플레이리스트 ID 필드 추가
+
+
     public Long getMemberId() {
         return memberId;
     }
@@ -27,6 +31,14 @@ public class PostPostDto {
 
     public String getText() {
         return text;
+    }
+
+
+    public void setPlaylistId(long playlistId) {
+        this.playlistId = playlistId;
+    }
+    public long getPlaylistId() {
+        return playlistId;
     }
 
     public Member getMember(){
