@@ -67,7 +67,7 @@ const PlaylistsShowAll = () => {
             </div>
             {/* 플레이리스트 */}
             <div className="w-full h-[50px] flex justify-between items-center mt-8 font-['Anton-Regular']">
-              <h1 className="ml-8">My Playlists</h1>
+              <h1 className="ml-8">Recommend</h1>
             </div>
             {/* 플리 앨범, 제목, 내용 */}
             <ul className="w-[550px] h-[450px] flex flex-wrap overflow-y-scroll">

@@ -18,7 +18,9 @@ export type SongInfo = {
 
 const SongAddModal = () => {
   const dispatch = useDispatch();
-  const playlistsInfo: PlaylistInfo[] = useSelector((state: RootState) => state.playlists.value);
+  const myPlaylistsInfo: PlaylistInfo[] = useSelector(
+    (state: RootState) => state.playlists.myPlaylist
+  );
 
   const token = useSelector((state: RootState) => state.login.accessToken);
 
@@ -63,7 +65,7 @@ const SongAddModal = () => {
             </button>
           </div>
           <ul className="w-full h-[200px] mt-6 flex flex-col overflow-y-scroll">
-            {playlistsInfo.map((el) => {
+            {myPlaylistsInfo.map((el) => {
               return (
                 <li
                   className="flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"

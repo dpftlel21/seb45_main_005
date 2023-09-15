@@ -41,7 +41,7 @@ const SongLists = () => {
       </div>
 
       {/* 플리 노래목록 */}
-      <ul className="w-full h-[350px] flex flex-col overflow-y-scroll">
+      <ul className="w-full h-[450px] flex flex-col overflow-y-scroll">
         {SongData.map((el, index) => (
           <li
             className={`w-full h-[70px] grid grid-cols-10 items-center text-center border-b-2 border-solid border-gray-400 border-opacity-20 ${
