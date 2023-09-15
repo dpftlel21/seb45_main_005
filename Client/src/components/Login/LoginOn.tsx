@@ -114,7 +114,9 @@ const LoginOn = () => {
     <>
       <main className="bg-[#F2F2F2] h-screen">
         <div className=" flex flex-col justify-center items-center ">
-          <img src={Logo} alt="" className="my-20" />
+          <Link to="/">
+            <img src={Logo} alt="" className="my-20" />
+          </Link>
           <div className="flex flex-col border-2 border-solid border-none shadow-2xl rounded-2xl">
             <form
               onSubmit={handleSubmit(onSubmit)}
