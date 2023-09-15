@@ -4,6 +4,8 @@ import PlayButton from '../../assets/images/Frame7.png';
 import Pause from '../../assets/images/pause.png';
 import Mute from '../../assets/images/mute.png';
 import Notmute from '../../assets/images/notmute.png';
+import NextBtn from '../../assets/images/nextBtn.svg';
+import PrevBtn from '../../assets/images/previousBtn.svg';
 import data from './Data/data.json';
 
 interface CustomAudioPlayerProps {
@@ -119,45 +121,67 @@ const Plyer: React.FC<CustomAudioPlayerProps> = ({
   };
 
   return (
-    <div className="custom-audio-player">
-      <div className="player-controls">
-        <div>{data[currentIdx].title}</div>
-        <div>{data[currentIdx].ArtistName}</div>
-        <button onClick={handlePlayPause}>
-          {isPlaying ? <img src={Pause} /> : <img src={PlayButton} />}
-        </button>
-        <button onClick={handleMuteUnmute}>
-          {isMuted ? <img src={Mute} /> : <img src={Notmute} />}
-        </button>
-        <div className="time">{formatTime(currentTime)}</div>
-        {duration && <div className="time">{formatTime(duration)}</div>}
-        <input
-          type="range"
-          min={0}
-          max={1}
-          value={volumeValue}
-          step={0.01}
-          onChange={handleVolumeChange}
-        />
-        <input
-          type="range"
-          min={0}
-          max={duration} // 영상의 총 길이를 최대 값으로 설정
-          step={0.01}
-          value={currentTime}
-          onChange={handleSeek}
-        />
-        <button onClick={handleNext}>다음</button>
-        <button onClick={handlePre} className="w-32">
-          이전
-        </button>
+    <div className="custom-audio-player h-[150px] bg-[#444] bg-opacity-10 shadow-xl rounded-xl backdrop-blur-xl">
+      <div className="player-controls w-full flex justify-center items-center">
+        <div>
+          <p className="text-xl font-['Anton-Regular']">{data[currentIdx].title}</p>
+          <p className="mt-2">{data[currentIdx].ArtistName}</p>
+        </div>
+
+        <div className="flex flex-col mx-20">
+          <div className="flex justify-around items-center">
+            <button onClick={handlePre}>
+              <img src={PrevBtn} className="w-[40px] h-[40px]" />
+            </button>
+            <button onClick={handlePlayPause}>
+              {isPlaying ? (
+                <img src={Pause} className="w-[100px] h-[100px]" />
+              ) : (
+                <img src={PlayButton} className="w-[100px] h-[100px]" />
+              )}
+            </button>
+            <button onClick={handleNext}>
+              <img src={NextBtn} className="w-[40px] h-[40px]" />
+            </button>
+          </div>
+
+          <div className="flex">
+            <div className="time">{formatTime(currentTime)}</div>
+            <input
+              className="w-[600px] mx-5 "
+              type="range"
+              min={0}
+              max={duration} // 영상의 총 길이를 최대 값으로 설정
+              step={0.01}
+              value={currentTime}
+              onChange={handleSeek}
+            />
+
+            {duration && <div className="time">{formatTime(duration)}</div>}
+          </div>
+        </div>
+
+        <div>
+          <button onClick={handleMuteUnmute}>
+            {isMuted ? <img src={Mute} /> : <img src={Notmute} />}
+          </button>
+          <input
+            type="range"
+            min={0}
+            max={1}
+            value={volumeValue}
+            step={0.01}
+            onChange={handleVolumeChange}
+          />
+        </div>
       </div>
+
       <ReactPlayer
         url={url}
         playing={isPlaying}
         controls={true}
         muted={isMuted}
-        width="100"
+        width="0"
         height="300px"
         volume={volumeValue}
         onProgress={handleProgress}

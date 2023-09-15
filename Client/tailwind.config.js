@@ -6,6 +6,10 @@ module.exports = {
         'sigmar-one': ['Sigmar One', 'cursive'],
         'spoqa-hansans': ['Spoqa Han Sans Neo', 'sans-serif'],
       },
+      colors: {
+        'slider-bg': '#C487F4',
+        'slider-thumb': '#C487F4',
+      },
       width: {
         '1040': '1040px',
         '1200': '1200px',
