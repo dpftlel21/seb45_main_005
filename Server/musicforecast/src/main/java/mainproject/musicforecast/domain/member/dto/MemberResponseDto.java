@@ -12,4 +12,7 @@ import java.util.List;
 public class MemberResponseDto {
     private long memberId;
     private String nickname;
+    private String email;
+    private String intro;
+    private String image;
 }
