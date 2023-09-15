@@ -78,15 +78,13 @@ public class MemberController {
 
         List<Post> response = memberService.findMemberPost(user);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(mapper.memberToMemberPostResponseDto(user, response), HttpStatus.OK);
     }
     //회원 탈퇴 기능
-    @DeleteMapping("/delete/{memberId}")
-    public ResponseEntity deleteMember(@PathVariable("memberId") @Positive long memberId
-                                       /*@AuthenticationPrincipal Member user*/) {
+    @DeleteMapping("/delete")
+    public ResponseEntity deleteMember(@AuthenticationPrincipal Member user) {
 
-        memberService.deleteMember(memberId);
-//        memberService.deleteMember(memberId, user);
+        memberService.deleteMember(user);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -1,5 +1,6 @@
 package mainproject.musicforecast.domain.post.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import mainproject.musicforecast.domain.comment.dto.CommentResponseDto;

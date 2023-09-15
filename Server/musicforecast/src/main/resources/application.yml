@@ -26,7 +26,7 @@ spring:
             client-secret: ${KAKAO_CLIENT_SECRET}
             scope:
               - account_email
-            client-authentication-method: POST
+            client-authentication-method: GET
             client-name: Kakao
         provider:
           kakao:

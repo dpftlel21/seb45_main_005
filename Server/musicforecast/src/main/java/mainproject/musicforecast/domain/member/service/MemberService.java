@@ -4,6 +4,7 @@ import mainproject.musicforecast.domain.member.auth.utils.CustomAuthorityUtils;
 import mainproject.musicforecast.domain.member.dto.MemberResponseDto;
 import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.member.repository.MemberRepository;
+import mainproject.musicforecast.domain.member.utils.RandomNumberGenerator;
 import mainproject.musicforecast.domain.post.entity.Post;
 import mainproject.musicforecast.domain.post.repository.PostRepository;
 import mainproject.musicforecast.domain.provider.Provider;
@@ -49,7 +50,8 @@ public class MemberService {
 
         Provider provider = member.getProvider();
 
-        if (provider.getProviderName() != "Google"){
+        if (provider.getProviderName().equals("MusicForecast")){
+
             String encryptedPassword = passwordEncoder.encode(member.getPassword());
             member.setPassword(encryptedPassword);
 
@@ -94,20 +96,15 @@ public class MemberService {
 
         return findMember;
     }
-//    playlist에 있음
-//    public Member findMemberPlaylist(long memberId) {
-//        Member member = new Member();
-//        return member;
-//    }
 
     public List<Post> findMemberPost(Member user) {
         return postRepository.findAllByMember(user);
     }
 
-    public void deleteMember(long memberId) {
-
-        //회원 존재 여부 확인
-        Member findMember = findVerifiedMember(memberId);
+    public void deleteMember(Member user) {
+//
+//        //회원 존재 여부 확인
+//        Member findMember = findVerifiedMember(memberId);
 
 //        //본인이 맞는지 확인
 //        if(findMember.getMemberId() != user.getMemberId()){
@@ -116,7 +113,14 @@ public class MemberService {
 
         //TODO 지금은 완전 삭제라 재가입 가능, 회원 상태를 만든다면 탈퇴계정인걸 알면 같은 이메일로 재가입 불가
 
-        memberRepository.delete(findMember);
+        String randomString = RandomNumberGenerator.generateRandomString(20);
+        user.setEmail(randomString + "@email.com");
+        user.setMemberStatus(Member.MemberStatus.MEMBER_QUIT);
+        user.setRoles(null);
+        user.setNickname(null);
+
+        memberRepository.save(user);
+//        memberRepository.delete(findMember);
     }
 
     @Transactional(readOnly = true)
@@ -126,7 +130,7 @@ public class MemberService {
         Member findMember =
                 optionalMember.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-//멤버 상태가 있을 경우 사용
+
 //        if(findMember.getMemberStatus().equals(Member.MemberStatus.MEMBER_QUIT))
 //            throw new BusinessLogicException(ExceptionCode.MEMBER_STATUS_DELETE);
 
