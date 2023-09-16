@@ -47,6 +47,12 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         var oAuth2User = (OAuth2User)authentication.getPrincipal();
 
+        String token = authentication.toString();
+        System.out.println(token + "\n");
+        System.out.println(authentication+ "\n");
+
+        System.out.println(oAuth2User);
+
         String email = String.valueOf(oAuth2User.getAttributes().get("email")); // (3)
         String nickname = null;
 
@@ -57,15 +63,13 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         if(optionalMember.isPresent()) {
             member = optionalMember.get();
         }else {
-            nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
-            if (nickname == null) {
+            //nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
                 int atIndex = email.indexOf("@"); // "@" 기호의 위치를 찾습니다.
 
                 if (atIndex != -1) {
                     nickname = email.substring(0, atIndex); // "@" 기호 이전까지의 부분을 추출합니다.
                 } else {
                     nickname = "닉네임을 입력해주세요.";
-                }
             }
             member = saveMember(email, nickname);
         }
@@ -112,7 +116,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         return accessToken;
     }
 
-    private String delegateRefreshToken(String username) {
+
+    private String delegateRefreshToken(String username) { // username == email
         String subject = username;
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
@@ -127,7 +132,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         queryParams.add("access_token", "Bearer " + accessToken);
         queryParams.add("refresh_token", refreshToken);
         queryParams.add("memberId", memberId);
-        //queryParams.add("nickname", nickname);
+        queryParams.add("nickname", nickname);
 
 
         //TODO Oauth2 성공 후 리다이렉트 할 주소 넣기

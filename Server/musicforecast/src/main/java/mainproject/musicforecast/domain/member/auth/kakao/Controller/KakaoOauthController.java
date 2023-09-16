@@ -1,6 +1,7 @@
 package mainproject.musicforecast.domain.member.auth.kakao.Controller;
 
 import mainproject.musicforecast.domain.member.auth.kakao.Service.KakaoOauthService;
+import mainproject.musicforecast.domain.member.auth.kakao.Service.OauthService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
@@ -11,9 +12,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("/oauth")
 public class KakaoOauthController {
-    public KakaoOauthService kakaoOauthService;
-    public KakaoOauthController(KakaoOauthService kakaoOauthService) {
+    private final KakaoOauthService kakaoOauthService;
+    private final OauthService oauthService;
+    public KakaoOauthController(KakaoOauthService kakaoOauthService,
+                                OauthService oauthService) {
         this.kakaoOauthService = kakaoOauthService;
+        this.oauthService = oauthService;
     }
 
     @GetMapping("/kakao")
@@ -32,5 +36,15 @@ public class KakaoOauthController {
 //        map.remove("nickname");
         //String jsonResponse = "성공";
         return ResponseEntity.ok().headers(tokenHeader).body(jsonResponse);
+    }
+
+    @GetMapping("/google")
+    public ResponseEntity googleCallback(@RequestHeader("Authorization") String token) {
+
+        MultiValueMap map = oauthService.createGoogleUser(token);
+
+        HttpHeaders tokenHeader = new HttpHeaders(map);
+
+        return ResponseEntity.ok().headers(tokenHeader).body("");
     }
 }

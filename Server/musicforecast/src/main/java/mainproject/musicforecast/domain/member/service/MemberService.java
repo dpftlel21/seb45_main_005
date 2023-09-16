@@ -46,11 +46,12 @@ public class MemberService {
     }
     public Member createMember(Member member) {
 
-        verifyExistsEmail(member.getEmail());
-
         Provider provider = member.getProvider();
 
         if (provider.getProviderName().equals("MusicForecast")){
+
+            // 웹 서비스 내에 중복 메일 확인
+            verifyExistsEmail(member.getEmail());
 
             String encryptedPassword = passwordEncoder.encode(member.getPassword());
             member.setPassword(encryptedPassword);
@@ -61,7 +62,7 @@ public class MemberService {
             Question question = questionService.findVerifiedQuestion(member.getQuestionNumber());
 
             member.setQuestion(question);
-        }else {
+        } else {
             List<String> roles = customAuthorityUtils.createRoles(member.getEmail());
             member.setRoles(roles);
         }
@@ -139,8 +140,14 @@ public class MemberService {
 
     private void verifyExistsEmail(String email) {
         Optional<Member> member = memberRepository.findByEmail(email);
+
         if(member.isPresent()) {
-            throw new BusinessLogicException(ExceptionCode.MEMBER_IS_EXIST);
+            Member findMember = member.get();
+            if(findMember.getProvider().getProviderName().equals("Google") || findMember.getProvider().getProviderName().equals("KaKao")){
+                // 중복된 메일이 있을 수 있지만 가입한 루트가 구글이나 카카오면 회원가입 가능
+            } else {
+                throw new BusinessLogicException(ExceptionCode.MEMBER_IS_EXIST);
+            }
         }
     }
     @Transactional(readOnly = true)

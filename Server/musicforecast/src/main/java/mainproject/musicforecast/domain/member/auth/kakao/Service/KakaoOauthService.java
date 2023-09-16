@@ -132,7 +132,7 @@ public class KakaoOauthService extends SimpleUrlAuthenticationSuccessHandler {
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result);
 
-            int id = element.getAsJsonObject().get("id").getAsInt();
+            long id = element.getAsJsonObject().get("id").getAsLong();
             boolean hasEmail = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsBoolean();
             String email = "";
             String nickname = element.getAsJsonObject().get("properties").getAsJsonObject().get("nickname").getAsString();;

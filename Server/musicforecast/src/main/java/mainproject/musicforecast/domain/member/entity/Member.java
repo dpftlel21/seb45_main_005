@@ -11,6 +11,7 @@ import mainproject.musicforecast.domain.question.Question;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +48,12 @@ public class Member {
 
     @Column
     private String image;
+
+    @Column
+    private String sub; // 구글 회원 고유 ID
+
+    @Column
+    private String kakaoId; // KAKAO 회원 고유 ID
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
