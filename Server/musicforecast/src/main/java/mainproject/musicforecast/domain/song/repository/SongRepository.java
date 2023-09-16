@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SongRepository extends JpaRepository<Song, Long> {
 
@@ -22,6 +23,9 @@ public interface SongRepository extends JpaRepository<Song, Long> {
     @Modifying
     @Query("DELETE FROM Song s WHERE s.title=:title AND s.artistName=:artistName AND s.albumName=:albumName")
     void deleteDuplicateSongs(@Param("title") String title, @Param("artistName") String artistName, @Param("albumName") String albumName);
+
+    @Query("SELECT s FROM Song s WHERE s.title=:title AND s.artistName=:artistName AND s.albumName=:albumName")
+    Optional<Song> findDuplicatedSong(@Param("title") String title, @Param("artistName") String artistName, @Param("albumName") String albumName);
 
     @Query("SELECT p FROM PlaylistSong p WHERE p.song.songId=:songId AND p.playlist.playlistId=:playlistId")
     PlaylistSong findExistSong(long songId, long playlistId);
