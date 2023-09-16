@@ -1,4 +1,35 @@
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setServeyA } from '../../../redux/slice/MUBTISlice';
+
 const Survey = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSurvey = (a: number) => {
+    dispatch(setServeyA(a));
+    switch (a) {
+      case 1:
+        navigate('../mubti/mood');
+        break;
+
+      case 2:
+        navigate('../mubti/situation');
+        break;
+
+      case 3:
+        navigate('../mubti/liking');
+        break;
+
+      case 4:
+        navigate('../mubti/result');
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <div
       style={{
@@ -16,30 +47,34 @@ const Survey = () => {
       <h2 className="text-white text-2xl font-bold my-8">
         간단한 설문조사를 진행할 예정입니다. 본인의 현재 상황을 알려주세요 !
       </h2>
-      <a
-        href="./mood"
+      <button
+        onClick={() => handleSurvey(1)}
+        // href="./mood"
         className="inline-flex justify-center items-center w-[450px] h-[50px] bg-[#D9D9D9] text-black font-bold my-5 rounded-full hover:bg-[#EFD0A0]"
       >
         기분
-      </a>
-      <a
-        href="./situation"
+      </button>
+      <button
+        onClick={() => handleSurvey(2)}
+        // href="./situation"
         className="inline-flex justify-center items-center w-[450px] h-[50px] bg-[#D9D9D9] text-black font-bold my-5 rounded-full hover:bg-[#EFD0A0]"
       >
         상황 (운동,공부,잠)
-      </a>
-      <a
-        href="./liking"
+      </button>
+      <button
+        onClick={() => handleSurvey(3)}
+        // href="./liking"
         className="inline-flex justify-center items-center w-[450px] h-[50px] bg-[#D9D9D9] text-black font-bold my-5 rounded-full hover:bg-[#EFD0A0]"
       >
-        원하는 느낌
-      </a>
-      <a
-        href="./result"
+        노래 분위기
+      </button>
+      <button
+        onClick={() => handleSurvey(4)}
+        // href="./result"
         className="inline-flex justify-center items-center w-[450px] h-[50px] bg-[#D9D9D9] text-black font-bold my-5 rounded-full hover:bg-[#EFD0A0]"
       >
         유튜버 플레이리스트
-      </a>
+      </button>
     </div>
   );
 };

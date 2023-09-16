@@ -32,7 +32,7 @@ const playlistIcon = () => {
         onClick={handleOpenModal}
         onKeyPress={handleEnterKeyPress}
         tabIndex={0}
-        className="w-[90px] h-[90px] fixed right-0 bottom-0 mr-8 mb-8"
+        className="w-[90px] h-[90px] fixed right-0 bottom-0 mr-8 mb-8 z-30"
       >
         <img
           src={playIcon}

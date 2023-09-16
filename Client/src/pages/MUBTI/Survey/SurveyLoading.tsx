@@ -1,7 +1,41 @@
-import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'src/redux/store';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import playlistdisc from '../../../assets/images/playlistdisc.png';
+import { serveyResult } from '../../../redux/slice/MUBTISlice';
 
 const SurveyLoading = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate('../mubti/result');
+  };
+
+  const a = useSelector((state: RootState) => state.mubti.serveyA);
+  const b = useSelector((state: RootState) => state.mubti.serveyB);
+
+  const headers = {
+    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+  };
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/mubti/result?page=1&size=10&a=${a}&b=${b}`,
+        { headers }
+      )
+      .then((res) => {
+        dispatch(serveyResult(res.data.data));
+        console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div
       style={{
@@ -27,12 +61,13 @@ const SurveyLoading = () => {
         />
       </div>
 
-      <a
-        href="./result"
+      <button
+        onClick={handleNavigate}
+        // href="./result"
         className="mt-12 w-[180px] h-[50px] inline-flex justify-center items-center rounded-2xl bg-[#EFD0A0] ml-6 text-xl"
       >
         결과보기
-      </a>
+      </button>
     </div>
   );
 };

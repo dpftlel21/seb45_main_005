@@ -18,21 +18,21 @@ const WeatherChange = () => {
   };
 
   const changeToCloudyWeather = () => {
-    dispatch(changeWeather('Cloudy'));
+    dispatch(changeWeather('Clouds'));
   };
 
   return (
-    <div className="w-[200px] flex justify-around">
-      <button className="w-[40px] h-[40px] bg-[#9ac9e4]" onClick={changeToClearWeather}>
+    <div className="w-[280px] flex justify-around">
+      <button className="w-[60px] h-[40px] bg-[#9ac9e4]" onClick={changeToClearWeather}>
         Clear
       </button>
-      <button className="w-[40px] h-[40px] bg-[#9ac9e4]" onClick={changeToRainWeather}>
+      <button className="w-[60px] h-[40px] bg-[#9ac9e4]" onClick={changeToRainWeather}>
         Rain
       </button>
-      <button className="w-[40px] h-[40px] bg-[#9ac9e4]" onClick={changeToSnowWeather}>
+      <button className="w-[60px] h-[40px] bg-[#9ac9e4]" onClick={changeToSnowWeather}>
         Snow
       </button>
-      <button className="w-[40px] h-[40px] bg-[#9ac9e4]" onClick={changeToCloudyWeather}>
+      <button className="w-[60px] h-[40px] bg-[#9ac9e4]" onClick={changeToCloudyWeather}>
         Cloudy
       </button>
     </div>

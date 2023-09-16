@@ -8,6 +8,7 @@ import { setCurrentPage } from '../redux/slice/CommunitySlice';
 import 'animate.css';
 import PlaylistIcon from '../components/Playlist/PlaylistIcon';
 import Wrapper from '../components/Wrapper/Wrapper';
+// import Motherplayer from '../components/Main/Motherplayer';
 
 interface Post {
   postId: number;
@@ -165,10 +166,10 @@ const Community = () => {
               다음
             </button>
           </div>
-
-          <PlaylistIcon />
         </Wrapper>
       </div>
+
+      <PlaylistIcon />
     </>
   );
 };

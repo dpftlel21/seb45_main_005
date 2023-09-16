@@ -12,7 +12,7 @@ import MbtiMain from './MbtiMain';
 const Main = () => {
   // const slides = [<Contents />, <Chart />, <Footer />];
   return (
-    <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] ">
+    <div className="w-full bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] relative overflow-hidden">
       {/* <Swiper
         modules={[Navigation, Pagination, Scrollbar, Mousewheel, Keyboard]}
         style={{ height: '100vh' }}

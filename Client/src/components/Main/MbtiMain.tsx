@@ -27,9 +27,6 @@ const MbtiMain = () => {
     };
   }, [scrollYProgress]);
 
-  console.log(ref.current);
-  console.log(scrollYProgress.get());
-
   const imageMotion = {
     initial: { opacity: 0 },
     animate: { opacity: isVisible ? 1 : 0, x: isVisible ? 1 : -95 },

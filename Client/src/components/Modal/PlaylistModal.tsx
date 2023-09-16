@@ -11,14 +11,31 @@ import { setSelectedPlaylistId, playlistInfo, myPlaylist } from '../../redux/sli
 import { setPlaylistTitle } from '../../redux/slice/PlaylistsSlice';
 import { RootState } from '../../redux/store';
 import xbtn from '../../assets/images/xbtn.svg';
-import Album from '../../assets/images/Album.png';
 import PlaylistsShowAll from '../Playlist/PlaylistsShowAll';
 import PlaylistsDetail from '../Playlist/PlayListsDetail';
 import MyPlaylistsShowAll from '../Playlist/MyPlaylistsShowAll';
+import playlistdisc from '../../assets/images/playlistdisc.png';
 
 export type PlaylistInfo = {
   title: string;
   playlistId: number;
+};
+
+export type SongData = {
+  title: string;
+  imageUrl: string;
+  album: string;
+  artistName: string;
+  songId: number;
+};
+
+export type PlaylistData = {
+  title: string;
+  views: number;
+  playlistId: number;
+  memberId: number;
+  playlistSongs: [];
+  playlistTags: [];
 };
 
 const PlaylistModal = () => {
@@ -95,7 +112,7 @@ const PlaylistModal = () => {
   return (
     <>
       <div className="fixed bottom-0 flex justify-center bg-opacity-1 ">
-        <div className="w-[600px] h-[670px] mt-12 animate-fadeInBottomRight-fast fixed right-8 top-40">
+        <div className="w-[600px] h-[670px] mt-12 animate-fadeInBottomRight-fast fixed right-8 bottom-40">
           <div className="h-[670px] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca] animate-scale-anim  ">
             {/* 플레이리스트 상단 */}
             <div className="flex justify-around">
@@ -129,7 +146,7 @@ const PlaylistModal = () => {
                       className="h-[150px] w-[150px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
                     >
                       <div className=" cursor-pointer w-[100px] h-[100px]">
-                        <img src={Album} className=" cursor-pointer w-[100px] h-[100px]" />
+                        <img src={playlistdisc} className="animate-spin-slow" />
                         <h1 className="mt-4 text-xs">{myEl.title}</h1>
                       </div>
                     </li>
@@ -155,7 +172,7 @@ const PlaylistModal = () => {
                       className="h-[150px] w-[150px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
                     >
                       <div className=" cursor-pointer w-[100px] h-[100px]">
-                        <img src={Album} className=" cursor-pointer w-[100px] h-[100px]" />
+                        <img src={playlistdisc} className="animate-spin-slow" />
                         <h1 className="mt-4 text-xs">{el.title}</h1>
                       </div>
                     </li>

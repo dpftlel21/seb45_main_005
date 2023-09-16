@@ -29,7 +29,7 @@ const MyPlaylistsShowAll = () => {
   return (
     <>
       <div className="w-[600px] h-[670px] fixed bottom-0 flex justify-center bg-opacity-1 ">
-        <div className="w-[600px] h-[670px] mt-12 fixed right-8 top-40">
+        <div className="w-[600px] h-[670px] mt-12 fixed right-8 bottom-40">
           <div className="h-[670px] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca]">
             {/* 플레이리스트 상단 */}
             <div className="flex justify-around">
