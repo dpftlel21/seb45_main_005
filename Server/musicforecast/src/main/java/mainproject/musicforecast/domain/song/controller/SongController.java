@@ -91,8 +91,7 @@ public class SongController {
                 long songId = songService.findSongId(title, artistName, albumName).getSongId();
                 System.out.println("song Id : " + songId);
                 SongDto.SpotifyAddResponseDto spotifyAddResponseDto = songMapper.toSpotifyAddResponseDto(songId, artistName, title, albumName, imageUrl);
-                if (addResponseDtoList.indexOf(spotifyAddResponseDto) == -1)
-                    addResponseDtoList.add(spotifyAddResponseDto);
+                addResponseDtoList.add(spotifyAddResponseDto);
             }
             if (!keywordService.findKeyword(keyword)) { // 중복된 키워드가 아닐때
                 SongDto.KeywordResponse keywordResponse = SongDto.KeywordResponse.builder()
