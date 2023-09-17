@@ -25,9 +25,6 @@ interface DecodedToken {
   exp: number;
 }
 
-// testtest2@test.com
-// test1234569!!
-
 const LoginOn = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.login.accessToken);
@@ -60,6 +57,7 @@ const LoginOn = () => {
       window.location.href = '/';
     } catch (error) {
       console.error('로그인 실패:', error);
+      alert('아이디 또는 비밀번호가 일치하지 않습니다.');
     }
   };
 

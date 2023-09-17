@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
 import store, { persistor } from './redux/store';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
@@ -20,6 +21,7 @@ root.render(
           clientId={process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}
           onScriptLoadError={() => console.log('실패')}
         >
+          <ToastContainer />
           <App />
         </GoogleOAuthProvider>
       </PersistGate>
