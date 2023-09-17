@@ -1,10 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import Today from '../../assets/images/todaymusic.png';
-import SunBackground from '../../assets/images/GIF/sun.gif';
-import RainyBackground from '../../assets/images/GIF/rainy.gif';
-import SnowBackground from '../../assets/images/GIF/snow.gif';
-import CloudyBackground from '../../assets/images/GIF/cloudy.gif';
 import RecommendLists from './Genre/RecommendLists';
 import Weather from './Weather';
 import WeatherChange from './Button/WeatherChange';
@@ -16,6 +12,15 @@ export type WeatherData = {
 const ContentBox = () => {
   const weather = useSelector((state: RootState) => state.weather.value);
   console.log(weather);
+
+  const SunBackground =
+    'https://user-images.githubusercontent.com/101685650/268509123-363c9802-07a3-4c35-85fe-31182b48eb78.gif';
+  const RainyBackground =
+    'https://user-images.githubusercontent.com/101685650/268509143-d480188e-ac76-4be5-b8f0-433fe91aae0a.gif';
+  const SnowBackground =
+    'https://user-images.githubusercontent.com/101685650/268509137-d5720ad4-7a3e-417a-b098-23ab5d747897.gif';
+  const CloudyBackground =
+    'https://user-images.githubusercontent.com/101685650/268509096-5fc53919-dc9e-415f-a35b-aec99f9a6d61.gif';
 
   let backgroundImage = SunBackground; // 기본 이미지로 설정
 
@@ -32,7 +37,7 @@ const ContentBox = () => {
 
   return (
     <div
-      className="w-[1230px] h-[720px] bg-[#3c84d633] bg-opacity-5 border-1 shadow-md"
+      className="w-[1230px] h-[70vh] bg-[#3c84d633] bg-opacity-5 border-1 shadow-xl rounded-xl"
       style={{
         backgroundImage: `url(${backgroundImage})`, // 변경된 이미지 경로를 설정
         backgroundPosition: 'center',
