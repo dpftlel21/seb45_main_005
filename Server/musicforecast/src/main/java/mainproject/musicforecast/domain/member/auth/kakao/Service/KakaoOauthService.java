@@ -66,7 +66,6 @@ public class KakaoOauthService extends SimpleUrlAuthenticationSuccessHandler {
             sb.append("&code=" + code);
             bw.write(sb.toString());
             bw.flush();
-
             //결과 코드가 200이라면 성공
             int responseCode = conn.getResponseCode();
             System.out.println("responseCode : " + responseCode);

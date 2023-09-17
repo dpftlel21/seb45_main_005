@@ -83,10 +83,10 @@ public class MemberController {
     }
     //회원 탈퇴 기능
     @DeleteMapping("/delete/{memberId}")
-    public ResponseEntity deleteMember(@PathVariable("memberId") long memberId) {
+    public ResponseEntity deleteMember(@AuthenticationPrincipal Member user) {
 
-//        memberService.deleteMember(user);
-        memberService.deleteMember(memberId);
+        memberService.deleteMember(user);
+//        memberService.deleteMember(memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

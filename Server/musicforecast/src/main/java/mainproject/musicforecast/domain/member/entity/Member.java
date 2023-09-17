@@ -50,10 +50,10 @@ public class Member {
     private String image;
 
     @Column
-    private String sub; // 구글 회원 고유 ID
+    private BigInteger sub; // 구글 회원 고유 ID
 
     @Column
-    private String kakaoId; // KAKAO 회원 고유 ID
+    private BigInteger kakaoId; // KAKAO 회원 고유 ID
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
