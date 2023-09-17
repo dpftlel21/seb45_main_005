@@ -101,7 +101,7 @@ const App = () => {
           <Route path={RouteConst.PwdFind} element={<PwdFind />} />
         </Routes>
       </BrowserRouter>
-      <div className=" w-[600px] fixed bottom-10">
+      <div className="w-[1300px] fixed bottom-0">
         <Motherplayer />
       </div>
     </>
