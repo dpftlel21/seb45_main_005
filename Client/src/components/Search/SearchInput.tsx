@@ -19,6 +19,7 @@ const SearchInput = () => {
       )
       .then((res) => {
         dispatch(songlistInfo(res.data));
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -32,7 +33,7 @@ const SearchInput = () => {
   };
 
   return (
-    <div className="flex justify-around my-8">
+    <div className="flex justify-around my-6">
       {/* 검색칸 */}
       <div className="w-[528px] h-[50px] flex items-center bg-[#faf7f7e8] rounded-3xl  ">
         <input

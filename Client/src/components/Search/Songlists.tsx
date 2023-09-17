@@ -31,7 +31,7 @@ const SongLists = () => {
   return (
     <>
       {/* 플리 앨범, 제목, 내용 */}
-      <div className="w-full h-[80px] grid grid-cols-10 text-center items-center font-['Anton-Regular'] border-y-2 border-solid border-gray-400">
+      <div className="w-full h-[50px] grid grid-cols-10 text-center items-center font-['Anton-Regular'] border-y-2 border-solid border-gray-400">
         <h3 className="col-span-1">#</h3>
         <h3 className="col-span-1">No.</h3>
         <h3 className="col-span-2">Artist</h3>
@@ -41,10 +41,10 @@ const SongLists = () => {
       </div>
 
       {/* 플리 노래목록 */}
-      <ul className="w-full h-[450px] flex flex-col overflow-y-scroll">
+      <ul className="w-full h-[30vh] flex flex-col overflow-y-scroll">
         {SongData.map((el, index) => (
           <li
-            className={`w-full h-[70px] grid grid-cols-10 items-center text-center border-b-2 border-solid border-gray-400 border-opacity-20 ${
+            className={`w-full h-[60px] grid grid-cols-10 items-center text-center border-b-2 border-solid border-gray-400 border-opacity-20 ${
               selectedItems.includes(el) ? 'bg-blue-200' : ''
             }`}
             key={index}
@@ -59,8 +59,8 @@ const SongLists = () => {
             <h3 className="col-span-1">{index + 1}</h3>
 
             <p className="text-sm col-span-2">{el.artistName}</p>
-            <div className="h-[50px] flex flex-col items-center my-4 col-span-2">
-              <img src={el.imageUrl} className="w-[50px] h-[50px] " />
+            <div className="h-[30px] flex flex-col items-center my-4 col-span-2">
+              <img src={el.imageUrl} className="w-[50px] h-[30px] " />
             </div>
             <h3 className="col-span-2">{el.albumName}</h3>
             <h3 className="col-span-2">{el.title}</h3>
