@@ -78,7 +78,8 @@ public class OauthService extends SimpleUrlAuthenticationSuccessHandler {
 
             br.close();
 
-            Optional<Member> optionalMember = memberRepository.findBySub(stringSub);
+//            Optional<Member> optionalMember = memberRepository.findBySub(stringSub);
+            Optional<Member> optionalMember = memberRepository.findByEmail(email);
 
             Member member = null;
             String nickname = null;
@@ -126,10 +127,10 @@ public class OauthService extends SimpleUrlAuthenticationSuccessHandler {
 
         //memberNum은 카카오나 구글에서 받은 고유 번호, 카카오는 id, 구글은 sub을 뜻한다
         if(providerName.equals("Google")){
-            savedMember.setSub(memberNum);
+//            savedMember.setSub(memberNum);
             provider = providerRepository.findByProviderName("Google");
         } else if(providerName.equals("KaKao")){
-            savedMember.setKakaoId(memberNum);
+//            savedMember.setKakaoId(memberNum);
             provider = providerRepository.findByProviderName("KaKao");
         }
 
