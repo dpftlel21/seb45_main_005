@@ -96,7 +96,7 @@ const Community = () => {
           <Header />
         </div>
         <Wrapper>
-          <div className="flex flex-col w-full h-[800px] items-center mt-4">
+          <div className="flex flex-col w-full h-[750px] items-center">
             <div className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#000000] justify-center">
               <button
                 className="w-[140px] text-center text-xs underline"

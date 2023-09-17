@@ -28,6 +28,7 @@ import EditProfile from './pages/EditProfile';
 import IdFind from './components/Login/IdFind';
 import PwdFind from './components/Login/PwdFind';
 import Motherplayer from './components/Main/Motherplayer';
+import CommunityEdit from './pages/CommunityEdit';
 
 const App = () => {
   const token = useSelector((state: RootState) => state.login.accessToken);
@@ -99,6 +100,7 @@ const App = () => {
           <Route path={RouteConst.SignUp} element={<SignUp />} />
           <Route path={RouteConst.IdFind} element={<IdFind />} />
           <Route path={RouteConst.PwdFind} element={<PwdFind />} />
+          <Route path={RouteConst.Edit} element={<CommunityEdit />} />
         </Routes>
       </BrowserRouter>
       <div className="w-full fixed bottom-0 flex justify-center">

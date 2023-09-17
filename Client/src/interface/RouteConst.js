@@ -19,4 +19,5 @@ export const RouteConst = {
   Search: '/search',
   IdFind: '/idfind',
   PwdFind: '/pwdfind',
+  Edit: '/community/:id/edit',
 };
