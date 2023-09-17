@@ -49,6 +49,14 @@ module.exports = {
         '0%': { transform: 'scale(0)' },
         '100%': { transform: 'scale(1)' },
       },
+      'slider': {
+        '0%': {
+          transform: 'translateX(-100%)',
+        },
+        '100%': {
+          transform: 'translateX(0%)',
+        },
+      },
     },
     animation: {
       'spin-slow': 'spin-slow 5s linear infinite',
@@ -58,6 +66,7 @@ module.exports = {
       'fadeInBottomRight-fast': 'fadeInBottomRight 2s cubic-bezier(0.42, 0, 0.02, 0.96)',
       'bounceIn': 'bounceIn 1s linear',
       'pulse': 'pulse 1s ease-in-out infinite',
+      'slider': 'slider 10s linear infinite ',
     },
   },
   plugins: [],

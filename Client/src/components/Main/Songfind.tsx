@@ -28,9 +28,6 @@ const Songfind = () => {
     };
   }, [scrollYProgress]);
 
-  console.log(ref.current);
-  console.log(scrollYProgress.get());
-
   const textMotion = {
     initial: { opacity: 0 },
     animate: { opacity: isVisible ? 1 : 0, y: isVisible ? 0 : -50 },

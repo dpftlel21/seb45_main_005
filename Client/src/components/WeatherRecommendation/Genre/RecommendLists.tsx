@@ -1,72 +1,58 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { openAlbumDetailModal } from '../../../redux/slice/ModalSlice';
-import Album from '../../../assets/images/Album.png';
-import AlbumModal from '../../Modal/AlbumModal';
 import { RootState } from '../../../redux/store';
+import { weatherResult } from '../../../redux/slice/WeatherSlice';
+import { openModal } from '../../../redux/slice/ModalSlice';
+import { openSongLists } from '../../../redux/slice/ModalSlice';
+import { setSelectedPlaylistId } from '../../../redux/slice/PlaylistsSlice';
+import playlistdisc from '../../../assets/images/playlistdisc.png';
 
 const RecommendLists = () => {
   const dispatch = useDispatch();
-  const isOpen = useSelector((state: RootState) => state.modal.isAlbumDetailOpen);
+  const weather = useSelector((state: RootState) => state.weather.value);
+  const RecommendResult = useSelector((state: RootState) => state.weather.Result);
 
-  const handleOpenModal = () => {
-    dispatch(openAlbumDetailModal());
+  const handleDetailOpen = async (playlistId: number) => {
+    dispatch(openModal());
+
+    setTimeout(async () => {
+      await dispatch(openSongLists());
+      dispatch(setSelectedPlaylistId(playlistId));
+    }, 1500);
   };
 
   // 날씨별 추천 리스트 가져오기
   useEffect(() => {
     axios
       .get(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/weather/result?page=1&size=10&q=Haze'
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/weather/result?page=1&size=10&q=${weather}`
       )
       .then((res) => {
-        console.log(res);
+        dispatch(weatherResult(res.data.data));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [weather]);
 
   return (
-    <div className="w-full flex flex-col justify-center items-center">
-      <h1 className="mt-12 font-['Anton-Regular'] text-2xl">RecommendLists</h1>
-      <div className="flex ">
-        <img
-          onClick={handleOpenModal}
-          src={Album}
-          alt="Album"
-          className="w-[200px] h-[200px] mt-12 hover:translate-y-[-15px] transition duration-300 ease-in-out"
-          tabIndex={0}
-        />
-        <img
-          src={Album}
-          alt="Album"
-          className="w-[200px] h-[200px] mt-12 hover:translate-y-[-15px] transition duration-300 ease-in-out"
-          tabIndex={0}
-        />
-        <img
-          src={Album}
-          alt="Album"
-          className="w-[200px] h-[200px] mt-12 hover:translate-y-[-15px] transition duration-300 ease-in-out"
-          tabIndex={0}
-        />
-        <img
-          src={Album}
-          alt="Album"
-          className="w-[200px] h-[200px] mt-12 hover:translate-y-[-15px] transition duration-300 ease-in-out"
-          tabIndex={0}
-        />
-        <img
-          src={Album}
-          alt="Album"
-          className="w-[200px] h-[200px] mt-12 hover:translate-y-[-15px] transition duration-300 ease-in-out"
-          tabIndex={0}
-        />
+    <>
+      <div className="w-full flex flex-col justify-center items-center">
+        <h1 className="my-8 font-['Anton-Regular'] text-2xl">RecommendLists</h1>
+        <div className="flex ">
+          {RecommendResult.map((el) => (
+            <div
+              onClick={() => handleDetailOpen(el.playlistId)}
+              className="flex flex-col justify-center w-[150px] bg-[#d8d5d5] bg-opacity-10 shadow-xl rounded-xl backdrop-blur-md mx-4 hover:translate-y-[-15px] transition duration-300 ease-in-out"
+            >
+              <img src={playlistdisc} className="animate-spin-slow w-[150px] h-[150px] my-4" />
+              <p className="h-[60px] font-bold text-lg text-center">{el.title}</p>
+            </div>
+          ))}
+        </div>
       </div>
-
-      {isOpen && <AlbumModal />}
-    </div>
+    </>
   );
 };
 

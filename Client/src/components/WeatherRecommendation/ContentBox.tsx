@@ -15,6 +15,7 @@ export type WeatherData = {
 
 const ContentBox = () => {
   const weather = useSelector((state: RootState) => state.weather.value);
+  console.log(weather);
 
   let backgroundImage = SunBackground; // 기본 이미지로 설정
 
@@ -25,7 +26,7 @@ const ContentBox = () => {
     backgroundImage = RainyBackground;
   } else if (weather === 'Snow') {
     backgroundImage = SnowBackground;
-  } else if (weather === 'Cloudy') {
+  } else if (weather === 'Clouds') {
     backgroundImage = CloudyBackground;
   }
 

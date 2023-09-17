@@ -43,7 +43,7 @@ const SongDeleteBtn = ({ songId }: deleteProps) => {
     <>
       <button
         onClick={handleSongDelete}
-        className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
+        className="w-[75px] h-[30px] my-4 ml-7 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
       >
         삭제하기
       </button>

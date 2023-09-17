@@ -19,6 +19,9 @@ const PlaylistsSlice = createSlice({
     playlistDetail: (state, action) => {
       state.detailInfo = action.payload;
     },
+    playlistData: (state, action) => {
+      state.detailData = action.payload;
+    },
     myPlaylist: (state, action) => {
       state.myPlaylist = action.payload;
     },
@@ -47,6 +50,7 @@ export const {
   playlistDetail,
   myPlaylist,
   myPlaylistDetail,
+  playlistData,
   setSelectedPlaylistId,
   setSelectedMemberId,
   setDetailData,

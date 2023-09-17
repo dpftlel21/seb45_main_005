@@ -52,7 +52,7 @@ const SongAddModal = () => {
   };
 
   return (
-    <div className=" font-['Anton-Regular'] bg-[#4a4b4a42] text-[#838282]">
+    <div className="font-['Anton-Regular'] bg-[#4a4b4a42] text-[#838282]">
       <div className="w-[300px] h-[350px] flex flex-col justify-center items-center fixed bottom-0 bg-[#414052] border-2 border-gray-500 border-solid animate-fadeIn">
         <div className="my-8 text-[#ffff]">
           <div className="flex">
