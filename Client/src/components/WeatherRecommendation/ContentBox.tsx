@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import Today from '../../assets/images/todaymusic.png';
-
 import RecommendLists from './Genre/RecommendLists';
 import Weather from './Weather';
 import WeatherChange from './Button/WeatherChange';

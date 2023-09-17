@@ -133,12 +133,12 @@ const CommunityDetail = () => {
         <Header />
 
         <div className="flex flex-col items-center">
-          <div className="w-[875px] mt-10">
+          <div className="w-[120vh] mt-10">
             {/* 상단 제목과 이름 좋아요 바 */}
-            <div className="w-[875px] h-[100px] border-b-[1px] border-solid border-black">
-              <div className="w-[875px] h-[50px] flex justify-between">
+            <div className="w-[120vh] h-[10vh] border-b-[1px] border-solid border-black">
+              <div className="w-[120vh] h-[5vh] flex justify-between">
                 <span className="text-xl">{posts.title}</span>
-                <div className="w-[150px] flex justify-center">
+                <div className="w-[30vh] flex justify-end">
                   <button onClick={handleEdit} className="mr-5 text-xs">
                     수정
                   </button>
@@ -147,13 +147,13 @@ const CommunityDetail = () => {
                   </button>
                 </div>
               </div>
-              <div className="w-[875px] h-[50px] flex items-center">
-                <img src={usericon} alt="유저아이콘" className="w-[40px] h-40px]" />
-                <span className="inline-flex w-[80px] h-[50px] items-center justify-center">
+              <div className="w-[120vh] h-[5vh] flex items-center">
+                <img src={usericon} alt="유저아이콘" className="w-[4vh] h-[4vh]" />
+                <span className="inline-flex w-[16vh] h-[10vh] items-center justify-center">
                   {posts.nickName}
                 </span>
-                <div className="w-[625px]"></div>
-                <div className="w-[150px] h-[50px] inline-flex items-center justify-center text-xs">
+                <div className="w-[100vh]"></div>
+                <div className="w-[30vh] h-[5vh] inline-flex items-center justify-end text-xs">
                   <span>{posts.voteCount}</span>
                   <button className="text-xl ml-2" onClick={handleLikeClick}>
                     {isLiked ? '❤️' : '🤍'}
@@ -164,47 +164,47 @@ const CommunityDetail = () => {
               </div>
             </div>
             {/* 플레이리스트 */}
-            <div className="flex flex-col w-[875px] h-[400px] items-center">
-              <div className="w-[875px] h-[20px] flex justify-end">
+            <div className="flex flex-col w-[120vh] h-[40vh] items-center">
+              <div className="w-[120vh] h-[4vh] flex justify-end">
                 <button className="text-xs">내 플레이리스트에 추가 ⎋</button>
               </div>
-              <div className="w-[875px] h-[150px]"></div>
-              <div className="flex items-center w-[800px] h-[200px]">
-                <ul className="playlist-buttons relative top-5 items-center flex gap-[20px] ">
-                  <li className="left-0 absolute w-[100px]">
+              <div className="w-[120vh] h-[10vh]"></div>
+              <div className="flex items-center w-[110vh] h-[20vh]">
+                <ul className="playlist-buttons relative top-5 items-center flex gap-[4vh] ">
+                  <li className="left-0 absolute w-[20vh]">
                     <button className="shadow-xl hover:scale-[150%]">
                       <img
-                        className="rounded-md w-[100px] h-[100px]"
+                        className="rounded-md w-[10vh] h-[10vh]"
                         src={musicicon}
                         alt="뮤직아이콘"
                       ></img>
                     </button>
                   </li>
 
-                  <li className="left-20 absolute w-[100px]">
+                  <li className="left-20 absolute w-[10vh]">
                     <button className="shadow-xl hover:scale-[150%]">
                       <img
-                        className="rounded-md w-[100px] h-[100px]"
+                        className="rounded-md w-[10vh] h-[10vh]"
                         src={musicicon}
                         alt="뮤직아이콘"
                       ></img>
                     </button>
                   </li>
 
-                  <li className="left-40 absolute w-[100px]">
+                  <li className="left-40 absolute w-[10vh]">
                     <button className="shadow-xl hover:scale-[150%]">
                       <img
-                        className="rounded-md w-[100px] h-[100px]"
+                        className="rounded-md w-[10vh] h-[10vh]"
                         src={musicicon}
                         alt="뮤직아이콘"
                       ></img>
                     </button>
                   </li>
 
-                  <li className="left-60 absolute w-[100px]">
+                  <li className="left-60 absolute w-[10vh]">
                     <button className="shadow-xl hover:scale-[150%]">
                       <img
-                        className="rounded-md w-[100px] h-[100px]"
+                        className="rounded-md w-[10vh] h-[10vh]"
                         src={musicicon}
                         alt="뮤직아이콘"
                       ></img>
@@ -214,8 +214,8 @@ const CommunityDetail = () => {
               </div>
             </div>
             {/* 게시글내용 */}
-            <div className="flex w-[875px] justify-center border-b-[1px] border-solid border-black">
-              <span className="w-[800px] mb-10">{posts.text}</span>
+            <div className="flex w-[120vh] justify-center border-b-[1px] border-solid border-black">
+              <span className="w-[110vh] mb-10">{posts.text}</span>
             </div>
           </div>
         </div>
@@ -228,7 +228,7 @@ const CommunityDetail = () => {
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 id="answer"
-                className="border-2 border-solid border-black w-[500px] h-[40px]"
+                className="border-2 border-solid border-black w-[80vh] h-[3vh]"
               />
               <button onClick={handleComment}>등록</button>
             </form>
@@ -238,8 +238,8 @@ const CommunityDetail = () => {
         <div>
           {savedComment.map((item, idx) => (
             <div key={idx} className="flex flex-col justify-center items-center">
-              <span className="w-[700px] h-[30px]">{item.nickname}</span>
-              <span className="w-[700px] h-[50px]">{item.text}</span>
+              <span className="w-[80vh] h-[2vh] text-xs">{item.nickname}</span>
+              <span className="w-[80vh] h-[2vh] text-xs">{item.text}</span>
             </div>
           ))}
         </div>

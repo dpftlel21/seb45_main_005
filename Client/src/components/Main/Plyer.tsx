@@ -126,34 +126,36 @@ const Plyer: React.FC<CustomAudioPlayerProps> = ({
   return (
     <>
       {loginconfirm && (
-        <div className="custom-audio-player w-[1000px] h-[75px] bg-[#444] bg-opacity-10 shadow-xl rounded-xl backdrop-blur-xl">
-          <div className="player-controls w-full flex justify-center items-center">
-            <div>
-              <p className="text-xl font-['Anton-Regular']">{data[currentIdx].title}</p>
-              <p className="mt-2">{data[currentIdx].ArtistName}</p>
+        <div className="custom-audio-player w-[150vh] h-[10vh] bg-[#444] bg-opacity-10 shadow-xl rounded-xl backdrop-blur-xl">
+          <div className="player-controls w-[150vh] flex justify-center items-center">
+            <div className="h-[10vh] w-[15vh]">
+              <p className="text-xl md:text-lg lg:text-2xs  font-['Anton-Regular']">
+                {data[currentIdx].title}
+              </p>
+              <p className="mt-2 md:text-lg lg:text-2xs ">{data[currentIdx].ArtistName}</p>
             </div>
 
-            <div className="flex flex-col mx-20">
-              <div className="flex justify-around items-center">
+            <div className="flex flex-col mx-[4vh] ">
+              <div className="flex justify-around items-center h-[6vh]">
                 <button onClick={handlePre}>
-                  <img src={PrevBtn} className="w-[20px] h-[20px]" />
+                  <img src={PrevBtn} className="w-[3vh] h-[3vh]" />
                 </button>
                 <button onClick={handlePlayPause}>
                   {isPlaying ? (
-                    <img src={Pause} className="w-[50px] h-[50px]" />
+                    <img src={Pause} className="w-[5vh] h-[5vh]" />
                   ) : (
-                    <img src={PlayButton} className="w-[50px] h-[50px]" />
+                    <img src={PlayButton} className="w-[10vh] h-[10vh]" />
                   )}
                 </button>
                 <button onClick={handleNext}>
-                  <img src={NextBtn} className="w-[20px] h-[20px]" />
+                  <img src={NextBtn} className="w-[3vh] h-[3vh]" />
                 </button>
               </div>
 
-              <div className="flex">
-                <div className="time">{formatTime(currentTime)}</div>
+              <div className="flex h-[3vh]">
+                <div className="time h-[3vh]">{formatTime(currentTime)}</div>
                 <input
-                  className="w-[400px] mx-5 "
+                  className="w-[80vh] h-[3vh] mx-5 "
                   type="range"
                   min={0}
                   max={duration} // 영상의 총 길이를 최대 값으로 설정
@@ -162,16 +164,16 @@ const Plyer: React.FC<CustomAudioPlayerProps> = ({
                   onChange={handleSeek}
                 />
 
-                {duration && <div className="time">{formatTime(duration)}</div>}
+                {duration && <div className="time h-[3vh]">{formatTime(duration)}</div>}
               </div>
             </div>
 
-            <div className="flex mx-2">
+            <div className="flex mx-2 w-[25vh]">
               <button onClick={handleMuteUnmute}>
                 {isMuted ? (
-                  <img src={Mute} className="w-[27px] h-[27px] mr-4" />
+                  <img src={Mute} className="w-[4vh] h-[4vh] mr-4" />
                 ) : (
-                  <img src={Notmute} className="w-[27px] h-[30px] mr-4" />
+                  <img src={Notmute} className="w-[4vh] h-[4vh] mr-4" />
                 )}
               </button>
               <input
@@ -181,6 +183,7 @@ const Plyer: React.FC<CustomAudioPlayerProps> = ({
                 value={volumeValue}
                 step={0.01}
                 onChange={handleVolumeChange}
+                className="w-[20vh]"
               />
             </div>
           </div>
