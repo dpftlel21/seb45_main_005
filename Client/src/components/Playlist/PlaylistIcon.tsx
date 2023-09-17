@@ -32,12 +32,12 @@ const playlistIcon = () => {
         onClick={handleOpenModal}
         onKeyPress={handleEnterKeyPress}
         tabIndex={0}
-        className="w-[90px] h-[90px] fixed right-0 bottom-0 mr-8 mb-8 z-30"
+        className="w-[10vh] h-[10vh] fixed right-0 bottom-0 mr-8 mb-8 z-30"
       >
         <img
           src={playIcon}
           alt="playIcon"
-          className="fixed right-0 bottom-0 mr-8 mb-8 hover:animate-bounceIn"
+          className="fixed right-0 bottom-0 mr-8 mb-8 hover:animate-bounceIn w-[10vh] h-[10vh]"
         />
       </button>
       {isOpen && <PlaylistModal />}

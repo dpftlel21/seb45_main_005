@@ -8,7 +8,7 @@ import { RootState } from 'src/redux/store';
 import Header from '../components/Header';
 
 const EditProfile = () => {
-  const memberid = useSelector((state: RootState) => state.login.memberid);
+  // const memberid = useSelector((state: RootState) => state.login.memberid);
   const accessToken = useSelector((state: RootState) => state.login.accessToken);
   const [nickname, setNickname] = useState('');
   const [myintro, setMyintro] = useState('');
@@ -22,17 +22,17 @@ const EditProfile = () => {
   const handleEdit = () => {
     axios
       .patch(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/profile/edit/${memberid}`,
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/my_page/101`,
         {
           image: '',
-          myintro,
+          intro: myintro,
           nickname,
         },
         { headers }
       )
       .then((res) => {
         console.log(res);
-        navigate('../mypage');
+        navigate('../');
       })
       .catch((err) => {
         console.log(err);

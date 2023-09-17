@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import Wrapper from '../../components/Wrapper/Wrapper';
-import MUBTIBackground from '../../assets/images/GIF/MUBTI.gif';
 
 const MUBTIMain = () => {
   const navigate = useNavigate();
@@ -21,7 +20,11 @@ const MUBTIMain = () => {
             }}
             className="flex flex-col justify-center items-center"
           >
-            <img src={MUBTIBackground} alt="MUBTI" className="h-[550px]" />
+            <img
+              src="https://user-images.githubusercontent.com/101685650/268509128-d79277d1-477d-410c-b6b0-0b68fc92d7a0.gif"
+              alt="MUBTI"
+              className="h-[550px]"
+            />
             <div className="flex flex-col justify-center items-center text-white">
               <h1 className="text-4xl font-bold">
                 당신의 음악 취향, 상황, 기분에 맞춰서 음악을 추천 해 드려요 !!{' '}
