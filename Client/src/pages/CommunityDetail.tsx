@@ -123,6 +123,10 @@ const CommunityDetail = () => {
     return <></>;
   };
 
+  const handleEdit = () => {
+    navigate('./edit');
+  };
+
   return (
     <>
       <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] h-screen">
@@ -135,7 +139,9 @@ const CommunityDetail = () => {
               <div className="w-[875px] h-[50px] flex justify-between">
                 <span className="text-xl">{posts.title}</span>
                 <div className="w-[150px] flex justify-center">
-                  <button className="mr-5 text-xs">수정</button>
+                  <button onClick={handleEdit} className="mr-5 text-xs">
+                    수정
+                  </button>
                   <button className="text-xs" onClick={handleDelete}>
                     삭제
                   </button>
