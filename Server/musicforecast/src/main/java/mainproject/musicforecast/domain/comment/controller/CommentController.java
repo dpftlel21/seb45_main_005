@@ -30,7 +30,7 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity postAnswer(@Valid @RequestBody CommentPostDto commentPostDto,
+    public ResponseEntity postComment(@Valid @RequestBody CommentPostDto commentPostDto,
                                      @AuthenticationPrincipal Member user) {
         Comment comment = mapper.commentPostDtoToComment(commentPostDto);
 

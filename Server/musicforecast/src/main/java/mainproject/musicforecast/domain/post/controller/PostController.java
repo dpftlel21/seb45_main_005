@@ -83,7 +83,8 @@ public class PostController {
         requestBody.setPostId(postId);
 
         Post post = postService.updatePost(
-                mapper.postPatchDtoToPost(requestBody), member);
+                mapper.postPatchDtoToPost(requestBody), requestBody.getPlaylistId(), member);
+
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.postToPostResponseDto(post)),
