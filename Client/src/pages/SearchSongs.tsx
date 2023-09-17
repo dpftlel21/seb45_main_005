@@ -14,7 +14,7 @@ const SearchSongs = () => {
         <Wrapper>
           <SearchInput />
           <div className="w-full flex justify-center">
-            <div className="w-[1200px] mt-8 bg-gradient-to-b from-[#c5ccec] to-[#b6d4e7] shadow-md">
+            <div className="w-[1200px] h-[60vh] mt-8 bg-gradient-to-b from-[#97c7f3] to-[#fafafa7c] shadow-xl rounded-2xl">
               <SongInfo />
               <SongLists />
               <SongBtn />

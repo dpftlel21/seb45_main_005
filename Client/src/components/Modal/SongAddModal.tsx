@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { closeSongAddModal } from '../../redux/slice/ModalSlice';
 import { RootState } from '../../redux/store';
@@ -6,6 +7,13 @@ import { RootState } from '../../redux/store';
 export type PlaylistInfo = {
   title: string;
   playlistId: number;
+};
+
+export type UserIntro = {
+  image: string;
+  intro: string;
+  memberId: number;
+  nickname: string;
 };
 
 export type SongInfo = {
@@ -18,9 +26,16 @@ export type SongInfo = {
 
 const SongAddModal = () => {
   const dispatch = useDispatch();
+  const [userIntro, setUserIntro] = useState<UserIntro | undefined>();
   const myPlaylistsInfo: PlaylistInfo[] = useSelector(
     (state: RootState) => state.playlists.myPlaylist
   );
+  const accessToken = useSelector((state: RootState) => state.login.accessToken);
+
+  const headers = {
+    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+    'Authorization': accessToken,
+  };
 
   const token = useSelector((state: RootState) => state.login.accessToken);
 
@@ -30,7 +45,22 @@ const SongAddModal = () => {
   const handleCloseAddSong = () => {
     dispatch(closeSongAddModal());
   };
+  // 유저 닉네임 받아오기
+  useEffect(() => {
+    axios
+      .get(
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/my_page/intro`,
+        { headers }
+      )
+      .then((res) => {
+        setUserIntro(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
+  // 노래 가져오기
   const handleAddSong = async (plyId: number) => {
     const axiosRequests = selectedSongs.map(async (song) => {
       try {
@@ -52,33 +82,27 @@ const SongAddModal = () => {
   };
 
   return (
-    <div className="font-['Anton-Regular'] bg-[#4a4b4a42] text-[#838282]">
-      <div className="w-[300px] h-[350px] flex flex-col justify-center items-center fixed bottom-0 bg-[#414052] border-2 border-gray-500 border-solid animate-fadeIn">
-        <div className="my-8 text-[#ffff]">
-          <div className="flex">
-            <p className="mb-4">플리 리스트</p>
-            <button
-              onClick={handleCloseAddSong}
-              className="w-[70px] h-[40px] mb-4 ml-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
-            >
-              취소
-            </button>
-          </div>
-          <ul className="w-full h-[200px] mt-6 flex flex-col overflow-y-scroll">
-            {myPlaylistsInfo.map((el) => {
-              return (
-                <li
-                  className="flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
-                  onClick={() => handleAddSong(el.playlistId)}
-                >
-                  <div className="ml-2 cursor-pointer">
-                    <h1 className="mt-4">{el.title}</h1>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+    <div className="font-['Anton-Regular']">
+      <div className="w-[300px] h-[250px] flex flex-col  items-center fixed left-8 bottom-0 bg-gradient-to-b from-[#97c7f3] to-[#fafafa7c] shadow-lg rounded-xl animate-fadeIn">
+        <div className="flex mt-4">
+          {userIntro && <p className="text-lg">{userIntro.nickname}님의 플레이리스트</p>}
+          <button
+            onClick={handleCloseAddSong}
+            className="w-[30px] h-[30px] mb-4 ml-4 inline-flex justify-center items-center rounded-2xl border-2 text-black text-center border-sky-400 bg-white hover:bg-[#85b5db] hover:text-white"
+          >
+            X
+          </button>
         </div>
+        {myPlaylistsInfo.map((el) => {
+          return (
+            <li
+              className="w-[200px] bg-[#dceef1] flex justify-center items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out cursor-pointer rounded-2xl shadow-lg"
+              onClick={() => handleAddSong(el.playlistId)}
+            >
+              <h1>{el.title}</h1>
+            </li>
+          );
+        })}
       </div>
     </div>
   );

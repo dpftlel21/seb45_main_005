@@ -4,7 +4,7 @@ import axios from 'axios';
 import { RootState } from '../../../redux/store';
 import SongAddModal from '../../Modal/SongAddModal';
 import { openSongAddModal } from '../../../redux/slice/ModalSlice';
-import { playlistInfo } from '../../../redux/slice/PlaylistsSlice';
+import { myPlaylist } from '../../../redux/slice/PlaylistsSlice';
 
 export type PlaylistInfo = {
   title: string;
@@ -14,25 +14,34 @@ export type PlaylistInfo = {
 const SongBtn = () => {
   const dispatch = useDispatch();
   const openAddSong = useSelector((state: RootState) => state.modal.isSongAddOpen);
-  const headers = {
-    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
-  };
+  const token = useSelector((state: RootState) => state.login.accessToken);
 
   const handleAddSong = () => {
     dispatch(openSongAddModal());
   };
 
-  useEffect(() => {
+  const getPlaylists = (): void => {
     axios
-      .get('http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist', {
-        headers,
-      })
+      .get(
+        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/my?page=1&size=10',
+        {
+          headers: {
+            'Authorization': token,
+            'Access-Control-Allow-Origin':
+              'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+          },
+        }
+      )
       .then((res) => {
-        dispatch(playlistInfo(res.data.data));
+        dispatch(myPlaylist(res.data.data));
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  useEffect(() => {
+    getPlaylists();
   }, []);
 
   return (
@@ -40,7 +49,7 @@ const SongBtn = () => {
       <div className="flex justify-center">
         <button
           onClick={() => handleAddSong()}
-          className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
+          className="w-[150px] h-[5vh] my-4 mr-4 rounded-2xl border-2 border-sky-400 bg-white hover:bg-[#85b5db] hover:text-white"
         >
           추가
         </button>
