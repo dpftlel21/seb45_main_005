@@ -10,7 +10,7 @@ const Footer = () => {
     <>
       <header className="bg-cover bg-center h-screen overflow-x-none bg-[#71b8f6]-500" style={{}}>
         <div className="w-full flex flex-col items-center justify-center mt-12">
-          <h2 className="font-['Anton-Regular'] text-4xl">Thank you for comming</h2>
+          <h2 className="font-['Anton-Regular'] text-7xl">Thank you for comming</h2>
           <div className="w-[1200px] h-full flex flex-nowrap  overflow-x-hidden ">
             <div className="flex mb-10 relative right-1 animate-slider">
               <div className="w-[1200px] h-[200px] flex flex-row  justify-center items-center my-12">

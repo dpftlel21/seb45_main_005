@@ -6,6 +6,8 @@ import { RouteConst } from './interface/RouteConst';
 import PrivateRoute from './interface/PrivateRoute';
 import { RootState } from './redux/store';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 import MUBTIMain from './pages/MUBTI/MUBTIMain';
 import Survey from './pages/MUBTI/Survey/Survey';
 import SurveyMood from './pages/MUBTI/Survey/SurveyMood';
@@ -32,6 +34,7 @@ import CommunityEdit from './pages/CommunityEdit';
 
 const App = () => {
   const token = useSelector((state: RootState) => state.login.accessToken);
+
   return (
     <>
       <BrowserRouter>
@@ -103,6 +106,7 @@ const App = () => {
           <Route path={RouteConst.Edit} element={<CommunityEdit />} />
         </Routes>
       </BrowserRouter>
+
       <div className="w-full fixed bottom-0 flex justify-center">
         <Motherplayer />
       </div>
@@ -111,5 +115,3 @@ const App = () => {
 };
 
 export default App;
-
-// ss
