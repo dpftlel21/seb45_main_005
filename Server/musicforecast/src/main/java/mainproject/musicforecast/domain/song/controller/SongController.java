@@ -84,11 +84,12 @@ public class SongController {
 
                 SpotifySearchResponseDto spotifySearchResultDto = mapper.toSpotifySearchDto(artistName, title, albumName, imageUrl);
 
-                if (!keywordService.findKeyword(keyword)) { // 중복된 키워드가 아닐때
-                    songService.findAndDeleteDuplicatedSong(title, albumName, artistName);
+                if (!songService.findDuplicatedSong(title, artistName, albumName)) { // 이미 존재하는 노래가 아닐 때
+//                    songService.findAndDeleteDuplicatedSong(title, albumName, artistName);
                     songService.createSong(songMapper.spotifySearchResponseDtoToSong(spotifySearchResultDto));
                 }
                 long songId = songService.findSongId(title, artistName, albumName).getSongId();
+                System.out.println("song Id : " + songId);
                 SongDto.SpotifyAddResponseDto spotifyAddResponseDto = songMapper.toSpotifyAddResponseDto(songId, artistName, title, albumName, imageUrl);
                 addResponseDtoList.add(spotifyAddResponseDto);
             }

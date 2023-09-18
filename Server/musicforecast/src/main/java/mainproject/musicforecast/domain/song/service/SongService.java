@@ -38,6 +38,12 @@ public class SongService {
         songRepository.deleteDuplicateSongs(title, artistName, albumName);
     }
 
+    public boolean findDuplicatedSong(String title, String artistName, String albumName) {
+        Optional<Song> duplicatedSong = songRepository.findDuplicatedSong(title, artistName, albumName);
+        if (duplicatedSong.isPresent()) return true;
+        return false;
+    }
+
     public boolean checkExistSong(long songId, long playlistId) {
         if (songRepository.findExistSong(songId, playlistId) != null) return true;
         return false;
