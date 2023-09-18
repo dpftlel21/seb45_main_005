@@ -36,7 +36,7 @@ public class OauthController {
 //        return ResponseEntity.ok().headers(tokenHeader).body(jsonResponse);
 //    }
 
-    @GetMapping("/google")
+    @PostMapping("/google")
     public ResponseEntity createGoogleToken(@RequestHeader("Authorization") String token) {
 
         MultiValueMap map = oauthService.createGoogleUser(token);
@@ -46,7 +46,7 @@ public class OauthController {
         return ResponseEntity.ok().headers(tokenHeader).body("");
     }
 
-    @GetMapping("/kakao")
+    @PostMapping("/kakao")
     public ResponseEntity createKakaoToken(@RequestHeader("Authorization") String token) {
 
         MultiValueMap map = oauthService.createKakaoUser(token);

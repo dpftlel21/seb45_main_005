@@ -13,9 +13,15 @@ public interface MemberMapper {
     Member memberPostDtoToMember(MemberPostDto memberPostDto);
     Member memberPatchDtoToMember(MemberPatchDto memberPatchDto);
     MemberResponseDto memberToMemberResponseDto(Member member);
-    Member findMemberDto(FindMemberDto findMemberDto);
-    FindMemberDto memberToFindMemberDto(Member member);
+    Member findQuestionDtoToMember(FindQuestionDto findQuestionDto);
+    QuestionResponseDto memberToQuestionResponseDto(Member member);
+    Member findUsernameDtoToMember(FindUsernameDto findUsernameDto);
+    Member UpdatePwDtoToMember(UpdatePwDto updatePwDto);
+
+    UsernameResponseDto memberToUsernameResponseDto(Member member);
     MemberIntroResponseDto memberToMemberIntroResponseDto(Member member);
+
+
     default MemberPostResponseDto memberToMemberPostResponseDto(Member member, List<Post> posts) {
         MemberPostResponseDto response = MemberPostResponseDto.builder()
                 .memberId(member.getMemberId())
