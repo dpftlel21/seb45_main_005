@@ -3,8 +3,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { RootState } from '../../../redux/store';
 import { weatherResult } from '../../../redux/slice/WeatherSlice';
-import { openModal } from '../../../redux/slice/ModalSlice';
-import { openSongLists } from '../../../redux/slice/ModalSlice';
+import { openModal, openSongLists } from '../../../redux/slice/ModalSlice';
 import { setSelectedPlaylistId } from '../../../redux/slice/PlaylistsSlice';
 import playlistdisc from '../../../assets/images/playlistdisc.png';
 
@@ -12,6 +11,10 @@ const RecommendLists = () => {
   const dispatch = useDispatch();
   const weather = useSelector((state: RootState) => state.weather.value);
   const RecommendResult = useSelector((state: RootState) => state.weather.Result);
+
+  const headers = {
+    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+  };
 
   const handleDetailOpen = async (playlistId: number) => {
     dispatch(openModal());
@@ -26,10 +29,12 @@ const RecommendLists = () => {
   useEffect(() => {
     axios
       .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/weather/result?page=1&size=10&q=${weather}`
+        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/weather/result?page=1&size=10&q=${weather}`,
+        { headers }
       )
       .then((res) => {
         dispatch(weatherResult(res.data.data));
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
