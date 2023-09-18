@@ -37,7 +37,7 @@ public class PostPostDto {
     public void setPlaylistId(long playlistId) {
         this.playlistId = playlistId;
     }
-    public long getPlaylistId() {
+    public Long getPlaylistId() {
         return playlistId;
     }
 

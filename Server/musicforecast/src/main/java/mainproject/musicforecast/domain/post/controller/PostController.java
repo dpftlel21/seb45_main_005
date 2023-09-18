@@ -12,6 +12,9 @@ import mainproject.musicforecast.domain.post.service.PostService;
 import mainproject.musicforecast.domain.postLike.entity.PostLike;
 import mainproject.musicforecast.domain.postLike.service.PostLikeService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -117,10 +120,36 @@ public class PostController {
 
 
     // 전체 게시글 조회
-    @GetMapping  // page = 1, size = 10으로 설정
-    public ResponseEntity getPosts(@Positive @RequestParam int page,
-                                   @Positive @RequestParam int size) {
-        Page<Post> pagePosts = postService.findPosts(page - 1, size);
+//    @GetMapping  // page = 1, size = 10으로 설정
+//    public ResponseEntity getPosts(@Positive @RequestParam int page,
+//                                   @Positive @RequestParam int size) {
+//        Page<Post> pagePosts = postService.findPosts(page - 1, size);
+//        List<Post> posts = pagePosts.getContent();
+//        List<PostResponseDto> response =
+//                posts.stream()
+//                        .map(post -> mapper.postToPostResponse(memberMapper, post, commentMapper))
+//                        .collect(Collectors.toList());
+//
+//        return new ResponseEntity<>(
+//                new MultiResponseDto<>(response, pagePosts),
+//                HttpStatus.OK);
+//    }
+
+    //전체 게시글 조회(필터링 가능 viewCount, likeCount 순으로 나열 가능)
+    @GetMapping
+    public ResponseEntity getPosts( @RequestParam(defaultValue = "1") int page,
+                                    @RequestParam(defaultValue = "10") int size,
+                                    @RequestParam(defaultValue = "postId,desc") String sort) {
+        // Parsing sort parameter
+        String[] sortParams = sort.split(",");
+        String sortField = sortParams[0];
+        Sort.Direction sortOrder = Sort.Direction.fromString(sortParams[1]);
+
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(sortOrder, sortField));
+
+
+        // 페이지 및 정렬 정보를 이용하여 게시물 조회
+        Page<Post> pagePosts = postService.findPosts(pageable);
         List<Post> posts = pagePosts.getContent();
         List<PostResponseDto> response =
                 posts.stream()
@@ -131,7 +160,6 @@ public class PostController {
                 new MultiResponseDto<>(response, pagePosts),
                 HttpStatus.OK);
     }
-
     // 게시글 삭제
     @DeleteMapping("/{post-id}")
     public ResponseEntity deletePost(@PathVariable("post-id") @Positive Long postId,
@@ -164,4 +192,14 @@ public class PostController {
         postLikeService.likePost(postId, PostLike.LikeType.Like, member);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+//    // likeCount로 정렬된 게시물 목록 조회
+//    @GetMapping("/sortByLikeCount")
+//    public List<Post> getPostsSortedByLikeCount() {
+//        return postRepository.findAllByOrderByLikeCountDesc();
+//    }
+//    @GetMapping("/sortByViewCount")
+//    public List<Post> getPostsSortedByViewCount() {
+//        return postRepository.findAllByOrderByViewCountDesc();
+//    }
 }
