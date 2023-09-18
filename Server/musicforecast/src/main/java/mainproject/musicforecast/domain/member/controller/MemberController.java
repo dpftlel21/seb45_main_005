@@ -5,11 +5,17 @@ import mainproject.musicforecast.domain.member.dto.MemberPostDto;
 import mainproject.musicforecast.domain.member.entity.Member;
 import mainproject.musicforecast.domain.member.mapper.MemberMapper;
 import mainproject.musicforecast.domain.member.service.MemberService;
+import mainproject.musicforecast.domain.playlist.Utils;
+import mainproject.musicforecast.domain.playlist.controller.PlaylistController;
+import mainproject.musicforecast.domain.playlist.entity.Playlist;
+import mainproject.musicforecast.domain.playlist.mapper.PlaylistMapper;
+import mainproject.musicforecast.domain.playlist.service.PlaylistService;
 import mainproject.musicforecast.domain.post.entity.Post;
 import mainproject.musicforecast.domain.provider.Provider;
 import mainproject.musicforecast.domain.provider.ProviderRepository;
 import mainproject.musicforecast.global.exception.response.ErrorResponse;
 import org.apache.coyote.Response;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,10 +37,16 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberMapper mapper;
     private final ProviderRepository providerRepository;
-    public MemberController(MemberService memberService, MemberMapper mapper, ProviderRepository providerRepository) {
+    private final PlaylistService playlistService;
+    private final PlaylistMapper playlistMapper;
+    public MemberController(MemberService memberService, MemberMapper mapper, ProviderRepository providerRepository,
+                            PlaylistService playlistService,
+                            PlaylistMapper playlistMapper) {
         this.memberService = memberService;
         this.mapper = mapper;
         this.providerRepository = providerRepository;
+        this.playlistService = playlistService;
+        this.playlistMapper = playlistMapper;
     }
 
     //회원가입
@@ -80,6 +92,37 @@ public class MemberController {
         List<Post> response = memberService.findMemberPost(user);
 
         return new ResponseEntity<>(mapper.memberToMemberPostResponseDto(user, response), HttpStatus.OK);
+    }
+
+    //다른 유저의 자기소개 글 조회
+    @GetMapping("/other/intro/{memberId}")
+    public ResponseEntity getOtherIntro(@PathVariable("memberId") long memberId) {
+
+        Member response = memberService.findMemberIntro(memberId);
+
+        return new ResponseEntity<>(mapper.memberToMemberIntroResponseDto(response), HttpStatus.OK);
+    }
+
+    @GetMapping("/other/post/{memberId}")
+    public ResponseEntity getOtherPost(@PathVariable("memberId") long memberId) {
+
+        Member user = memberService.findMember(memberId);
+
+        List<Post> response = memberService.findMemberPost(user);
+
+        return new ResponseEntity<>(mapper.memberToMemberPostResponseDto(user, response), HttpStatus.OK);
+    }
+
+    @GetMapping("/other/playlist/{memberId}")
+    public ResponseEntity getOtherPlaylist(@RequestParam(required = false, defaultValue = "1") int page,
+                                           @RequestParam(required = false, defaultValue = "10") int size,
+                                           @PathVariable("memberId") long memberId) {
+        Page<Playlist> playlistPage = playlistService.findMyPlaylists(page - 1, size, memberId);
+        List<Playlist> playlists = playlistPage.getContent();
+        return new ResponseEntity<>(
+                new Utils.MultiResponseDto<>(playlistMapper.playlistToPlaylistResponseDtos(playlists), playlistPage), HttpStatus.OK
+        );
+
     }
     //회원 탈퇴 기능
     @DeleteMapping("/delete/{memberId}")
