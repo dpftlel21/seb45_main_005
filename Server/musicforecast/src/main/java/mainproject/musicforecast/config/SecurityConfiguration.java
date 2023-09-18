@@ -15,6 +15,7 @@ import mainproject.musicforecast.domain.member.auth.handler.OAuth2MemberSuccessH
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -71,7 +72,14 @@ public class SecurityConfiguration {
                 .apply(new CustomOauthFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        //.antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.POST, "/members/**").permitAll()
+                        .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.DELETE, "/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.POST, "/oauth/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/oauth/**").permitAll()
+                        .antMatchers(HttpMethod.PATCH, "/find/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/find/**").permitAll()
                         .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2
@@ -93,7 +101,7 @@ public class SecurityConfiguration {
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
-        configuration.setExposedHeaders(List.of("Authorization", "Refresh", "memberId"));
+        configuration.setExposedHeaders(List.of("Authorization", "Refresh", "memberId", "nickname"));
 
         //configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
 
