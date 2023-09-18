@@ -12,8 +12,9 @@ import java.util.List;
 @Getter
 @Setter
 public class FindMemberDto {
-        private String email;
+
+        private String nickname;
+        private long birthdate;
         private long questionNumber;
         private String auth_answer;
-        private Question question;
 }
