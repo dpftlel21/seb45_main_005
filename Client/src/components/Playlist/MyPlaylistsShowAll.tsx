@@ -6,6 +6,8 @@ import ToastModal from '../Modal/ToastModal';
 import { RootState } from '../../redux/store';
 import PlaylistAddButton from './Button/PlaylistAddButton';
 import MyPlaylists from './MyPlaylists';
+import PlaylistsSearch from './PlaylistsSearch';
+import SearchedPlaylists from './SearchedPlaylists';
 
 export type PlaylistInfo = {
   title: string;
@@ -17,6 +19,7 @@ const MyPlaylistsShowAll = () => {
   const dispatch = useDispatch();
 
   const isDetailOpen = useSelector((state: RootState) => state.modal.isSongOpen);
+  const isSearchedOpen = useSelector((state: RootState) => state.modal.isSearchedOpen);
   const isOpenToast = useSelector((state: RootState) => state.modal.isToastOpen);
   const myPlaylistsInfo: PlaylistInfo[] = useSelector(
     (state: RootState) => state.playlists.myPlaylist
@@ -28,7 +31,7 @@ const MyPlaylistsShowAll = () => {
 
   return (
     <>
-      <div className="w-[600px] h-[670px] fixed bottom-0 flex justify-center bg-opacity-1 ">
+      <div className="w-[600px] h-[670px] fixed bottom-0 flex justify-center">
         <div className="w-[600px] h-[670px] mt-12 fixed right-8 bottom-40">
           <div className="h-[670px] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca]">
             {/* 플레이리스트 상단 */}
@@ -37,14 +40,9 @@ const MyPlaylistsShowAll = () => {
                 <img src={xbtn} className="w-[35px]" />
               </button>
               {/* 검색칸 */}
-              <div className="flex mt-8">
-                <input
-                  type="text"
-                  placeholder="   플레이리스트 이름을 입력해주세요"
-                  className="w-[400px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
-                ></input>
+              <div className="flex items-center">
+                <PlaylistsSearch />
               </div>
-              <button className="mt-8"></button>
             </div>
             {/* 플레이리스트 */}
             <div className="w-full h-[50px] flex justify-between items-center mt-8 font-['Anton-Regular']">
@@ -62,6 +60,9 @@ const MyPlaylistsShowAll = () => {
       </div>
       {isDetailOpen && <PlaylistsDetail />}
       {isOpenToast && <ToastModal />}
+      {isSearchedOpen && ( // 모달이 열렸을 때만 모달 컴포넌트 렌더링
+        <SearchedPlaylists />
+      )}
     </>
   );
 };

@@ -22,20 +22,35 @@ const WeatherChange = () => {
   };
 
   return (
-    <div className="w-[280px] flex justify-around">
-      <button className="w-[60px] h-[40px] bg-[#9ac9e4]" onClick={changeToClearWeather}>
-        Clear
-      </button>
-      <button className="w-[60px] h-[40px] bg-[#9ac9e4]" onClick={changeToRainWeather}>
-        Rain
-      </button>
-      <button className="w-[60px] h-[40px] bg-[#9ac9e4]" onClick={changeToSnowWeather}>
-        Snow
-      </button>
-      <button className="w-[60px] h-[40px] bg-[#9ac9e4]" onClick={changeToCloudyWeather}>
-        Cloudy
-      </button>
-    </div>
+    <>
+      <h1 className="ml-10 font-['Anton-Regular']">WeatherRecommend</h1>
+      <div className="w-[280px] flex justify-around">
+        <button
+          className="w-[60px] h-[40px] rounded-2xl bg-[#d8dee283] text-2xl hover:bg-[#e1be6c] hover:translate-y-[-10px] transition duration-300 ease-in-out"
+          onClick={changeToClearWeather}
+        >
+          🌞
+        </button>
+        <button
+          className="w-[60px] h-[40px] rounded-2xl bg-[#d8dee283] text-2xl hover:bg-[#6574be] hover:translate-y-[-10px] transition duration-300 ease-in-out"
+          onClick={changeToRainWeather}
+        >
+          🌧️
+        </button>
+        <button
+          className="w-[60px] h-[40px] rounded-2xl bg-[#d8dee283] text-2xl hover:bg-[#99c8e4] hover:translate-y-[-10px] transition duration-300 ease-in-out"
+          onClick={changeToSnowWeather}
+        >
+          ☃️
+        </button>
+        <button
+          className="w-[60px] h-[40px] rounded-2xl bg-[#d8dee283] text-2xl hover:bg-[#444] hover:translate-y-[-10px] transition duration-300 ease-in-out"
+          onClick={changeToCloudyWeather}
+        >
+          ☁️
+        </button>
+      </div>
+    </>
   );
 };
 

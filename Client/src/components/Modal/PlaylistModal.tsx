@@ -19,6 +19,8 @@ import PlaylistsShowAll from '../Playlist/PlaylistsShowAll';
 import PlaylistsDetail from '../Playlist/PlayListsDetail';
 import MyPlaylistsShowAll from '../Playlist/MyPlaylistsShowAll';
 import playlistdisc from '../../assets/images/playlistdisc.png';
+import SearchPlaylists from '../Playlist/PlaylistsSearch';
+import SearchedPlaylists from '../Playlist/SearchedPlaylists';
 
 export type PlaylistInfo = {
   title: string;
@@ -48,6 +50,7 @@ const PlaylistModal = () => {
   };
   const token = useSelector((state: RootState) => state.login.accessToken);
   const dispatch = useDispatch();
+  const isSearchedOpen = useSelector((state: RootState) => state.modal.isSearchedOpen);
   const isDetailOpen = useSelector((state: RootState) => state.modal.isSongOpen);
   const isShowAll = useSelector((state: RootState) => state.modal.isDetailOpen);
   const isMyShowAll = useSelector((state: RootState) => state.modal.isMyShowAll);
@@ -95,23 +98,28 @@ const PlaylistModal = () => {
     getPlaylists();
   }, []);
 
-  // 플레이리스트 받아오기
-  useEffect(() => {
+  const getRecommendPlaylists = (): void => {
     axios
       .get(`${process.env.REACT_APP_BE_API_URL}/playlist`, {
         headers,
       })
       .then((res) => {
+        getPlaylists();
         dispatch(playlistInfo(res.data.data));
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  // 플레이리스트 받아오기
+  useEffect(() => {
+    getRecommendPlaylists();
   }, []);
 
   return (
     <>
-      <div className="fixed bottom-0 flex justify-center bg-opacity-1 ">
+      <div className="fixed bottom-0 flex justify-center bg-opacity-1">
         <div className="w-[600px] h-[670px] mt-12 animate-fadeInBottomRight-fast fixed right-8 bottom-40">
           <div className="h-[670px] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca] animate-scale-anim  ">
             {/* 플레이리스트 상단 */}
@@ -120,13 +128,7 @@ const PlaylistModal = () => {
                 <img src={xbtn} className="w-[35px]" />
               </button>
               {/* 검색칸 */}
-              <div className="flex mt-8">
-                <input
-                  type="text"
-                  placeholder="   플레이리스트 이름을 입력해주세요"
-                  className="w-[400px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
-                ></input>
-              </div>
+              <SearchPlaylists />
               <button className="mt-8"></button>
             </div>
             {/* 플레이리스트 */}
@@ -185,6 +187,9 @@ const PlaylistModal = () => {
           </div>
         </div>
       </div>
+      {isSearchedOpen && ( // 모달이 열렸을 때만 모달 컴포넌트 렌더링
+        <SearchedPlaylists />
+      )}
       {isDetailOpen && <PlaylistsDetail />}
       {isShowAll && <PlaylistsShowAll />}
       {isMyShowAll && <MyPlaylistsShowAll />}

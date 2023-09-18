@@ -12,7 +12,6 @@ const WeatherRecommend = () => {
           <div className="flex items-center justify-center mt-12">
             <ContentBox />
           </div>
-          <div className="w-full flex justify-end"></div>
         </Wrapper>
       </div>
       <PlaylistIcon />

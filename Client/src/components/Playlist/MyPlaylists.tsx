@@ -7,8 +7,9 @@ import {
   setSelectedMemberId,
   setSelectedPlaylistId,
   myPlaylist,
+  playlistInfo,
 } from '../../redux/slice/PlaylistsSlice';
-import Album from '../../assets/images/Album.png';
+import playlistdisc from '../../assets/images/playlistdisc.png';
 import { PlaylistInfo } from './PlaylistsShowAll';
 import { RootState } from '../../redux/store';
 
@@ -23,6 +24,10 @@ const MyPlaylists = ({ el }: PlaylistProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const token = useSelector((state: RootState) => state.login.accessToken);
+  const headers = {
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+    'Authorization': token,
+  };
 
   const handleOpenDetail = () => {
     dispatch(openSongLists());
@@ -46,6 +51,20 @@ const MyPlaylists = ({ el }: PlaylistProps) => {
       });
   };
 
+  const getRecommendPlaylists = (): void => {
+    axios
+      .get(`${process.env.REACT_APP_BE_API_URL}/playlist`, {
+        headers,
+      })
+      .then((res) => {
+        getPlaylists();
+        dispatch(playlistInfo(res.data.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleListDelete = () => {
     const shouldDelete = window.confirm('정말 삭제하시겠습니까?');
 
@@ -61,6 +80,7 @@ const MyPlaylists = ({ el }: PlaylistProps) => {
           console.log(res);
           alert('플리가 삭제되었습니다.');
           getPlaylists();
+          getRecommendPlaylists();
         })
         .catch((err) => {
           if (err.response.status === 500) {
@@ -75,13 +95,13 @@ const MyPlaylists = ({ el }: PlaylistProps) => {
   return (
     <>
       <li
-        className="w-[100px] h-[150px] relative flex flex-col justify-center items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out "
+        className="w-[100px] h-[150px] ml-4 relative flex flex-col justify-center items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out cursor-pointer"
         onMouseEnter={() => setIsHovered(true)} // 호버 상태에 들어갈 때
         onMouseLeave={() => setIsHovered(false)} // 호버 상태에서 나올 때
       >
         <button
           onClick={handleListDelete}
-          className={`w-[25px] h-[25px] flex justify-center text-center items-center relative top-9 -right-7 bg-[#fa1f1f81] text-white text-lg rounded-full ${
+          className={`w-[25px] h-[25px] flex justify-center text-center items-center relative top-5 -right-14 bg-[#fa1f1f81] text-white text-lg rounded-full ${
             isHovered ? 'opacity-100' : 'opacity-0' // 상태에 따라 opacity 변경
           }`}
           style={{ transition: 'opacity 0.3s' }}
@@ -89,8 +109,8 @@ const MyPlaylists = ({ el }: PlaylistProps) => {
           X
         </button>
         {/* 플리 리스트들 */}
-        <div onClick={handleOpenDetail} className="h-[100px]">
-          <img src={Album} className="w-[100px] h-[100px]" />
+        <div onClick={handleOpenDetail} className="w-[120px] h-[100px]">
+          <img src={playlistdisc} className="w-[100px] h-[100px]  animate-spin-slow" />
           <h1 className="mt-4 text-xs">{el.title}</h1>
         </div>
       </li>

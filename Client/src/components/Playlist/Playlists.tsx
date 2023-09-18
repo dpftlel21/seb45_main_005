@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { openSongLists } from '../../redux/slice/ModalSlice';
 import { setSelectedMemberId, setSelectedPlaylistId } from '../../redux/slice/PlaylistsSlice';
-import Album from '../../assets/images/Album.png';
+import playlistdisc from '../../assets/images/playlistdisc.png';
 import { PlaylistInfo } from './PlaylistsShowAll';
 
 type PlaylistProps = {
@@ -21,10 +21,10 @@ const Playlists = ({ el }: PlaylistProps) => {
 
   return (
     <>
-      <li className="w-[100px] h-[150px] relative flex flex-col justify-center items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out ">
+      <li className="w-[100px] h-[150px] ml-4 relative flex flex-col justify-center items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out cursor-pointer">
         {/* 플리 리스트들 */}
         <div onClick={handleOpenDetail} className="h-[100px]">
-          <img src={Album} className="w-[100px] h-[100px]" />
+          <img src={playlistdisc} className="w-[100px] h-[100px] animate-spin-slow" />
           <h1 className="mt-4 text-xs">{el.title}</h1>
         </div>
       </li>

@@ -7,6 +7,7 @@ import { RootState } from '../../redux/store';
 
 const ToastModal = () => {
   const [title, setTitle] = useState('');
+  const [isPublic, setIsPublic] = useState(true); // 초기값 공개
 
   const dispatch = useDispatch();
 
@@ -36,7 +37,7 @@ const ToastModal = () => {
     axios
       .post(
         `${process.env.REACT_APP_BE_API_URL}/playlist`,
-        { title, public: true },
+        { title, public: isPublic },
         {
           headers: {
             'Authorization': token,
@@ -57,7 +58,7 @@ const ToastModal = () => {
   };
 
   return (
-    <div className="w-full h-full fixed top-0 flex flex-col justify-center items-center font-['Anton-Regular'] bg-[#4a4b4a42] text-[#838282]">
+    <div className="fixed bottom-72 right-48 flex flex-col justify-center items-center font-['Anton-Regular'] bg-[#4a4b4a42] text-[#838282]">
       <div className="w-[300px] flex flex-col justify-center items-center bg-[#414052] border-2 border-gray-500 border-solid animate-fadeIn">
         <div className="my-8 text-[#ffff]">
           <p className="mb-4">플리 제목</p>
@@ -67,6 +68,22 @@ const ToastModal = () => {
             type="text"
             className="w-[250px] pl-2 rounded-2xl bg-[#6b6767]"
           ></input>
+        </div>
+        <div className="w-full flex justify-start ml-12 mb-4">
+          <input
+            type="checkbox"
+            className="mr-2"
+            checked={isPublic}
+            onChange={() => setIsPublic(!isPublic)} // 공개/비공개 체크 상태 토글
+          />
+          <span className="mr-4 text-[#ffff]">공개</span>
+          <input
+            type="checkbox"
+            className="mr-2"
+            checked={!isPublic} // 반대 값으로 설정
+            onChange={() => setIsPublic(!isPublic)} // 공개/비공개 체크 상태 토글
+          />
+          <span>비공개</span>
         </div>
         <div>
           <button

@@ -23,7 +23,6 @@ const Weather = () => {
         const { temperature, weatherDescription } = data;
         setWeather({ temperature, weatherDescription });
         dispatch(weatherInfo(data.weatherDescription));
-        console.log(data);
       })
       .catch((err) => {
         console.log(err);
