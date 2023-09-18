@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { deletedSongs } from '../../../redux/slice/SonglistsSlice';
 
@@ -20,7 +19,7 @@ const SongDeleteBtn = ({ songId }: deleteProps) => {
     if (shouldDelete) {
       return axios
         .patch(
-          `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/song/${playlistId}/${songId}/delete`,
+          `${process.env.REACT_APP_BE_API_URL}/song/${playlistId}/${songId}/delete`,
           {},
           {
             headers: {

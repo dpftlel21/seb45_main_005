@@ -6,17 +6,16 @@ import search from '../../assets/images/search.png';
 
 const SearchInput = () => {
   const headers = {
-    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
   };
   const [keyword, setKeyword] = useState('');
   const dispatch = useDispatch();
 
   const handleSearch = () => {
     axios
-      .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/song/search?keyword=${keyword}&song=10`,
-        { headers }
-      )
+      .get(`${process.env.REACT_APP_BE_API_URL}/song/search?keyword=${keyword}&song=10`, {
+        headers,
+      })
       .then((res) => {
         dispatch(songlistInfo(res.data));
         console.log(res.data);

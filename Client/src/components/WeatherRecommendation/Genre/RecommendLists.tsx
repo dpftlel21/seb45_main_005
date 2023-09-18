@@ -13,7 +13,7 @@ const RecommendLists = () => {
   const RecommendResult = useSelector((state: RootState) => state.weather.Result);
 
   const headers = {
-    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
   };
 
   const handleDetailOpen = async (playlistId: number) => {
@@ -28,10 +28,9 @@ const RecommendLists = () => {
   // 날씨별 추천 리스트 가져오기
   useEffect(() => {
     axios
-      .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/weather/result?page=1&size=10&q=${weather}`,
-        { headers }
-      )
+      .get(`${process.env.REACT_APP_BE_API_URL}/weather/result?page=1&size=10&q=${weather}`, {
+        headers,
+      })
       .then((res) => {
         dispatch(weatherResult(res.data.data));
         console.log(res.data.data);
