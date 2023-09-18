@@ -1,10 +1,13 @@
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { setServeyA } from '../../../redux/slice/MUBTISlice';
+import { setServeyA, serveyResult } from '../../../redux/slice/MUBTISlice';
 
 const Survey = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  dispatch(serveyResult([]));
 
   const handleSurvey = (a: number) => {
     dispatch(setServeyA(a));
@@ -21,13 +24,21 @@ const Survey = () => {
         navigate('../mubti/liking');
         break;
 
-      case 4:
-        navigate('../mubti/result');
-        break;
-
       default:
         break;
     }
+  };
+
+  const handleRecommendYoutube = () => {
+    axios
+      .get(`${process.env.REACT_APP_BE_API_URL}/youtuber?q=5`)
+      .then((res) => {
+        console.log(res.data);
+        navigate('../mubti/youtube');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -69,7 +80,7 @@ const Survey = () => {
         노래 분위기
       </button>
       <button
-        onClick={() => handleSurvey(4)}
+        onClick={() => handleRecommendYoutube()}
         // href="./result"
         className="inline-flex justify-center items-center w-[450px] h-[50px] bg-[#D9D9D9] text-black font-bold my-5 rounded-full hover:bg-[#EFD0A0]"
       >

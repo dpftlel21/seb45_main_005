@@ -10,7 +10,7 @@ import Calendar from '../../assets/images/calendar.svg';
 
 const SignUp = () => {
   const headers = {
-    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
   };
 
   interface IFormInput {
@@ -36,7 +36,7 @@ const SignUp = () => {
 
     try {
       const response = await axios.post(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/signup',
+        `${process.env.REACT_APP_BE_API_URL}/members/signup`,
         data,
         { headers }
       );

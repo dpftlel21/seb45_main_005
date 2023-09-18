@@ -33,7 +33,7 @@ const SongAddModal = () => {
   const accessToken = useSelector((state: RootState) => state.login.accessToken);
 
   const headers = {
-    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
     'Authorization': accessToken,
   };
 
@@ -48,10 +48,7 @@ const SongAddModal = () => {
   // 유저 닉네임 받아오기
   useEffect(() => {
     axios
-      .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/my_page/intro`,
-        { headers }
-      )
+      .get(`${process.env.REACT_APP_BE_API_URL}/members/my_page/intro`, { headers })
       .then((res) => {
         setUserIntro(res.data);
       })
@@ -65,7 +62,7 @@ const SongAddModal = () => {
     const axiosRequests = selectedSongs.map(async (song) => {
       try {
         const res = await axios.post(
-          `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/song/${song.songId}/${plyId}/add`,
+          `${process.env.REACT_APP_BE_API_URL}/song/${song.songId}/${plyId}/add`,
           {},
           {
             headers: {

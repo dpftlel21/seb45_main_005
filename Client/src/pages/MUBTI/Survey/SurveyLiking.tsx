@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setServeyB } from '../../../redux/slice/MUBTISlice';
 
@@ -9,6 +10,18 @@ const SurveyLiking = () => {
   const handleSurvey = (b: number) => {
     dispatch(setServeyB(b));
     navigate('../mubti/loading');
+  };
+
+  const handleRecommendAdmin = () => {
+    axios
+      .get(`${process.env.REACT_APP_BE_API_URL}/admin-suggest?q=1`)
+      .then((res) => {
+        console.log(res.data);
+        navigate('../mubti/result');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -46,7 +59,7 @@ const SurveyLiking = () => {
         클래식한
       </button>
       <button
-        onClick={() => handleSurvey(4)}
+        onClick={() => handleRecommendAdmin()}
         className="inline-flex justify-center items-center w-[450px] h-[50px] bg-[#D9D9D9] text-black font-bold my-5 rounded-full hover:bg-[#EFD0A0]"
       >
         담당자가 추천해준 노래

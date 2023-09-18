@@ -53,7 +53,7 @@ const CommunityDetail = () => {
   console.log(savedComment);
   const navigate = useNavigate();
   const headers = {
-    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
   };
 
   const handleLikeClick = () => {
@@ -62,7 +62,7 @@ const CommunityDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts/${postId}`, {
+      .get(`${process.env.REACT_APP_BE_API_URL}/posts/${postId}`, {
         headers,
       })
       .then((res) => {
@@ -78,7 +78,7 @@ const CommunityDetail = () => {
 
   const handleComment = () => {
     axios.post(
-      `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/comments`,
+      `${process.env.REACT_APP_BE_API_URL}/comments`,
       {
         memberid,
         postId,
@@ -87,8 +87,7 @@ const CommunityDetail = () => {
       {
         headers: {
           'Authorization': accessToken,
-          'Access-Control-Allow-Origin':
-            'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+          'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
         },
       }
     );
@@ -100,14 +99,11 @@ const CommunityDetail = () => {
     if (confirmDelete) {
       // 확인을 누르면 삭제 요청을 보냅니다.
       return axios
-        .delete(
-          `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts/${postId}`,
-          {
-            headers: {
-              Authorization: accessToken,
-            },
-          }
-        )
+        .delete(`${process.env.REACT_APP_BE_API_URL}/posts/${postId}`, {
+          headers: {
+            Authorization: accessToken,
+          },
+        })
         .then((res) => {
           // 삭제 성공 시의 처리
           console.log('삭제가 완료되었습니다.', res.data);
