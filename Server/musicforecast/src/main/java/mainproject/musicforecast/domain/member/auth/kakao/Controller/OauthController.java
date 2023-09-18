@@ -18,23 +18,17 @@ public class OauthController {
         this.oauthService = oauthService;
     }
 
-//    @GetMapping("/kakao")
-//    public ResponseEntity kakaoCallback(@RequestParam("code") String code) {
-//        System.out.println(code);
-//        String token = kakaoOauthService.getKakaoAccessToken(code);
-//        MultiValueMap map = kakaoOauthService.createKakaoUser(token);
-//        String jsonResponse = "nickname : " + map.get("nickname").toString();
-//
-//        map.remove("nickname");
-//
-//        HttpHeaders tokenHeader = new HttpHeaders(map);
-//
-////        String jsonResponse = (String) map.get("nickname");
-//
-////        map.remove("nickname");
-//        //String jsonResponse = "성공";
-//        return ResponseEntity.ok().headers(tokenHeader).body(jsonResponse);
-//    }
+    @GetMapping("/v2/kakao")
+    public ResponseEntity kakaoCallback(@RequestHeader("code") String code) {
+        System.out.println(code);
+
+        String token = kakaoOauthService.getKakaoAccessToken(code);
+        MultiValueMap map = kakaoOauthService.createKakaoUser(token);
+
+        HttpHeaders tokenHeader = new HttpHeaders(map);
+
+        return ResponseEntity.ok().headers(tokenHeader).body("");
+    }
 
     @PostMapping("/google")
     public ResponseEntity createGoogleToken(@RequestHeader("Authorization") String token) {
