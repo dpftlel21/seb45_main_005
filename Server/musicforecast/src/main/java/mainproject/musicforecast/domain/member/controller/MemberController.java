@@ -13,6 +13,7 @@ import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -81,10 +82,11 @@ public class MemberController {
         return new ResponseEntity<>(mapper.memberToMemberPostResponseDto(user, response), HttpStatus.OK);
     }
     //회원 탈퇴 기능
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{memberId}")
     public ResponseEntity deleteMember(@AuthenticationPrincipal Member user) {
 
         memberService.deleteMember(user);
+//        memberService.deleteMember(memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

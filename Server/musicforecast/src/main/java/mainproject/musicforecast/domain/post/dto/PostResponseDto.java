@@ -1,6 +1,5 @@
 package mainproject.musicforecast.domain.post.dto;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import mainproject.musicforecast.domain.comment.dto.CommentResponseDto;
@@ -24,7 +23,9 @@ public class PostResponseDto {
     private int viewCount;
     private LocalDateTime createdAt;
 
-   // private Long playlistId;
+    private Long playlistId;
+    private String playlistTitle;
+
     public void setMember(MemberResponseDto memberToMemberResponseDto) {
         this.nickName = memberToMemberResponseDto.getNickname();
         this.memberId = memberToMemberResponseDto.getMemberId();
