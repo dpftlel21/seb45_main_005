@@ -7,6 +7,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,9 @@ public class MubtiService {
     public Page<Playlist> findBySearchTags(int page, int size, int a, int b) {
         Page<PlaylistTag> playlistTags = playlistTagRepository.findByTags(PageRequest.of(page, size, Sort.by("playlist").descending()), setSearchTags(a, b));
 
-        List<Playlist> playlistList = playlistTags.stream().map(playlistTag -> playlistTag.getPlaylist()).collect(Collectors.toList());
+        HashSet<Playlist> playlist = playlistTags.stream().map(playlistTag -> playlistTag.getPlaylist()).collect(Collectors.toCollection(HashSet::new));
+
+        List<Playlist> playlistList = new ArrayList<>(playlist);
 
         Pageable pageable = PageRequest.of(page, size);
 

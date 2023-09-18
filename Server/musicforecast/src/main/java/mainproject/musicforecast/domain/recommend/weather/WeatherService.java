@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -129,7 +130,9 @@ public class WeatherService {
     public Page<Playlist> findBySearchTags(int page, int size, String weather) {
         Page<PlaylistTag> playlistTags = playlistTagRepository.findByTags(PageRequest.of(page, size, Sort.by("playlist").descending()), setSearchTags(weather));
 
-        List<Playlist> playlistList = playlistTags.stream().map(playlistTag -> playlistTag.getPlaylist()).collect(Collectors.toList());
+        HashSet<Playlist> playlistListSet = playlistTags.stream().map(playlistTag -> playlistTag.getPlaylist()).collect(Collectors.toCollection(HashSet::new));
+
+        List<Playlist> playlistList = new ArrayList<>(playlistListSet);
 
         Pageable pageable = PageRequest.of(page, size);
 

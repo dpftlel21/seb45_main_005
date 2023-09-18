@@ -37,11 +37,11 @@ public interface PostMapper {
         post.setMember(memberService.findMember(member.getMemberId()));
         post.setCreatedAt(LocalDateTime.now());
 
-
-        Playlist playlist = new Playlist();
-        playlist.setPlaylistId(postPostDto.getPlaylistId());
-        post.setPlaylist(playlist);
-
+        if (postPostDto.getPlaylistId() != null) {
+            Playlist playlist = new Playlist();
+            playlist.setPlaylistId(postPostDto.getPlaylistId());
+            post.setPlaylist(playlist);
+        }
         return post;
     }
 
@@ -53,9 +53,11 @@ public interface PostMapper {
         post.setTitle(requestBody.getTitle());
         post.setText(requestBody.getText());
 
-        Playlist playlist = new Playlist();
-        playlist.setPlaylistId(requestBody.getPlaylistId());
-        post.setPlaylist(playlist);
+        if (requestBody.getPlaylistId() != null) {
+            Playlist playlist = new Playlist();
+            playlist.setPlaylistId(requestBody.getPlaylistId());
+            post.setPlaylist(playlist);
+        }
 
         return post;
     }
@@ -93,9 +95,10 @@ public interface PostMapper {
         postResponseDto.setMember(memberMapper.memberToMemberResponseDto(member));
 
         Playlist playlist = post.getPlaylist();
-        postResponseDto.setPlaylistId(playlist.getPlaylistId());
-        postResponseDto.setPlaylistTitle(playlist.getTitle());
-
+        if(playlist != null) {
+            postResponseDto.setPlaylistId(playlist.getPlaylistId());
+            postResponseDto.setPlaylistTitle(playlist.getTitle());
+        }
         return postResponseDto;
     }
 
@@ -130,9 +133,10 @@ public interface PostMapper {
         postResponseDto.setCreatedAt( post.getCreatedAt() );
 
         Playlist playlist = post.getPlaylist();
-        postResponseDto.setPlaylistId(playlist.getPlaylistId());
-        postResponseDto.setPlaylistTitle(playlist.getTitle());
-
+        if(playlist != null) {
+            postResponseDto.setPlaylistId(playlist.getPlaylistId());
+            postResponseDto.setPlaylistTitle(playlist.getTitle());
+        }
         return postResponseDto;
     }
 }
