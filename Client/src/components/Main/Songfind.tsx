@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useScroll, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-// import List from '../../assets/images/list.jpg';
 
 const Songfind = () => {
   const ref = useRef<HTMLDivElement>(null);

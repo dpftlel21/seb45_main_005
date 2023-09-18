@@ -47,7 +47,9 @@ const MbtiMain = () => {
           <h2 className="text-5xl ">자기만의 노래를 찾기 힘들때!</h2>
           <h2 className="text-5xl mb-12">MUBTI를 통해 간편하게 찾아보세요!</h2>
           <span className="text-2xl">여러분의 선택으로 노래를 찾아보세요!</span>
-          <button className="w-36 h-32">MUBTI 알아보러가기</button>
+          <button className="w-40 h-12 rounded-lg bg-[#94B0FC] hover:opacity-70 my-20">
+            MUBTI 알아보러가기
+          </button>
         </div>
       </div>
     </>

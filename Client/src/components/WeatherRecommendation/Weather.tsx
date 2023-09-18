@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { weatherInfo } from 'src/redux/slice/WeatherSlice';
+import { weatherInfo } from '../../redux/slice/WeatherSlice';
 
 export type WeatherData = {
   temperature: number;
