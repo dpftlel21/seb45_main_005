@@ -12,7 +12,6 @@ import mainproject.musicforecast.global.exception.ExceptionCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,12 +42,13 @@ public class PostService {
     public Post createPost(Post post, Long playlistId) {
         // 게시물 작성에 필요한 로직을 수행합니다.
         // 플레이리스트 ID를 사용하여 해당 플레이리스트를 조회합니다.
-        Playlist playlist = playlistRepository.findById(playlistId)
-                .orElseThrow(() -> new EntityNotFoundException("플레이리스트를 찾을 수 없습니다."));
+        if (playlistId != null) {
+            Playlist playlist = playlistRepository.findById(playlistId)
+                    .orElseThrow(() -> new EntityNotFoundException("플레이리스트를 찾을 수 없습니다."));
 
-        // 게시물과 플레이리스트를 연결합니다.
-        post.setPlaylists(playlist);
-
+            // 게시물과 플레이리스트를 연결합니다.
+            post.setPlaylists(playlist);
+        }
         // 게시물을 작성한 회원을 조회하고 연결합니다.
         Member member = memberRepository.findByMemberId(post.getMember().getMemberId());
         post.setMember(member);
@@ -57,14 +57,17 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public Post updatePost(Post post, Long playlistId, Member loggedInMember) {
+    public Post updatePost(Post post, Long newPlaylistId, Member loggedInMember) {
         Post findPost = postRepository.findByPostId(post.getPostId());
 
-        if (playlistId != null){
-            Playlist playlist = playlistRepository.findById(playlistId)
+        if (newPlaylistId != null){
+            Playlist newPlaylist = playlistRepository.findById(newPlaylistId)
                     .orElseThrow(() -> new EntityNotFoundException("플레이리스트를 찾을 수 없습니다."));
 
-            post.setPlaylists(playlist);
+            findPost.setPlaylists(newPlaylist);
+        } else {
+            // newPlaylistId가 null인 경우, 플레이리스트를 삭제하고 연결을 끊습니다.
+            findPost.setPlaylist(null);
         }
 
         if (findPost.getMember().getMemberId().equals(loggedInMember.getMemberId())) {
@@ -99,10 +102,13 @@ public class PostService {
         return post;
     }
 
-    public Page<Post> findPosts(int page, int size) {
-        return postRepository.findAll(PageRequest.of(page, size, Sort.by("postId").descending()));
-    }
+//    public Page<Post> findPosts(int page, int size) {
+//        return postRepository.findAll(PageRequest.of(page, size, Sort.by("postId").descending()));
+//    }
 
+    public Page<Post> findPosts(Pageable pageable) {
+        return postRepository.findAll(pageable);
+    }
     @Transactional(readOnly = true)
     public Post findVerifyPost(Long postId) {
         Optional<Post> optionalPost = postRepository.findById(postId);
