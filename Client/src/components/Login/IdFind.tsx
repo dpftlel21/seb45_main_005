@@ -22,7 +22,6 @@ const IdFind = () => {
 
       if (response.status === 200) {
         console.log('아이디 찾기 성공');
-        // history('/signup')
       }
     } catch (error) {
       console.error('오류 발생:', error);
