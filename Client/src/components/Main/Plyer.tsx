@@ -142,7 +142,7 @@ const Plyer: React.FC<CustomAudioPlayerProps> = ({
                 </button>
                 <button onClick={handlePlayPause}>
                   {isPlaying ? (
-                    <img src={Pause} className="w-[5vh] h-[5vh]" />
+                    <img src={Pause} className="w-[10vh] h-[10vh]" />
                   ) : (
                     <img src={PlayButton} className="w-[10vh] h-[10vh]" />
                   )}
