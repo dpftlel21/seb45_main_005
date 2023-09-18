@@ -8,4 +8,5 @@ public class PostPatchDto {
     private Long postId;
     private String title;
     private String text;
+    private Long playlistId;
 }

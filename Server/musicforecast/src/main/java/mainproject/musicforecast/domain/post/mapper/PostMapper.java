@@ -53,6 +53,10 @@ public interface PostMapper {
         post.setTitle(requestBody.getTitle());
         post.setText(requestBody.getText());
 
+        Playlist playlist = new Playlist();
+        playlist.setPlaylistId(requestBody.getPlaylistId());
+        post.setPlaylist(playlist);
+
         return post;
     }
 //
@@ -88,6 +92,10 @@ public interface PostMapper {
         Member member = post.getMember();
         postResponseDto.setMember(memberMapper.memberToMemberResponseDto(member));
 
+        Playlist playlist = post.getPlaylist();
+        postResponseDto.setPlaylistId(playlist.getPlaylistId());
+        postResponseDto.setPlaylistTitle(playlist.getTitle());
+
         return postResponseDto;
     }
 
@@ -104,6 +112,7 @@ public interface PostMapper {
         return response;
     }
 
+
     default PostResponseDto postToPostResponseDto(Post post) {
         if ( post == null ) {
             return null;
@@ -119,6 +128,10 @@ public interface PostMapper {
         postResponseDto.setLikeCount( post.getLikeCount() );
         postResponseDto.setViewCount( post.getViewCount());
         postResponseDto.setCreatedAt( post.getCreatedAt() );
+
+        Playlist playlist = post.getPlaylist();
+        postResponseDto.setPlaylistId(playlist.getPlaylistId());
+        postResponseDto.setPlaylistTitle(playlist.getTitle());
 
         return postResponseDto;
     }

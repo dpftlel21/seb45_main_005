@@ -57,8 +57,15 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public Post updatePost(Post post, Member loggedInMember) {
+    public Post updatePost(Post post, Long playlistId, Member loggedInMember) {
         Post findPost = postRepository.findByPostId(post.getPostId());
+
+        if (playlistId != null){
+            Playlist playlist = playlistRepository.findById(playlistId)
+                    .orElseThrow(() -> new EntityNotFoundException("플레이리스트를 찾을 수 없습니다."));
+
+            post.setPlaylists(playlist);
+        }
 
         if (findPost.getMember().getMemberId().equals(loggedInMember.getMemberId())) {
             Optional.ofNullable(post.getText())
