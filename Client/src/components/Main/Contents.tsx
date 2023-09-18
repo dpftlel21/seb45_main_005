@@ -1,10 +1,4 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
-
-// import Music from '../../assets/images/music.jpg';
-// import List from '../../assets/images/list.jpg';
-// import Mubti from '../../assets/images/mubti.png';
-// import Vector from '../../assets/images/vector.svg';
 import Headers from '../Header';
 
 const Contents = () => {
@@ -25,46 +19,6 @@ const Contents = () => {
               <span>MUSIC FORECAST와 지금 함께하세요</span>
             </div>
           </div>
-          <div></div>
-
-          {/* 컨텐츠
-          {!bton && (
-            <div>
-              <div className="flex flex-row justify-between mx-60 mr-12 mt-12">
-                <div className="hover:opacity-90">
-                  <img src={Music} alt="" />
-                  <div className=" mt-12">
-                    <span className="text-2xl">노래 차트</span>
-                    <p className="text-lg">
-                      비, 눈, 맑음, 흐림에따라 날씨별 노래 추천이 다르게 나타납니다.
-                    </p>
-                  </div>
-                </div>
-                <div className="hover:opacity-90">
-                  <Link to="/mubti">
-                    <img src={Mubti} alt="" />
-                    <div className=" mt-12">
-                      <span className="text-2xl">MUBTI</span>
-                      <p className="text-lg">
-                        비, 눈, 맑음, 흐림에따라 날씨별 노래 추천이 다르게 나타납니다.
-                      </p>
-                    </div>
-                  </Link>
-                </div>
-                <div className="hover:opacity-90">
-                  <Link to="/weatherRecommend">
-                    <img src={List} alt="" />
-                    <div className=" mt-12">
-                      <span className="text-2xl">날씨에 따른 음악 추천</span>
-                      <p className="text-lg">
-                        자신의 플레이리스트, 애청곡 등을 자유롭게 공유해 봅시다 !!
-                      </p>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )} */}
         </header>
       </div>
     </>

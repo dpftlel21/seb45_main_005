@@ -49,7 +49,7 @@ const SignUp = () => {
       }
     } catch (error) {
       console.error('오류 발생:', error);
-      // history('/signup')
+      alert('회원가입에 실패했습니다.');
     }
   };
 
