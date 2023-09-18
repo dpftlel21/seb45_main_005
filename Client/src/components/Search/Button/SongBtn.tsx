@@ -22,16 +22,12 @@ const SongBtn = () => {
 
   const getPlaylists = (): void => {
     axios
-      .get(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/my?page=1&size=10',
-        {
-          headers: {
-            'Authorization': token,
-            'Access-Control-Allow-Origin':
-              'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
-          },
-        }
-      )
+      .get(`${process.env.REACT_APP_BE_API_URL}/playlist/my?page=1&size=10`, {
+        headers: {
+          'Authorization': token,
+          'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+        },
+      })
       .then((res) => {
         dispatch(myPlaylist(res.data.data));
       })

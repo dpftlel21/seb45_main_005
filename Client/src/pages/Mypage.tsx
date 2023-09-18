@@ -45,7 +45,7 @@ const Mypage = () => {
   const accessToken = useSelector((state: RootState) => state.login.accessToken);
 
   const headers = {
-    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
     'Authorization': accessToken,
   };
 
@@ -62,10 +62,7 @@ const Mypage = () => {
   // 플레이 리스트
   useEffect(() => {
     axios
-      .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/my?page=1&size=10`,
-        { headers }
-      )
+      .get(`${process.env.REACT_APP_BE_API_URL}/playlist/my?page=1&size=10`, { headers })
       .then((res) => {
         setMyPlayList(res.data.data);
       })
@@ -76,10 +73,7 @@ const Mypage = () => {
   // 자기소개글
   useEffect(() => {
     axios
-      .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/my_page/intro`,
-        { headers }
-      )
+      .get(`${process.env.REACT_APP_BE_API_URL}/members/my_page/intro`, { headers })
       .then((res) => {
         setUserIntro(res.data);
       })
@@ -90,10 +84,7 @@ const Mypage = () => {
   // 유저의 게시글
   useEffect(() => {
     axios
-      .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/members/my_page/post`,
-        { headers }
-      )
+      .get(`${process.env.REACT_APP_BE_API_URL}/members/my_page/post`, { headers })
       .then((res) => {
         console.log(res.data.post);
         setMyCommunity(res.data.post);
@@ -106,7 +97,7 @@ const Mypage = () => {
 
   return (
     <>
-      <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] h-[1024px]">
+      <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] h-screen">
         <Header />
         <div className="flex w-full h-[800px]">
           <div className="flex flex-col w-[200px] items-center mt-20 ml-10">

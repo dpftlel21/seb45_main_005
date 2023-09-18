@@ -126,9 +126,9 @@ const Plyer: React.FC<CustomAudioPlayerProps> = ({
   return (
     <>
       {loginconfirm && (
-        <div className="custom-audio-player w-[150vh] h-[10vh] bg-[#444] bg-opacity-10 shadow-xl rounded-xl backdrop-blur-xl">
-          <div className="player-controls w-[150vh] flex justify-center items-center">
-            <div className="h-[10vh] w-[15vh]">
+        <div className="custom-audio-player w-[115vh] h-[10vh] bg-[#444] bg-opacity-10 shadow-xl rounded-xl backdrop-blur-xl">
+          <div className="player-controls w-[115vh] flex justify-center items-center">
+            <div className="h-[10vh] w-[15vh] flex flex-col justify-center items-center">
               <p className="text-xl md:text-lg lg:text-2xs  font-['Anton-Regular']">
                 {data[currentIdx].title}
               </p>
@@ -155,7 +155,7 @@ const Plyer: React.FC<CustomAudioPlayerProps> = ({
               <div className="flex h-[3vh]">
                 <div className="time h-[3vh]">{formatTime(currentTime)}</div>
                 <input
-                  className="w-[80vh] h-[3vh] mx-5 "
+                  className="w-[50vh] h-[3vh] mx-5 "
                   type="range"
                   min={0}
                   max={duration} // 영상의 총 길이를 최대 값으로 설정
@@ -183,7 +183,7 @@ const Plyer: React.FC<CustomAudioPlayerProps> = ({
                 value={volumeValue}
                 step={0.01}
                 onChange={handleVolumeChange}
-                className="w-[20vh]"
+                className="w-[15vh]"
               />
             </div>
           </div>

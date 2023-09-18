@@ -7,8 +7,12 @@ import {
   openMyShowAll,
   openSongLists,
 } from '../../redux/slice/ModalSlice';
-import { setSelectedPlaylistId, playlistInfo, myPlaylist } from '../../redux/slice/PlaylistsSlice';
-import { setPlaylistTitle } from '../../redux/slice/PlaylistsSlice';
+import {
+  setSelectedPlaylistId,
+  playlistInfo,
+  myPlaylist,
+  setPlaylistTitle,
+} from '../../redux/slice/PlaylistsSlice';
 import { RootState } from '../../redux/store';
 import xbtn from '../../assets/images/xbtn.svg';
 import PlaylistsShowAll from '../Playlist/PlaylistsShowAll';
@@ -40,7 +44,7 @@ export type PlaylistData = {
 
 const PlaylistModal = () => {
   const headers = {
-    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
   };
   const token = useSelector((state: RootState) => state.login.accessToken);
   const dispatch = useDispatch();
@@ -72,16 +76,12 @@ const PlaylistModal = () => {
 
   const getPlaylists = (): void => {
     axios
-      .get(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/my?page=1&size=10',
-        {
-          headers: {
-            'Authorization': token,
-            'Access-Control-Allow-Origin':
-              'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
-          },
-        }
-      )
+      .get(`${process.env.REACT_APP_BE_API_URL}/playlist/my?page=1&size=10`, {
+        headers: {
+          'Authorization': token,
+          'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+        },
+      })
       .then((res) => {
         dispatch(myPlaylist(res.data.data));
       })
@@ -98,7 +98,7 @@ const PlaylistModal = () => {
   // 플레이리스트 받아오기
   useEffect(() => {
     axios
-      .get('http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist', {
+      .get(`${process.env.REACT_APP_BE_API_URL}/playlist`, {
         headers,
       })
       .then((res) => {

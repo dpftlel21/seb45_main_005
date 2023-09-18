@@ -25,12 +25,12 @@ import SearchSongs from './pages/SearchSongs';
 import SignUp from './components/Login/SignUp';
 import LoginOn from './components/Login/LoginOn';
 import Main from './components/Main/Main';
-import Test from './components/Login/Test';
 import EditProfile from './pages/EditProfile';
 import IdFind from './components/Login/IdFind';
 import PwdFind from './components/Login/PwdFind';
 import Motherplayer from './components/Main/Motherplayer';
 import CommunityEdit from './pages/CommunityEdit';
+import SurveyYoutube from './pages/MUBTI/Survey/SurveyYoutube';
 
 const App = () => {
   const token = useSelector((state: RootState) => state.login.accessToken);
@@ -89,7 +89,6 @@ const App = () => {
             path={RouteConst.Result}
             element={<PrivateRoute component={<SurveyResult />} authenticated={token} />}
           />
-          <Route path={RouteConst.Test} element={<Test />} />
           <Route
             path={RouteConst.EditProfile}
             element={<PrivateRoute component={<EditProfile />} authenticated={token} />}
@@ -104,6 +103,7 @@ const App = () => {
           <Route path={RouteConst.IdFind} element={<IdFind />} />
           <Route path={RouteConst.PwdFind} element={<PwdFind />} />
           <Route path={RouteConst.Edit} element={<CommunityEdit />} />
+          <Route path={RouteConst.Youtube} element={<SurveyYoutube />} />
         </Routes>
       </BrowserRouter>
 

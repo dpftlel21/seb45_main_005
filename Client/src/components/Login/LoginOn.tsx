@@ -36,13 +36,13 @@ const LoginOn = () => {
   } = useForm<Formvalue>();
 
   const headers = {
-    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
   };
 
   const handleLogin = async (username: string, password: string) => {
     try {
       const response = await axios.post(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/auth/login',
+        `${process.env.REACT_APP_BE_API_URL}/auth/login`,
         { username, password },
         { headers }
       );
@@ -67,10 +67,7 @@ const LoginOn = () => {
         if (!refreshToken) {
           return;
         }
-        const response = await axios.post(
-          'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/auth/login',
-          { refreshToken }
-        );
+        const response = await axios.post(`${process.env.REACT_APP_BE_API_URL}`, { refreshToken });
         const newAccessToken = response.data.accessToken;
 
         localStorage.setItem('accessToken', newAccessToken);

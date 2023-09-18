@@ -18,15 +18,14 @@ const SurveyLoading = () => {
   const b = useSelector((state: RootState) => state.mubti.serveyB);
 
   const headers = {
-    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
   };
 
   useEffect(() => {
     axios
-      .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/mubti/result?page=1&size=10&a=${a}&b=${b}`,
-        { headers }
-      )
+      .get(`${process.env.REACT_APP_BE_API_URL}/mubti/result?page=1&size=10&a=${a}&b=${b}`, {
+        headers,
+      })
       .then((res) => {
         dispatch(serveyResult(res.data.data));
         console.log(res.data.data);

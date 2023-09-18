@@ -15,14 +15,14 @@ const EditProfile = () => {
   const navigate = useNavigate();
 
   const headers = {
-    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
     'Authorization': accessToken,
   };
 
   const handleEdit = () => {
     axios
       .patch(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/my_page/101`,
+        `${process.env.REACT_APP_BE_API_URL}/my_page/101`,
         {
           image: '',
           intro: myintro,

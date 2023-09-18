@@ -18,7 +18,7 @@ const Weather = () => {
 
   useEffect(() => {
     axios
-      .get(`http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/weather/data`)
+      .get(`${process.env.REACT_APP_BE_API_URL}/weather/data`)
       .then(({ data }) => {
         const { temperature, weatherDescription } = data;
         setWeather({ temperature, weatherDescription });

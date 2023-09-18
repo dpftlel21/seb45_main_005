@@ -23,17 +23,16 @@ const Write = () => {
   console.log(memberId);
 
   const headers = {
-    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
   };
   const [keyword, setKeyword] = useState('');
   const dispatch = useDispatch();
 
   const handleSearch = () => {
     axios
-      .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/song/search?keyword=${keyword}&song=10`,
-        { headers }
-      )
+      .get(`${process.env.REACT_APP_BE_API_URL}/song/search?keyword=${keyword}&song=10`, {
+        headers,
+      })
       .then((res) => {
         // dispatch(songlistInfo(res.data));
         setSongData(res.data);
@@ -73,17 +72,17 @@ const Write = () => {
     // 등록 버튼 클릭 시 POST 요청을 보내는 함수
     try {
       const response = await axios.post(
-        'http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/posts',
+        `${process.env.REACT_APP_BE_API_URL}/posts`,
         {
           memberId,
           title,
           text: content,
+          playlistId: 270,
         },
         {
           headers: {
             'Authorization': accessToken,
-            'Access-Control-Allow-Origin':
-              'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+            'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
           },
         }
       );

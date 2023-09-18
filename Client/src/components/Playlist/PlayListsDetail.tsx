@@ -29,7 +29,7 @@ export type SongData = {
 
 const PlaylistsDetail = () => {
   const headers = {
-    'Access-Control-Allow-Origin': 'http://musicforecast.s3-website.ap-northeast-2.amazonaws.com/',
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
   };
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
@@ -47,10 +47,7 @@ const PlaylistsDetail = () => {
 
   const getAddedSongs = (): void => {
     axios
-      .get(
-        `http://ec2-15-164-171-149.ap-northeast-2.compute.amazonaws.com:8080/playlist/${playlistId}`,
-        { headers }
-      )
+      .get(`${process.env.REACT_APP_BE_API_URL}/playlist/${playlistId}`, { headers })
       .then((res) => {
         dispatch(playlistDetail(res.data.data.playlistSongs));
         dispatch(playlistData(res.data.data));
