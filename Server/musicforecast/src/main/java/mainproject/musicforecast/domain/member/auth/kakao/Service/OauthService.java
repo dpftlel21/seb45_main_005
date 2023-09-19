@@ -157,6 +157,8 @@ public class OauthService extends SimpleUrlAuthenticationSuccessHandler {
                 email = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
             }
 
+            br.close();
+
             Optional<Member> optionalMember = memberRepository.findByKakaoId(kakaoId);
             Member member = null;
 

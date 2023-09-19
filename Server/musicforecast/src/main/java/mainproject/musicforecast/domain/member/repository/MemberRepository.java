@@ -12,4 +12,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findBySub(BigInteger sub);
     Optional<Member> findByKakaoId(BigInteger id);
     Optional<Member> findByNicknameAndBirthdate(String nickname, long birthdate);
+    Optional<Member> findByNicknameAndAuthAnswerAndQuestionNumberAndBirthdate(String nickname, String authAnswer, long QuestionNumber, long birthdate);
 }

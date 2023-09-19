@@ -8,6 +8,7 @@ import mainproject.musicforecast.domain.member.auth.utils.CustomAuthorityUtils;
 import mainproject.musicforecast.domain.member.repository.MemberRepository;
 import mainproject.musicforecast.domain.member.service.MemberService;
 import mainproject.musicforecast.domain.provider.ProviderRepository;
+import mainproject.musicforecast.domain.member.auth.handler.OAuth2MemberSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -68,7 +69,27 @@ public class SecurityConfiguration {
                 .apply(new CustomOauthFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        //.antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.POST, "/members/**").permitAll()
+                        .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.DELETE, "/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.POST, "/oauth/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/oauth/**").permitAll()
+                        .antMatchers(HttpMethod.PATCH, "/find/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/find/**").permitAll()
+                        .antMatchers(HttpMethod.POST, "/playlist/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/playlist/my/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/playlist/**").permitAll()
+                        .antMatchers(HttpMethod.PATCH, "/playlist/**").hasRole("USER")
+                        .antMatchers(HttpMethod.DELETE, "/playlist/**").hasRole("USER")
+                        .antMatchers(HttpMethod.POST, "/song/**").hasRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/song/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/song/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/weather/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/mubti/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/youtuber/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/admin-suggest/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/tag/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/posts/**").permitAll()
                         .antMatchers(HttpMethod.POST, "/posts/**").permitAll()
                         .antMatchers(HttpMethod.PATCH, "/posts/**").permitAll()
