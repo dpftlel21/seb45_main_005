@@ -21,4 +21,5 @@ export const RouteConst = {
   IdFind: '/idfind',
   PwdFind: '/pwdfind',
   Edit: '/community/:id/edit',
+  PwdChange: '/pwdfind/change',
 };
