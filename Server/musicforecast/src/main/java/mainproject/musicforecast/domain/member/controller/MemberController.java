@@ -125,7 +125,7 @@ public class MemberController {
 
     }
     //회원 탈퇴 기능
-    @DeleteMapping("/delete/{memberId}")
+    @DeleteMapping("/delete")
     public ResponseEntity deleteMember(@AuthenticationPrincipal Member user) {
 
         memberService.deleteMember(user);
