@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { setMemberID } from '../../redux/slice/LoginSlice';
 import Logo from '../../assets/images/logo.png';
 import Calendar from '../../assets/images/calendar.svg';
 
@@ -13,6 +15,11 @@ interface PwdInput {
 }
 
 const PwdFind = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const headers = {
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+  };
   const {
     handleSubmit,
     register,
@@ -20,14 +27,25 @@ const PwdFind = () => {
   } = useForm<PwdInput>();
 
   const onsubmit = async (data: PwdInput) => {
+
+    data.birthdate = data.birthdate.replace(/-/g, '');
+    console.log(data);
+    const url = `${process.env.REACT_APP_BE_API_URL}/find/username`;
+
     try {
-      const response = await axios.post('/members/find/id', data);
+      const response = await axios.get(url, {
+        params: data,
+        headers,
+      });
 
       if (response.status === 200) {
         console.log('비밀번호 찾기 성공');
+        dispatch(setMemberID(response.data.memberid));
+        navigate('/pwdfind/change');
       }
     } catch (error) {
       console.error('오류 발생:', error);
+      alert('질문이 일치하지 않습니다.');
     }
   };
   return (
@@ -79,7 +97,7 @@ const PwdFind = () => {
                 <input
                   type="text"
                   id="auth_answer"
-                  {...register('auth_answer', { required: '비밀번호 찾기 입력은 필수 입니다.' })}
+                  {...register('auth_answer', { required: '질문에 대한 답변 입력은 필수 입니다.' })}
                   className={`w-[330px] h-8 ${errors.birthdate ? 'border-red-500' : ''}`}
                 ></input>
                 {errors.auth_answer && (

@@ -27,6 +27,7 @@ const Kakaobt = () => {
         if (res.status === 200) {
           dispatch(setAccessToken(res.headers.authorization));
           dispatch(setLoginState(true));
+          window.location.href = '/';
         } else {
           console.log('실패');
         }

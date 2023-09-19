@@ -6,8 +6,6 @@ import { RouteConst } from './interface/RouteConst';
 import PrivateRoute from './interface/PrivateRoute';
 import { RootState } from './redux/store';
 
-import 'react-toastify/dist/ReactToastify.css';
-
 import MUBTIMain from './pages/MUBTI/MUBTIMain';
 import Survey from './pages/MUBTI/Survey/Survey';
 import SurveyMood from './pages/MUBTI/Survey/SurveyMood';
@@ -31,6 +29,7 @@ import PwdFind from './components/Login/PwdFind';
 import Motherplayer from './components/Main/Motherplayer';
 import CommunityEdit from './pages/CommunityEdit';
 import SurveyYoutube from './pages/MUBTI/Survey/SurveyYoutube';
+import PwdChange from './components/Login/PwdChange';
 
 const App = () => {
   const token = useSelector((state: RootState) => state.login.accessToken);
@@ -73,6 +72,7 @@ const App = () => {
           path={RouteConst.Detail}
           element={<PrivateRoute component={<CommunityDetail />} authenticated={token} />}
         />
+
 
         <Route
           path={RouteConst.MUBTI}
@@ -117,12 +117,16 @@ const App = () => {
         <Route path={RouteConst.PwdFind} element={<PwdFind />} />
         <Route path={RouteConst.Edit} element={<CommunityEdit />} />
         <Route path={RouteConst.Youtube} element={<SurveyYoutube />} />
+        <Route path={RouteConst.PwdChange} element={<PwdChange />} />
+        <Route path={RouteConst.IdFind} element={<IdFind />} />
+        <Route path={RouteConst.PwdFind} element={<PwdFind />} />
       </Routes>
       {showHeaderFooter() ? null : (
         <div className="w-full fixed bottom-0 flex justify-center">
           <Motherplayer />
         </div>
       )}
+
     </>
   );
 };
