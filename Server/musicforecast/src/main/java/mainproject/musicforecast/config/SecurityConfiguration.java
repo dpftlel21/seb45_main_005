@@ -2,19 +2,16 @@ package mainproject.musicforecast.config;
 
 import mainproject.musicforecast.domain.member.auth.filter.JwtAuthenticationFilter;
 import mainproject.musicforecast.domain.member.auth.filter.JwtVerificationFilter;
-import mainproject.musicforecast.domain.member.auth.handler.MemberAccessDeniedHandler;
-import mainproject.musicforecast.domain.member.auth.handler.MemberAuthenticationEntryPoint;
-import mainproject.musicforecast.domain.member.auth.handler.MemberAuthenticationFailureHandler;
-import mainproject.musicforecast.domain.member.auth.handler.MemberAuthenticationSuccessHandler;
+import mainproject.musicforecast.domain.member.auth.handler.*;
 import mainproject.musicforecast.domain.member.auth.jwt.JwtTokenizer;
 import mainproject.musicforecast.domain.member.auth.utils.CustomAuthorityUtils;
 import mainproject.musicforecast.domain.member.repository.MemberRepository;
 import mainproject.musicforecast.domain.member.service.MemberService;
 import mainproject.musicforecast.domain.provider.ProviderRepository;
-import mainproject.musicforecast.domain.member.auth.handler.OAuth2MemberSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -72,6 +69,14 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                         //.antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/posts/**").permitAll()
+                        .antMatchers(HttpMethod.POST, "/posts/**").permitAll()
+                        .antMatchers(HttpMethod.PATCH, "/posts/**").permitAll()
+                        .antMatchers(HttpMethod.DELETE, "/posts/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/comments/**").permitAll()
+                        .antMatchers(HttpMethod.POST, "/comments/**").permitAll()
+                        .antMatchers(HttpMethod.PATCH, "/comments/**").permitAll()
+                        .antMatchers(HttpMethod.DELETE, "/comments/**").permitAll()
                         .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2
