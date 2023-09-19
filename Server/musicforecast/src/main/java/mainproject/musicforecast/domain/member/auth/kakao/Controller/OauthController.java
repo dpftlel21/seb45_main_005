@@ -18,7 +18,7 @@ public class OauthController {
         this.oauthService = oauthService;
     }
 
-    @GetMapping("/v2/kakao")
+    @PostMapping("/v2/kakao")
     public ResponseEntity kakaoCallback(@RequestHeader("code") String code) {
         System.out.println(code);
 
