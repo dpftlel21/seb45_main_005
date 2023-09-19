@@ -31,7 +31,7 @@ const SongLists = () => {
   return (
     <>
       {/* 플리 앨범, 제목, 내용 */}
-      <div className="w-full h-[50px] grid grid-cols-10 text-center items-center font-['Anton-Regular'] border-y-2 border-solid border-gray-400">
+      <div className="w-full h-[50px] grid grid-cols-10 text-center items-center font-['Anton-Regular'] border-y-2 border-solid border-blue-400">
         <h3 className="col-span-1">#</h3>
         <h3 className="col-span-1">No.</h3>
         <h3 className="col-span-2">Artist</h3>

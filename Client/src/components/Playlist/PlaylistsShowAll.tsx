@@ -7,6 +7,8 @@ import xbtn from '../../assets/images/xbtn.svg';
 import PlaylistsDetail from './PlayListsDetail';
 import Playlists from './Playlists';
 import { RootState } from '../../redux/store';
+import PlaylistsSearch from './PlaylistsSearch';
+import SearchedPlaylists from './SearchedPlaylists';
 
 export type PlaylistInfo = {
   title: string;
@@ -21,6 +23,7 @@ const PlaylistsShowAll = () => {
   const dispatch = useDispatch();
 
   const isDetailOpen = useSelector((state: RootState) => state.modal.isSongOpen);
+  const isSearchedOpen = useSelector((state: RootState) => state.modal.isSearchedOpen);
   const playlistsInfo: PlaylistInfo[] = useSelector((state: RootState) => state.playlists.value);
 
   const handleCloseModal = () => {
@@ -45,19 +48,14 @@ const PlaylistsShowAll = () => {
         <div className="w-[600px] h-[670px] mt-12 fixed right-8 bottom-40">
           <div className="h-[670px] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca]">
             {/* 플레이리스트 상단 */}
-            <div className="flex justify-around">
+            <div className="flex justify-around mb-8">
               <button onClick={handleCloseModal} className="mr-10 mt-8 ">
                 <img src={xbtn} className="w-[35px]" />
               </button>
               {/* 검색칸 */}
-              <div className="flex mt-8">
-                <input
-                  type="text"
-                  placeholder="   플레이리스트 이름을 입력해주세요"
-                  className="w-[400px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
-                ></input>
+              <div className="flex items-center ">
+                <PlaylistsSearch />
               </div>
-              <button className="mt-8"></button>
             </div>
             {/* 플레이리스트 */}
             <div className="w-full h-[50px] flex justify-between items-center mt-8 font-['Anton-Regular']">
@@ -73,6 +71,9 @@ const PlaylistsShowAll = () => {
         </div>
       </div>
       {isDetailOpen && <PlaylistsDetail />}
+      {isSearchedOpen && ( // 모달이 열렸을 때만 모달 컴포넌트 렌더링
+        <SearchedPlaylists />
+      )}
     </>
   );
 };

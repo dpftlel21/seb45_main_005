@@ -4,7 +4,7 @@ import axios from 'axios';
 import { RootState } from '../../../redux/store';
 import { weatherResult } from '../../../redux/slice/WeatherSlice';
 import { openModal, openSongLists } from '../../../redux/slice/ModalSlice';
-import { setSelectedPlaylistId } from '../../../redux/slice/PlaylistsSlice';
+import { setSelectedPlaylistId, setPlaylistTitle } from '../../../redux/slice/PlaylistsSlice';
 import playlistdisc from '../../../assets/images/playlistdisc.png';
 
 const RecommendLists = () => {
@@ -16,12 +16,13 @@ const RecommendLists = () => {
     'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
   };
 
-  const handleDetailOpen = async (playlistId: number) => {
+  const handleDetailOpen = async (playlistId: number, title: string) => {
     dispatch(openModal());
 
     setTimeout(async () => {
       await dispatch(openSongLists());
       dispatch(setSelectedPlaylistId(playlistId));
+      dispatch(setPlaylistTitle(title));
     }, 1500);
   };
 
@@ -33,7 +34,6 @@ const RecommendLists = () => {
       })
       .then((res) => {
         dispatch(weatherResult(res.data.data));
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -47,8 +47,8 @@ const RecommendLists = () => {
         <div className="flex ">
           {RecommendResult.map((el) => (
             <div
-              onClick={() => handleDetailOpen(el.playlistId)}
-              className="flex flex-col justify-center w-[150px] bg-[#d8d5d5] bg-opacity-10 shadow-xl rounded-xl backdrop-blur-md mx-4 hover:translate-y-[-15px] transition duration-300 ease-in-out"
+              onClick={() => handleDetailOpen(el.playlistId, el.title)}
+              className="flex flex-col justify-center w-[150px] bg-[#d8d5d5] bg-opacity-10 shadow-xl rounded-xl backdrop-blur-md mx-4 hover:translate-y-[-15px] transition duration-300 ease-in-out cursor-pointer"
             >
               <img src={playlistdisc} className="animate-spin-slow w-[150px] h-[150px] my-4" />
               <p className="h-[60px] font-bold text-lg text-center">{el.title}</p>

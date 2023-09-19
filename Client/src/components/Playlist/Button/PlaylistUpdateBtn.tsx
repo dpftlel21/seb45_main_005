@@ -1,11 +1,19 @@
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { RootState } from '../../../redux/store';
-import { myPlaylist } from '../../../redux/slice/PlaylistsSlice';
+import { myPlaylist, playlistInfo } from '../../../redux/slice/PlaylistsSlice';
 
-const PlaylistUpdateBtn = () => {
+export type PublicProp = {
+  isPublic: boolean;
+  isClicked: boolean;
+  setIsClicked: any;
+};
+
+const PlaylistUpdateBtn = ({ isPublic, setIsClicked, isClicked }: PublicProp) => {
   const dispatch = useDispatch();
-
+  const headers = {
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+  };
   const playlistId = useSelector((state: RootState) => state.playlists.selectedPlaylistId);
   const token = useSelector((state: RootState) => state.login.accessToken);
   const title = useSelector((state: RootState) => state.playlists.playlistTitle);
@@ -26,11 +34,25 @@ const PlaylistUpdateBtn = () => {
       });
   };
 
+  const getRecommendPlaylists = (): void => {
+    axios
+      .get(`${process.env.REACT_APP_BE_API_URL}/playlist`, {
+        headers,
+      })
+      .then((res) => {
+        getPlaylists();
+        dispatch(playlistInfo(res.data.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleUpdate = () => {
     axios
       .patch(
         `${process.env.REACT_APP_BE_API_URL}/playlist/${playlistId}`,
-        { title, public: true, tag: [] },
+        { title, public: isPublic, tag: [] },
         {
           headers: {
             'Authorization': token,
@@ -40,6 +62,8 @@ const PlaylistUpdateBtn = () => {
       )
       .then((res) => {
         getPlaylists();
+        getRecommendPlaylists();
+        setIsClicked(false);
         console.log('수정 성공 !', res);
       })
       .catch((err) => {
@@ -48,12 +72,23 @@ const PlaylistUpdateBtn = () => {
   };
 
   return (
-    <button
-      onClick={handleUpdate}
-      className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
-    >
-      완료
-    </button>
+    <>
+      {isClicked ? (
+        <button
+          onClick={handleUpdate}
+          className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
+        >
+          완료
+        </button>
+      ) : (
+        <button
+          onClick={() => setIsClicked(true)}
+          className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
+        >
+          수정하기
+        </button>
+      )}
+    </>
   );
 };
 

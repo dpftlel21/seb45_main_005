@@ -11,7 +11,6 @@ export type WeatherData = {
 
 const ContentBox = () => {
   const weather = useSelector((state: RootState) => state.weather.value);
-  console.log(weather);
 
   const SunBackground =
     'https://user-images.githubusercontent.com/101685650/268509123-363c9802-07a3-4c35-85fe-31182b48eb78.gif';

@@ -59,6 +59,8 @@ const SongAddModal = () => {
 
   // 노래 가져오기
   const handleAddSong = async (plyId: number) => {
+    let addedSongsCount = 0;
+
     const axiosRequests = selectedSongs.map(async (song) => {
       try {
         const res = await axios.post(
@@ -70,12 +72,17 @@ const SongAddModal = () => {
             },
           }
         );
+        addedSongsCount += 1;
         console.log(res);
       } catch (err) {
         console.error(err);
       }
     });
     await Promise.all(axiosRequests);
+
+    if (addedSongsCount > 0) {
+      alert(`${addedSongsCount}개의 노래가 추가되었습니다.`); // 한 번의 alert 메시지 표시
+    }
   };
 
   return (
