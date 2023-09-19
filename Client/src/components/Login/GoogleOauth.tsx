@@ -1,16 +1,35 @@
 import React from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
-// import axios from 'axios';
+import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import google from '../../assets/images/google.svg';
 import { setAccessToken, setLoginState } from '../../redux/slice/LoginSlice';
 
 const GoogleOauth = () => {
+  const headers = {
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+  };
   const dispatch = useDispatch();
   const login = useGoogleLogin({
+    scope: 'email',
     onSuccess: (tokenResponse) => {
       console.log(tokenResponse);
       dispatch(setAccessToken(tokenResponse.access_token));
+      axios
+        .post(
+          `${process.env.REACT_APP_BE_API_URL}/auth/google`,
+          {},
+          {
+            headers: {
+              Authorization: tokenResponse.access_token,
+              ...headers,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        });
+
       console.log('Login Success:', tokenResponse.access_token);
       window.location.href = '/';
       dispatch(setLoginState(true));

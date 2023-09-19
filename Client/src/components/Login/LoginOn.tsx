@@ -15,7 +15,7 @@ import Email from '../../assets/images/email.svg';
 import Lock from '../../assets/images/lock.svg';
 import { RootState } from '../../redux/store';
 import GoogleOauth from './GoogleOauth';
-import SocialKakao from './KakaoLogin';
+import Kakaobt from './Kakaobt';
 
 interface Formvalue {
   username: string;
@@ -171,7 +171,7 @@ const LoginOn = () => {
             </form>
             <div className="flex flex-row justify-between ml-60 mt-5 w-52 mb-24">
               <GoogleOauth />
-              <SocialKakao />
+              <Kakaobt />
             </div>
           </div>
         </div>
