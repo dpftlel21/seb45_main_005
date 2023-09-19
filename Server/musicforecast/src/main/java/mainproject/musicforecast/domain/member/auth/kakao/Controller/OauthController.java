@@ -22,7 +22,7 @@ public class OauthController {
         this.kakaoOauthService = kakaoOauthService;
         this.oauthService = oauthService;
     }
-
+    @CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
     @PostMapping("/v2/kakao")
     public ResponseEntity kakaoCallback(@RequestHeader("code") String code) {
         System.out.println(code);

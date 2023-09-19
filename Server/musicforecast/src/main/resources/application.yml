@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: jdbc:mysql://database-1.csuupodcoobr.ap-northeast-2.rds.amazonaws.com:13306/music-forecast?createDatabaseIfNotExist=true
+    username: admin
+    password: musicforecast
   jpa:
     show-sql: true
     hibernate:
@@ -14,16 +14,16 @@ spring:
       client:
         registration:
           google:
-            clientId: ${G_CLIENT_ID}
-            clientSecret: ${G_CLIENT_SECRET}
+            clientId: 121646054560-tgn23qhkfbno1lhgj0v4odq7p9gjlqkc.apps.googleusercontent.com
+            clientSecret: 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
             scope:
               - email
               - profile
           kakao:
             authorization-grant-type: authorization_code
             redirect-uri: http://localhost:3000
-            client-id: ${KAKAO_CLIENT_ID}
-            client-secret: ${KAKAO_CLIENT_SECRET}
+            client-id: 4c5d1970a764dd126fa0800e2b151812
+            client-secret: 3cMajN46UJ0ZVCVityDGQMPzttKqjVey
             scope:
               - account_email
             client-authentication-method: GET

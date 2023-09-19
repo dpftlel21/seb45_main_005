@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.*;
@@ -26,6 +27,7 @@ import java.net.URL;
 import java.security.Principal;
 import java.util.*;
 
+@CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
 @Service
 public class KakaoOauthService extends SimpleUrlAuthenticationSuccessHandler {
     private final MemberService memberService;
