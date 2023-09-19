@@ -87,7 +87,10 @@ const CommunityDetail = () => {
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_BE_API_URL}/posts/${postId}`, {
-        headers,
+        headers: {
+          'Authorization': accessToken,
+          'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+        },
       })
       .then((res) => {
         setPosts(res.data.data);
