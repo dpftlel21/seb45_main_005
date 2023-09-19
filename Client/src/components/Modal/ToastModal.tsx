@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { closeToastModal } from '../../redux/slice/ModalSlice';
 import { myPlaylist } from '../../redux/slice/PlaylistsSlice';
 import { RootState } from '../../redux/store';
@@ -47,7 +48,7 @@ const ToastModal = () => {
       )
       .then((res) => {
         console.log(res);
-        alert('플리가 추가되었습니다.');
+        toast.success('플리가 추가되었습니다.');
         getPlaylists();
         dispatch(closeToastModal());
       })

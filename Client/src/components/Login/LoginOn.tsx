@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import {
   setAccessToken,
   setRefreshToken,
@@ -52,11 +53,11 @@ const LoginOn = () => {
       dispatch(setRefreshToken(response.headers.refreshtoken));
       dispatch(setMemberID(response.headers.memberid));
       dispatch(setLoginState(true));
-
       window.location.href = '/';
+      toast.success('로그인 성공');
     } catch (error) {
       console.error('로그인 실패:', error);
-      alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+      toast.error('아이디와 비밀번호가 일치하지 않습니다.');
     }
   };
 
