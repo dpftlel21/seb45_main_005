@@ -74,11 +74,42 @@ public interface PostMapper {
 //    }
 
 
-    default PostResponseDto postToPostResponse(MemberMapper memberMapper, Post post, CommentMapper commentMapper) {
+    default PostResponseDto postToPostResponse(MemberMapper memberMapper, Post post, CommentMapper commentMapper, boolean userHasLiked) {
         if ( post == null ) {
             return null;
         }
 
+        PostResponseDto postResponseDto = new PostResponseDto();
+
+        postResponseDto.setPostId( post.getPostId() );
+        postResponseDto.setTitle( post.getTitle() );
+        postResponseDto.setText( post.getText() );
+        postResponseDto.setComments(post.getComments().stream()
+                .map(comment -> commentMapper.CommentToCommentResponseDto(comment)).collect(Collectors.toList()));
+        //postResponseDto.setVoteCount( post.getVoteCount() );
+        postResponseDto.setLikeCount( post.getLikeCount() );
+        postResponseDto.setViewCount(post.getViewCount());
+        postResponseDto.setCreatedAt(post.getCreatedAt());
+
+
+        postResponseDto.setHasLiked(userHasLiked);
+
+
+        Member member = post.getMember();
+        postResponseDto.setMember(memberMapper.memberToMemberResponseDto(member));
+
+        Playlist playlist = post.getPlaylist();
+        if(playlist != null) {
+            postResponseDto.setPlaylistId(playlist.getPlaylistId());
+            postResponseDto.setPlaylistTitle(playlist.getTitle());
+        }
+        return postResponseDto;
+    }
+
+    default PostResponseDto postToPostResponse(MemberMapper memberMapper, Post post, CommentMapper commentMapper) {
+        if ( post == null ) {
+            return null;
+        }
         PostResponseDto postResponseDto = new PostResponseDto();
 
         postResponseDto.setPostId( post.getPostId() );

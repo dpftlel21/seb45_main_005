@@ -110,11 +110,16 @@ public class PostController {
 
     // 특정 게시글 조회
     @GetMapping("/{post-id}")
-    public ResponseEntity getPost(@PathVariable("post-id") @Positive Long postId) {
+    public ResponseEntity getPost(@PathVariable("post-id") @Positive Long postId, @AuthenticationPrincipal Member member) {
+
+        Member currentUser = memberService.findMember(member.getMemberId());
 
         Post post = postService.findGetPost(postId);
+
+        boolean userHasLiked = postLikeService.hasLikedPost(postId,currentUser);
+
         return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.postToPostResponse(memberMapper, post, commentMapper)),
+                new SingleResponseDto<>(mapper.postToPostResponse(memberMapper, post, commentMapper,userHasLiked)),
                 HttpStatus.OK);
     }
 

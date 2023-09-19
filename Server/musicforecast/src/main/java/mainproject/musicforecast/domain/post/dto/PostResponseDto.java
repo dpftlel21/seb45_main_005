@@ -26,6 +26,16 @@ public class PostResponseDto {
     private Long playlistId;
     private String playlistTitle;
 
+    private boolean hasLiked;
+
+    public boolean isHasLiked(){
+        return hasLiked;
+    }
+
+    public void setHasLiked(boolean hasLiked){
+        this.hasLiked = hasLiked;
+    }
+
     public void setMember(MemberResponseDto memberToMemberResponseDto) {
         this.nickName = memberToMemberResponseDto.getNickname();
         this.memberId = memberToMemberResponseDto.getMemberId();
