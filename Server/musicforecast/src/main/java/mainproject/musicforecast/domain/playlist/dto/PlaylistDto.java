@@ -39,9 +39,10 @@ public class PlaylistDto {
     /*
     * 좋아요 누를 때 보내는 값
     */
+    @Builder
     @Getter
     public static class Like {
-        private long memberId;
+        private boolean like;
     }
     
     /*

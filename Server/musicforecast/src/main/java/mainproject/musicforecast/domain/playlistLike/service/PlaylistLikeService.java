@@ -31,10 +31,6 @@ public class PlaylistLikeService {
         Playlist playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new NullPointerException());
 
-        if (user.getMemberId() != playlist.getMember().getMemberId()) {
-            throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
-        }
-
         PlaylistLike existPlaylistLike = playlistLikeRepository.findByMemberAndPlaylist(member, playlist);
 
         int totalLikeCount = playlist.getLikeCount();
