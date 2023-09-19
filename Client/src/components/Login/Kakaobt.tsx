@@ -22,13 +22,13 @@ const Kakaobt = () => {
       'code': code,
     };
     axios
-      .get(`${process.env.REACT_APP_BE_API_URL}/oauth/v2/kakao`, { headers })
+      .post(`${process.env.REACT_APP_BE_API_URL}/oauth/v2/kakao`, {}, { headers })
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.headers.Authorization);
+          console.log(res.headers.authorization);
           dispatch(setAccessToken(res.headers.authorization));
-          dispatch(setLoginState(false));
-          // window.location.href = '/';
+          dispatch(setLoginState(true));
+          window.location.href = '/';
         } else {
           console.log('실패');
         }
