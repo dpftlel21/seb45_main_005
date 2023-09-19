@@ -4,7 +4,11 @@ import axios from 'axios';
 import { RootState } from '../../../redux/store';
 import { weatherResult } from '../../../redux/slice/WeatherSlice';
 import { openModal, openSongLists } from '../../../redux/slice/ModalSlice';
-import { setSelectedPlaylistId, setPlaylistTitle } from '../../../redux/slice/PlaylistsSlice';
+import {
+  setSelectedPlaylistId,
+  setPlaylistTitle,
+  playlistDetail,
+} from '../../../redux/slice/PlaylistsSlice';
 import playlistdisc from '../../../assets/images/playlistdisc.png';
 
 const RecommendLists = () => {
@@ -20,7 +24,15 @@ const RecommendLists = () => {
     dispatch(openModal());
 
     setTimeout(async () => {
-      await dispatch(openSongLists());
+      await axios
+        .get(`${process.env.REACT_APP_BE_API_URL}/playlist/${playlistId}`, { headers })
+        .then((res) => {
+          dispatch(playlistDetail(res.data.data.playlistSongs));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      dispatch(openSongLists());
       dispatch(setSelectedPlaylistId(playlistId));
       dispatch(setPlaylistTitle(title));
     }, 1500);
@@ -34,6 +46,7 @@ const RecommendLists = () => {
       })
       .then((res) => {
         dispatch(weatherResult(res.data.data));
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);

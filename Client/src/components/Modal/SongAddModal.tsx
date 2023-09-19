@@ -100,7 +100,7 @@ const SongAddModal = () => {
         {myPlaylistsInfo.map((el) => {
           return (
             <li
-              className="w-[200px] bg-[#dceef1] flex justify-center items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out cursor-pointer rounded-2xl shadow-lg"
+              className="w-[200px] mt-4 bg-[#dceef1] flex justify-center items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out cursor-pointer rounded-2xl shadow-lg"
               onClick={() => handleAddSong(el.playlistId)}
             >
               <h1>{el.title}</h1>

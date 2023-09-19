@@ -1,6 +1,7 @@
 import { KeyboardEvent, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { openModal } from '../../redux/slice/ModalSlice';
+// import playIcon2 from '../../assets/images/playicon2.png';
 import playIcon from '../../assets/images/playicon.png';
 import PlaylistModal from '../Modal/PlaylistModal';
 import { RootState } from '../../redux/store';
@@ -32,7 +33,7 @@ const playlistIcon = () => {
         onClick={handleOpenModal}
         onKeyPress={handleEnterKeyPress}
         tabIndex={0}
-        className="w-[10vh] h-[10vh] fixed right-0 bottom-0 mr-8 mb-8 z-30"
+        className="w-[10vh] h-[10vh] fixed right-0 bottom-0 mr-8 mb-8 z-30 bg-white rounded-[30%] border-2 border-[#444]"
       >
         <img
           src={playIcon}
