@@ -51,9 +51,18 @@ const Survey = () => {
     >
       <div className="flex flex-row justify-between items-center w-[250px] ">
         <button className="w-[20px] h-[20px] bg-[#797676] rounded-full border-2 border-red-100"></button>
-        <button className="w-[20px] h-[20px] bg-[#d9d9d9] rounded-full "></button>
-        <button className="w-[20px] h-[20px] bg-[#d9d9d9] rounded-full"></button>
-        <button className="w-[20px] h-[20px] bg-[#d9d9d9] rounded-full"></button>
+        <button
+          onClick={() => alert('선택지를 선택하세요')}
+          className="w-[20px] h-[20px] bg-[#d9d9d9] rounded-full "
+        ></button>
+        <button
+          onClick={() => alert('선택지를 선택하세요')}
+          className="w-[20px] h-[20px] bg-[#d9d9d9] rounded-full"
+        ></button>
+        <button
+          onClick={() => alert('선택지를 선택하세요')}
+          className="w-[20px] h-[20px] bg-[#d9d9d9] rounded-full"
+        ></button>
       </div>
       <h2 className="text-white text-2xl font-bold my-8">
         간단한 설문조사를 진행할 예정입니다. 본인의 현재 상황을 알려주세요 !

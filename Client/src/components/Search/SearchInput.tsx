@@ -18,7 +18,6 @@ const SearchInput = () => {
       })
       .then((res) => {
         dispatch(songlistInfo(res.data));
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);

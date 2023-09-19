@@ -33,7 +33,7 @@ const MUBTIMain = () => {
               <button
                 onClick={handleGoSurvey}
                 // href="./1"
-                className="w-[200px] h-[50px] bg-[#efd0a0] inline-flex justify-center items-center text-black font-bold mb-4 rounded-full hover:animate-bounceIn"
+                className="w-[200px] h-[50px] bg-[#efd0a0] inline-flex justify-center items-center text-black font-bold mb-4 rounded-full hover:translate-y-[-10px] transition duration-300 ease-in-out"
               >
                 MUBTI 바로가기
               </button>

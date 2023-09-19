@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
+import { BrowserRouter } from 'react-router-dom';
 import store, { persistor } from './redux/store';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
@@ -22,7 +23,9 @@ root.render(
           onScriptLoadError={() => console.log('실패')}
         >
           <ToastContainer />
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </GoogleOAuthProvider>
       </PersistGate>
     </Provider>

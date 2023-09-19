@@ -20,7 +20,6 @@ const PwdFind = () => {
   } = useForm<PwdInput>();
 
   const onsubmit = async (data: PwdInput) => {
-    console.log(data);
     try {
       const response = await axios.post('/members/find/id', data);
 

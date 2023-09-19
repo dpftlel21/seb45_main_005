@@ -38,15 +38,13 @@ const Community = () => {
 
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // 여기서 검색어(searchQuery)를 활용하여 검색 로직을 구현할 수 있습니다.
-    console.log('검색어:', searchQuery);
+
     axios
       .get(
         `${process.env.REACT_APP_BE_API_URL}/posts/search?page=${currentPage}&size=10&keyword=${searchQuery}`,
         { headers }
       )
       .then((res) => {
-        console.log(res);
         setPosts(res.data.data);
         setTotalPages(res.data.pageInfo.totPages);
         dispatch(setCurrentPage(currentPage));
@@ -83,7 +81,6 @@ const Community = () => {
         { headers }
       )
       .then((res) => {
-        console.log(res);
         setPosts(res.data.data);
         setTotalPages(res.data.pageInfo.totPages);
         dispatch(setCurrentPage(currentPage));
@@ -100,7 +97,6 @@ const Community = () => {
         { headers }
       )
       .then((res) => {
-        console.log(res);
         setPosts(res.data.data);
         setTotalPages(res.data.pageInfo.totPages);
         dispatch(setCurrentPage(currentPage));
@@ -118,7 +114,6 @@ const Community = () => {
         { headers }
       )
       .then((res) => {
-        console.log(res);
         setPosts(res.data.data);
         setTotalPages(res.data.pageInfo.totPages);
         dispatch(setCurrentPage(currentPage));
@@ -136,7 +131,6 @@ const Community = () => {
         { headers }
       )
       .then((res) => {
-        console.log(res);
         setPosts(res.data.data);
         setTotalPages(res.data.pageInfo.totPages);
         dispatch(setCurrentPage(currentPage));

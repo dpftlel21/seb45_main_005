@@ -13,7 +13,6 @@ const GoogleOauth = () => {
   const login = useGoogleLogin({
     scope: 'email',
     onSuccess: (tokenResponse) => {
-      console.log(tokenResponse);
       dispatch(setAccessToken(tokenResponse.access_token));
       axios
         .post(
@@ -30,7 +29,6 @@ const GoogleOauth = () => {
           console.log(res);
         });
 
-      console.log('Login Success:', tokenResponse.access_token);
       window.location.href = '/';
       dispatch(setLoginState(true));
     },

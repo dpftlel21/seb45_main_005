@@ -11,7 +11,6 @@ const Header = () => {
   const loginState = useSelector((state: RootState) => state.login.loginState);
   const currentURL = new URL(window.location.href);
   const pathName = currentURL.pathname;
-  console.log(pathName);
 
   const buttonClasses = (pathIndex: string) => {
     return `hover:text-sky-400 ${

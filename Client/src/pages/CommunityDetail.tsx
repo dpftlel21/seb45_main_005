@@ -50,15 +50,14 @@ const CommunityDetail = () => {
   const currentUrl = new URL(document.location.toString());
   const communityParam = currentUrl.pathname.split('/').pop() || '';
   const postId = parseInt(communityParam, 10);
-  console.log(typeof postId);
+
   const accessToken = useSelector((state: RootState) => state.login.accessToken);
-  console.log(accessToken);
+
   const memberId = useSelector((state: RootState) => state.login.memberid);
   const numMemberId = Number(memberId);
-  console.log(typeof numMemberId);
-  console.log(memberId);
+
   const savedComment: Comment[] = posts.comments;
-  console.log(savedComment);
+
   const navigate = useNavigate();
   const headers = {
     'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
@@ -91,10 +90,7 @@ const CommunityDetail = () => {
         headers,
       })
       .then((res) => {
-        console.log(res);
-        // setPosts(res.data.data);
         setPosts(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -162,7 +158,6 @@ const CommunityDetail = () => {
     axios
       .get(`${process.env.REACT_APP_BE_API_URL}/playlist/${posts.playlistId}`, { headers })
       .then((res) => {
-        console.log(res.data.data.playlistSongs);
         setSongs(res.data.data.playlistSongs);
       })
       .catch((err) => {

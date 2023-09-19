@@ -36,7 +36,7 @@ const Plyer: React.FC<CustomAudioPlayerProps> = ({
   setIsMuted,
   currentTime,
   setCurrentTime,
-  currentUrl,
+
   setCurrentUrl,
   currentIdx,
   setCurrentIdx,
@@ -68,7 +68,6 @@ const Plyer: React.FC<CustomAudioPlayerProps> = ({
 
   const handleNext = async () => {
     let nextIdx;
-    console.log(currentUrl);
 
     if (currentIdx < data.length - 1) {
       nextIdx = currentIdx + 1;

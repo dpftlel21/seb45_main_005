@@ -32,8 +32,6 @@ const SignUp = () => {
   const onSubmit = async (data: IFormInput) => {
     data.birthdate = data.birthdate.replace(/-/g, '');
 
-    console.log(data);
-
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BE_API_URL}/members/signup`,
@@ -42,7 +40,6 @@ const SignUp = () => {
       );
 
       if (response.status === 201) {
-        console.log('회원가입 성공');
         history('/login');
       } else {
         console.error('회원가입 실패');
