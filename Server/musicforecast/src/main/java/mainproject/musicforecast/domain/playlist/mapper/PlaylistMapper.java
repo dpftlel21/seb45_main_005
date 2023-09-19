@@ -95,12 +95,4 @@ public interface PlaylistMapper {
                                                                                     .build()).collect(Collectors.toList());
         return responses;
     }
-
-    default PlaylistDto.Like playlistToPlaylistLikeDto(boolean isLike) {
-        PlaylistDto.Like response = PlaylistDto.Like.builder()
-                                        .like(isLike)
-                                        .build();
-
-        return response;
-    }
 }

@@ -111,8 +111,8 @@ public class PlaylistController {
     @PatchMapping("/{playlist-id}/like")
     public ResponseEntity likePlaylist(@PathVariable("playlist-id") long playlistId,
                                        @AuthenticationPrincipal Member member) {
-        boolean like = playlistLikeService.likePlaylist(playlistId, PlaylistLike.LikeType.Like, member);
-        return new ResponseEntity<>(mapper.playlistToPlaylistLikeDto(like), HttpStatus.OK);
+        playlistLikeService.likePlaylist(playlistId, PlaylistLike.LikeType.Like, member);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/search")

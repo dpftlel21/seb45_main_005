@@ -25,7 +25,7 @@ public class PlaylistLikeService {
         this.memberRepository = memberRepository;
     }
 
-    public boolean likePlaylist(long playlistId, PlaylistLike.LikeType likeType, Member user) {
+    public void likePlaylist(long playlistId, PlaylistLike.LikeType likeType, Member user) {
         Member member = memberRepository.findById(user.getMemberId())
                 .orElseThrow(() -> new NullPointerException());
         Playlist playlist = playlistRepository.findById(playlistId)
@@ -51,7 +51,5 @@ public class PlaylistLikeService {
 
         playlist.setLikeCount(totalLikeCount);
         playlistRepository.save(playlist);
-
-        return (existPlaylistLike == null)? true : false;
     }
 }
