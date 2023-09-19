@@ -31,7 +31,7 @@ public class PostLikeService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new NullPointerException());
 
-        if (user.getMemberId() != post.getMember().getMemberId()) {
+        if (user.getMemberId() == post.getMember().getMemberId()) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
         }
 
@@ -55,5 +55,16 @@ public class PostLikeService {
 
         post.setLikeCount(totalLikeCount);
         postRepository.save(post);
+    }
+
+    public boolean hasLikedPost(long postId, Member user) {
+        Member member = memberRepository.findById(user.getMemberId())
+                .orElseThrow(() -> new NullPointerException());
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new NullPointerException());
+
+        PostLike existPostLike = postLikeRepository.findByMemberAndPost(member, post);
+
+        return existPostLike != null;
     }
 }

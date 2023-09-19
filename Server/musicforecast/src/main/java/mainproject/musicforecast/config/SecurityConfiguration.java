@@ -2,10 +2,7 @@ package mainproject.musicforecast.config;
 
 import mainproject.musicforecast.domain.member.auth.filter.JwtAuthenticationFilter;
 import mainproject.musicforecast.domain.member.auth.filter.JwtVerificationFilter;
-import mainproject.musicforecast.domain.member.auth.handler.MemberAccessDeniedHandler;
-import mainproject.musicforecast.domain.member.auth.handler.MemberAuthenticationEntryPoint;
-import mainproject.musicforecast.domain.member.auth.handler.MemberAuthenticationFailureHandler;
-import mainproject.musicforecast.domain.member.auth.handler.MemberAuthenticationSuccessHandler;
+import mainproject.musicforecast.domain.member.auth.handler.*;
 import mainproject.musicforecast.domain.member.auth.jwt.JwtTokenizer;
 import mainproject.musicforecast.domain.member.auth.utils.CustomAuthorityUtils;
 import mainproject.musicforecast.domain.member.repository.MemberRepository;
@@ -122,7 +119,7 @@ public class SecurityConfiguration {
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
-        configuration.setExposedHeaders(List.of("Authorization", "Refresh", "memberId", "nickname"));
+        configuration.setExposedHeaders(List.of("Authorization", "Refresh", "memberId"));
 
         //configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
 
