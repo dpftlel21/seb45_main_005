@@ -19,6 +19,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.sound.midi.MetaMessage;
 import java.io.*;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
@@ -132,32 +133,39 @@ public class KakaoOauthService extends SimpleUrlAuthenticationSuccessHandler {
             JsonElement element = parser.parse(result);
 
             long id = element.getAsJsonObject().get("id").getAsLong();
+            BigInteger kakaoId = BigInteger.valueOf(id);
+
             boolean hasEmail = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsBoolean();
             String email = "";
-            String nickname = element.getAsJsonObject().get("properties").getAsJsonObject().get("nickname").getAsString();;
+            String nickname = "";
+
             if(hasEmail){
                 email = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
             }
 
-            System.out.println("id : " + id);
-            System.out.println("email : " + email);
-            System.out.println("nickname : " + nickname);
-
             br.close();
 
-            Optional<Member> optionalMember = memberRepository.findByEmail(email);
-
+            Optional<Member> optionalMember = memberRepository.findByKakaoId(kakaoId);
             Member member = null;
 
             if(optionalMember.isPresent()) {
                 member = optionalMember.get();
-            }else {
-                member = saveMember(email, nickname);
+                nickname = member.getNickname();
+            } else {
+
+                int atIndex = email.indexOf("@"); // "@" 기호의 위치를 찾습니다.
+
+                if (atIndex != -1) {
+                    nickname = email.substring(0, atIndex); // "@" 기호 이전까지의 부분을 추출합니다.
+                } else {
+                    nickname = "닉네임을 입력해주세요.";
+                }
+                member = saveMember(kakaoId, email, nickname, "KaKao");
             }
 
             List<String> authorities = authorityUtils.createRoles(email);
 
-            String accessToken = delegateAccessToken(member, authorities);
+            String accessToken = delegateAccessToken(member);
             String refreshToken = delegateRefreshToken(member.getEmail());
 
             map.put("Authorization", Collections.singletonList("Bearer " + accessToken));
@@ -172,27 +180,37 @@ public class KakaoOauthService extends SimpleUrlAuthenticationSuccessHandler {
         return map;
     }
 
-    private Member saveMember(String email, String nickname) {
-        Member member = new Member();
+    private Member saveMember(BigInteger memberNum, String email, String nickname, String providerName) {
 
-        member.setEmail(email);
-        member.setNickname(nickname);
-        member.setIntro("자기소개를 입력해주세요.");
-        member.setImage("https://cdn-icons-png.flaticon.com/512/1361/1361876.png");
+        Member savedMember = new Member();
+        Provider provider = null;
 
-        Provider provider = providerRepository.findByProviderName("KaKao");
-        member.setProvider(provider);
+        savedMember.setEmail(email);
+        savedMember.setNickname(nickname);
+        savedMember.setIntro("자기소개를 입력해주세요.");
+        savedMember.setImage("https://cdn-icons-png.flaticon.com/512/1361/1361876.png");
 
-        //memberService.findExistsEmail(email);
-        memberService.createMember(member);
+        //memberNum은 카카오나 구글에서 받은 고유 번호, 카카오는 id, 구글은 sub을 뜻한다
+        if(providerName.equals("Google")){
+            savedMember.setSub(memberNum);
+            provider = providerRepository.findByProviderName("Google");
+        } else if(providerName.equals("KaKao")){
+            savedMember.setKakaoId(memberNum);
+            provider = providerRepository.findByProviderName("KaKao");
+        }
 
-        return member;
+        savedMember.setProvider(provider);
+
+        memberService.createMember(savedMember);
+
+        return savedMember;
     }
 
-    private String delegateAccessToken(Member member, List<String> authorities) {
+    private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>(); //토큰에 넣고싶은 member 정보
         claims.put("memberId", member.getMemberId());
-        claims.put("roles", authorities);
+        claims.put("nickname", member.getNickname());
+        claims.put("roles", member.getRoles());
 
         String subject = member.getEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());

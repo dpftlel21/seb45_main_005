@@ -40,8 +40,8 @@ public class Member {
     @Column
     private Long questionNumber;
 
-    @Column
-    private String auth_answer;
+    @Column(name = "auth_answer")
+    private String authAnswer;
 
     @Column
     private String intro;

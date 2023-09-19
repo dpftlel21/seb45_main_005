@@ -37,11 +37,11 @@ public interface PostMapper {
         post.setMember(memberService.findMember(member.getMemberId()));
         post.setCreatedAt(LocalDateTime.now());
 
-
-        Playlist playlist = new Playlist();
-        playlist.setPlaylistId(postPostDto.getPlaylistId());
-        post.setPlaylist(playlist);
-
+        if (postPostDto.getPlaylistId() != null) {
+            Playlist playlist = new Playlist();
+            playlist.setPlaylistId(postPostDto.getPlaylistId());
+            post.setPlaylist(playlist);
+        }
         return post;
     }
 
@@ -53,9 +53,11 @@ public interface PostMapper {
         post.setTitle(requestBody.getTitle());
         post.setText(requestBody.getText());
 
-        Playlist playlist = new Playlist();
-        playlist.setPlaylistId(requestBody.getPlaylistId());
-        post.setPlaylist(playlist);
+        if (requestBody.getPlaylistId() != null) {
+            Playlist playlist = new Playlist();
+            playlist.setPlaylistId(requestBody.getPlaylistId());
+            post.setPlaylist(playlist);
+        }
 
         return post;
     }
@@ -72,7 +74,7 @@ public interface PostMapper {
 //    }
 
 
-    default PostResponseDto postToPostResponse(MemberMapper memberMapper, Post post, CommentMapper commentMapper) {
+    default PostResponseDto postToPostResponse(MemberMapper memberMapper, Post post, CommentMapper commentMapper, boolean userHasLiked) {
         if ( post == null ) {
             return null;
         }
@@ -89,13 +91,45 @@ public interface PostMapper {
         postResponseDto.setViewCount(post.getViewCount());
         postResponseDto.setCreatedAt(post.getCreatedAt());
 
+
+        postResponseDto.setHasLiked(userHasLiked);
+
+
         Member member = post.getMember();
         postResponseDto.setMember(memberMapper.memberToMemberResponseDto(member));
 
         Playlist playlist = post.getPlaylist();
-        postResponseDto.setPlaylistId(playlist.getPlaylistId());
-        postResponseDto.setPlaylistTitle(playlist.getTitle());
+        if(playlist != null) {
+            postResponseDto.setPlaylistId(playlist.getPlaylistId());
+            postResponseDto.setPlaylistTitle(playlist.getTitle());
+        }
+        return postResponseDto;
+    }
 
+    default PostResponseDto postToPostResponse(MemberMapper memberMapper, Post post, CommentMapper commentMapper) {
+        if ( post == null ) {
+            return null;
+        }
+        PostResponseDto postResponseDto = new PostResponseDto();
+
+        postResponseDto.setPostId( post.getPostId() );
+        postResponseDto.setTitle( post.getTitle() );
+        postResponseDto.setText( post.getText() );
+        postResponseDto.setComments(post.getComments().stream()
+                .map(comment -> commentMapper.CommentToCommentResponseDto(comment)).collect(Collectors.toList()));
+        //postResponseDto.setVoteCount( post.getVoteCount() );
+        postResponseDto.setLikeCount( post.getLikeCount() );
+        postResponseDto.setViewCount(post.getViewCount());
+        postResponseDto.setCreatedAt(post.getCreatedAt());
+
+        Member member = post.getMember();
+        postResponseDto.setMember(memberMapper.memberToMemberResponseDto(member));
+
+        Playlist playlist = post.getPlaylist();
+        if(playlist != null) {
+            postResponseDto.setPlaylistId(playlist.getPlaylistId());
+            postResponseDto.setPlaylistTitle(playlist.getTitle());
+        }
         return postResponseDto;
     }
 
@@ -130,9 +164,10 @@ public interface PostMapper {
         postResponseDto.setCreatedAt( post.getCreatedAt() );
 
         Playlist playlist = post.getPlaylist();
-        postResponseDto.setPlaylistId(playlist.getPlaylistId());
-        postResponseDto.setPlaylistTitle(playlist.getTitle());
-
+        if(playlist != null) {
+            postResponseDto.setPlaylistId(playlist.getPlaylistId());
+            postResponseDto.setPlaylistTitle(playlist.getTitle());
+        }
         return postResponseDto;
     }
 }

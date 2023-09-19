@@ -57,6 +57,7 @@ public class Post extends Auditable {
     @JoinColumn(name = "playlist_id")
     private Playlist playlist;
 
+
     // 연관 관계 메서드
     public void setMember(Member member) {
         this.member = member;
