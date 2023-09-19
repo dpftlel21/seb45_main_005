@@ -3,9 +3,14 @@ package mainproject.musicforecast.domain.member.auth.kakao.Controller;
 import mainproject.musicforecast.domain.member.auth.kakao.Service.KakaoOauthService;
 import mainproject.musicforecast.domain.member.auth.kakao.Service.OauthService;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 @RestController
 @RequestMapping("/oauth")
@@ -26,6 +31,9 @@ public class OauthController {
         MultiValueMap map = kakaoOauthService.createKakaoUser(token);
 
         HttpHeaders tokenHeader = new HttpHeaders(map);
+
+        tokenHeader.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        tokenHeader.setAcceptCharset(List.of(UTF_8));
 
         return ResponseEntity.ok().headers(tokenHeader).body("");
     }

@@ -57,12 +57,14 @@ public class KakaoOauthService extends SimpleUrlAuthenticationSuccessHandler {
             //POST 요청을 위해 기본값이 false인 setDoOutput을 true로
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
 
             //POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
-            sb.append("&client_id=a71f4198d53e651595dadeace7f63fef"); // TODO REST_API_KEY 입력
+            sb.append("&client_id=4c5d1970a764dd126fa0800e2b151812"); // TODO REST_API_KEY 입력
             sb.append("&redirect_uri=http://localhost:3000/login"); // TODO 인가코드 받은 redirect_uri 입력
             sb.append("&code=" + code);
             bw.write(sb.toString());
@@ -70,6 +72,7 @@ public class KakaoOauthService extends SimpleUrlAuthenticationSuccessHandler {
             //결과 코드가 200이라면 성공
             int responseCode = conn.getResponseCode();
             System.out.println("responseCode : " + responseCode);
+
 
             //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -113,6 +116,7 @@ public class KakaoOauthService extends SimpleUrlAuthenticationSuccessHandler {
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
             conn.setRequestProperty("Authorization", "Bearer " + token); //전송할 header 작성, access_token전송
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
             //결과 코드가 200이라면 성공
             int responseCode = conn.getResponseCode();
