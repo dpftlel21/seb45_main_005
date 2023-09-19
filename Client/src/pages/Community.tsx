@@ -18,6 +18,7 @@ interface Post {
   text: string;
   // nickName: string;
   memberId: number;
+  likeCount: number;
 }
 
 const Community = () => {
@@ -74,10 +75,13 @@ const Community = () => {
       setcurrentPage(currentPage - 1);
     }
   };
-
+  // 기본 순 나열
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BE_API_URL}/posts?page=${currentPage}&size=10`, { headers })
+      .get(
+        `${process.env.REACT_APP_BE_API_URL}/posts?page=${currentPage}&size=10&sort=postId,desc`,
+        { headers }
+      )
       .then((res) => {
         console.log(res);
         setPosts(res.data.data);
@@ -89,6 +93,59 @@ const Community = () => {
       });
   }, [currentPage]);
 
+  const handleDefault = () => {
+    axios
+      .get(
+        `${process.env.REACT_APP_BE_API_URL}/posts?page=${currentPage}&size=10&sort=postId,desc`,
+        { headers }
+      )
+      .then((res) => {
+        console.log(res);
+        setPosts(res.data.data);
+        setTotalPages(res.data.pageInfo.totPages);
+        dispatch(setCurrentPage(currentPage));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // 좋아요 순 나열
+  const handleLikeCount = () => {
+    axios
+      .get(
+        `${process.env.REACT_APP_BE_API_URL}/posts?page=${currentPage}&size=10&sort=likeCount,desc`,
+        { headers }
+      )
+      .then((res) => {
+        console.log(res);
+        setPosts(res.data.data);
+        setTotalPages(res.data.pageInfo.totPages);
+        dispatch(setCurrentPage(currentPage));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // 조회 순 나열
+  const handleViewCount = () => {
+    axios
+      .get(
+        `${process.env.REACT_APP_BE_API_URL}/posts?page=${currentPage}&size=10&sort=viewCount,desc`,
+        { headers }
+      )
+      .then((res) => {
+        console.log(res);
+        setPosts(res.data.data);
+        setTotalPages(res.data.pageInfo.totPages);
+        dispatch(setCurrentPage(currentPage));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] h-screen flex flex-col items-center">
@@ -97,7 +154,7 @@ const Community = () => {
         </div>
         <Wrapper>
           <div className="flex flex-col w-[120vh] h-[65vh] items-center">
-            <div className="flex w-full h-[5vh] items-center border-b-[1px] border-solid border-[#000000] justify-center">
+            <div className="flex w-full h-[10vh] items-center border-b-[1px] border-solid border-[#000000] justify-center">
               <button
                 className="w-[28vh] text-center text-xs underline"
                 onClick={handleWriteButton}
@@ -105,7 +162,7 @@ const Community = () => {
                 글쓰기
               </button>
 
-              <form onSubmit={handleSearchSubmit} className=" w-[140vh] ">
+              <form onSubmit={handleSearchSubmit} className=" w-[140vh] ]">
                 <input
                   type="text"
                   value={searchQuery}
@@ -115,7 +172,15 @@ const Community = () => {
                 />
               </form>
 
-              <button className="w-[10vh] text-center text-xs underline">조회순</button>
+              <button onClick={handleDefault} className="w-[10vh] text-center text-xs underline">
+                기본순
+              </button>
+              <button onClick={handleViewCount} className="w-[10vh] text-center text-xs underline">
+                조회순
+              </button>
+              <button onClick={handleLikeCount} className="w-[10vh] text-center text-xs underline">
+                좋아요순
+              </button>
             </div>
             <div>
               <table className="flex flex-col w-[120vh] items-center justify-center ">
@@ -134,6 +199,7 @@ const Community = () => {
                         <a href={`./community/${item.postId}`}>{item.title}</a>
                       </td>
                       <td className="w-[10vh] text-center text-xs">{item.viewCount}</td>
+                      <td className="w-[10vh] text-center text-xs">{item.likeCount}</td>
                     </tr>
                   ))}
               </table>

@@ -5,8 +5,9 @@ import axios from 'axios';
 import { RootState } from '../redux/store';
 import Header from '../components/Header';
 import usericon from '../assets/images/user.png';
-import musicicon from '../assets/images/Rectangle(1).png';
+// import musicicon from '../assets/images/Rectangle(1).png';
 import PlaylistIcon from '../components/Playlist/PlaylistIcon';
+import playlistdisc from '../assets/images/playlistdisc.png';
 
 interface Comment {
   commentId: number;
@@ -19,36 +20,43 @@ interface Comment {
 interface Post {
   postId: number;
   title: string;
-  voteCount: number;
+  likeCount: number;
   viewCount: number;
   text: string;
   nickName: string;
   memberId: number;
   comments: [];
+  playlistId: number;
+  playlistTitle: string;
 }
 
 const CommunityDetail = () => {
+  const [commentPosted, setCommentPosted] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [posts, setPosts] = useState<Post>({
     postId: 0,
     title: '',
     viewCount: 0,
-    voteCount: 0,
+    likeCount: 0,
     text: '',
     nickName: '',
     memberId: 0,
     comments: [],
+    playlistId: null,
+    playlistTitle: '',
   });
   const [comment, setComment] = useState('');
+  const [songs, setSongs] = useState([]);
   const currentUrl = new URL(document.location.toString());
   const communityParam = currentUrl.pathname.split('/').pop() || '';
   const postId = parseInt(communityParam, 10);
-  console.log(postId);
+  console.log(typeof postId);
   const accessToken = useSelector((state: RootState) => state.login.accessToken);
-  const memberid = useSelector((state: RootState) => state.login.memberid);
-  // const accessToken = useSelector((state: RootState) => state.login.accessToken);
-  // const refreshToken = useSelector((state: RootState) => state.login.refreshToken);
-  // const dispatch = useDispatch();
+  console.log(accessToken);
+  const memberId = useSelector((state: RootState) => state.login.memberid);
+  const numMemberId = Number(memberId);
+  console.log(typeof numMemberId);
+  console.log(memberId);
   const savedComment: Comment[] = posts.comments;
   console.log(savedComment);
   const navigate = useNavigate();
@@ -59,6 +67,23 @@ const CommunityDetail = () => {
   const handleLikeClick = () => {
     setIsLiked((prevIsLiked) => !prevIsLiked);
   };
+
+  // useEffect(() => {
+  //   axios
+  //     .patch(
+  //       `${process.env.REACT_APP_BE_API_URL}/posts/${postId}/like`,
+  //       {},
+  //       {
+  //         headers: {
+  //           'Authorization': accessToken,
+  //           'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+  //         },
+  //       }
+  //     )
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [isLiked]);
 
   useEffect(() => {
     axios
@@ -74,23 +99,33 @@ const CommunityDetail = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [postId]);
+  }, [postId, commentPosted]);
 
-  const handleComment = () => {
-    axios.post(
-      `${process.env.REACT_APP_BE_API_URL}/comments`,
-      {
-        memberid,
-        postId,
-        text: comment,
-      },
-      {
-        headers: {
-          'Authorization': accessToken,
-          'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+  const handleComment = async (e: any) => {
+    e.preventDefault();
+    await axios
+      .post(
+        `${process.env.REACT_APP_BE_API_URL}/comments`,
+        {
+          memberId: numMemberId,
+          postId,
+          text: comment,
         },
-      }
-    );
+        {
+          headers: {
+            'Authorization': accessToken,
+            'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate(`../community/${postId}`);
+        setCommentPosted(!commentPosted); // 댓글이 등록되었음을 상태에 업데이트
+      });
+    setTimeout(function () {
+      navigate(`../community/${postId}`);
+    }, 500);
   };
 
   const handleDelete = () => {
@@ -123,124 +158,134 @@ const CommunityDetail = () => {
     navigate('./edit');
   };
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BE_API_URL}/playlist/${posts.playlistId}`, { headers })
+      .then((res) => {
+        console.log(res.data.data.playlistSongs);
+        setSongs(res.data.data.playlistSongs);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [posts, commentPosted]);
+
   return (
     <>
       <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] h-screen">
         <Header />
-
-        <div className="flex flex-col items-center">
-          <div className="w-[120vh] mt-10">
-            {/* 상단 제목과 이름 좋아요 바 */}
-            <div className="w-[120vh] h-[10vh] border-b-[1px] border-solid border-black">
-              <div className="w-[120vh] h-[5vh] flex justify-between">
-                <span className="text-xl">{posts.title}</span>
-                <div className="w-[30vh] flex justify-end">
-                  <button onClick={handleEdit} className="mr-5 text-xs">
-                    수정
-                  </button>
-                  <button className="text-xs" onClick={handleDelete}>
-                    삭제
-                  </button>
+        <div className="h-[80vh] overflow-y-scroll">
+          <div className="flex flex-col items-center">
+            <div className="w-[120vh] mt-10">
+              {/* 상단 제목과 이름 좋아요 바 */}
+              <div className="w-[120vh] h-[10vh] border-b-[1px] border-solid border-black">
+                <div className="w-[120vh] h-[5vh] flex justify-between">
+                  <span className="text-xl">{posts.title}</span>
+                  <div className="w-[30vh] flex justify-end">
+                    <button onClick={handleEdit} className="mr-5 text-xs">
+                      수정
+                    </button>
+                    <button className="text-xs" onClick={handleDelete}>
+                      삭제
+                    </button>
+                  </div>
+                </div>
+                <div className="w-[120vh] h-[5vh] flex items-center">
+                  <img src={usericon} alt="유저아이콘" className="w-[4vh] h-[4vh]" />
+                  <span className="inline-flex w-[16vh] h-[10vh] items-center justify-center">
+                    {posts.nickName}
+                  </span>
+                  <div className="w-[100vh]"></div>
+                  <div className="w-[30vh] h-[5vh] inline-flex items-center justify-end text-xs">
+                    <span>{posts.likeCount}</span>
+                    <button className="text-xl ml-2" onClick={handleLikeClick}>
+                      {isLiked ? '❤️' : '🤍'}
+                    </button>
+                    <span className="ml-2">{posts.viewCount}</span>
+                    <span className="ml-2">views</span>
+                  </div>
                 </div>
               </div>
-              <div className="w-[120vh] h-[5vh] flex items-center">
-                <img src={usericon} alt="유저아이콘" className="w-[4vh] h-[4vh]" />
-                <span className="inline-flex w-[16vh] h-[10vh] items-center justify-center">
-                  {posts.nickName}
-                </span>
-                <div className="w-[100vh]"></div>
-                <div className="w-[30vh] h-[5vh] inline-flex items-center justify-end text-xs">
-                  <span>{posts.voteCount}</span>
-                  <button className="text-xl ml-2" onClick={handleLikeClick}>
-                    {isLiked ? '❤️' : '🤍'}
-                  </button>
-                  <span className="ml-2">{posts.viewCount}</span>
-                  <span className="ml-2">views</span>
+              {/* 플레이리스트 */}
+              <div className="flex flex-col w-[120vh] h-[44vh] ">
+                <div className="w-[120vh] h-[4vh] flex justify-end">
+                  <button className="text-xs">내 플레이리스트에 추가 ⎋</button>
+                </div>
+
+                <div className="flex  items-center w-[120vh] h-[40vh] justify-center  flex-wrap">
+                  <ul className="playlist-buttons   flex flex-row w-[120vh] h-[40vh] flex-wrap">
+                    <div className="mr-4 w-[40vh] h-[30vh] flex flex-col justify-center backdrop-blur-md bg-opacity-10 shadow-xl rounded-xl bg-[#d8d5d5]">
+                      <div className="text-center text-2xl">{posts.playlistTitle}</div>
+                      <div className="flex justify-center">
+                        <img
+                          className="w-[20vh] h-[20vh] animate-spin-slow"
+                          src={playlistdisc}
+                          alt=""
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col flex-wrap h-[40vh]">
+                      {songs.map((el, idx) => (
+                        <li key={idx} className="inline-flex  my-4 w-[25vh] h-[5vh]">
+                          <img
+                            className="w-[6vh] h-[6vh] rounded-md mr-2"
+                            src={el.imageUrl}
+                            alt=""
+                          />
+                          <div className="flex flex-col">
+                            <p className="font-['Anton-Regular']">{el.title}</p>
+                            <p className="text-xs">{el.artistName}</p>
+                          </div>
+                        </li>
+                      ))}
+                    </div>
+                  </ul>
                 </div>
               </div>
-            </div>
-            {/* 플레이리스트 */}
-            <div className="flex flex-col w-[120vh] h-[40vh] items-center">
-              <div className="w-[120vh] h-[4vh] flex justify-end">
-                <button className="text-xs">내 플레이리스트에 추가 ⎋</button>
+              {/* 게시글내용 */}
+              <div className="flex w-[120vh] justify-center border-b-[1px] border-solid border-black mt-8">
+                <span className="w-[110vh] mb-10">{posts.text}</span>
               </div>
-              <div className="w-[120vh] h-[10vh]"></div>
-              <div className="flex items-center w-[110vh] h-[20vh]">
-                <ul className="playlist-buttons relative top-5 items-center flex gap-[4vh] ">
-                  <li className="left-0 absolute w-[20vh]">
-                    <button className="shadow-xl hover:scale-[150%]">
-                      <img
-                        className="rounded-md w-[10vh] h-[10vh]"
-                        src={musicicon}
-                        alt="뮤직아이콘"
-                      ></img>
-                    </button>
-                  </li>
-
-                  <li className="left-20 absolute w-[10vh]">
-                    <button className="shadow-xl hover:scale-[150%]">
-                      <img
-                        className="rounded-md w-[10vh] h-[10vh]"
-                        src={musicicon}
-                        alt="뮤직아이콘"
-                      ></img>
-                    </button>
-                  </li>
-
-                  <li className="left-40 absolute w-[10vh]">
-                    <button className="shadow-xl hover:scale-[150%]">
-                      <img
-                        className="rounded-md w-[10vh] h-[10vh]"
-                        src={musicicon}
-                        alt="뮤직아이콘"
-                      ></img>
-                    </button>
-                  </li>
-
-                  <li className="left-60 absolute w-[10vh]">
-                    <button className="shadow-xl hover:scale-[150%]">
-                      <img
-                        className="rounded-md w-[10vh] h-[10vh]"
-                        src={musicicon}
-                        alt="뮤직아이콘"
-                      ></img>
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            {/* 게시글내용 */}
-            <div className="flex w-[120vh] justify-center border-b-[1px] border-solid border-black">
-              <span className="w-[110vh] mb-10">{posts.text}</span>
             </div>
           </div>
-        </div>
-        <div>
+
           <div className="flex flex-col justify-center items-center">
             <form>
-              <label id="answer">댓글 작성</label>
               <input
                 type="text"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
+                placeholder="댓글을 작성해 보세요!"
                 id="answer"
-                className="border-2 border-solid border-black w-[80vh] h-[3vh]"
+                className="rounded-md w-[80vh] h-[6vh] mt-4 mb-4 p-[4px]"
               />
-              <button onClick={handleComment}>등록</button>
+              <button
+                className="rounded-md w-[10vh] h-[6vh] ml-4 bg-[#ffffff]"
+                onClick={(e) => handleComment(e)}
+              >
+                등록
+              </button>
             </form>
           </div>
-        </div>
-        {/* 댓글내용 */}
-        <div>
-          {savedComment.map((item, idx) => (
-            <div key={idx} className="flex flex-col justify-center items-center">
-              <span className="w-[80vh] h-[2vh] text-xs">{item.nickname}</span>
-              <span className="w-[80vh] h-[2vh] text-xs">{item.text}</span>
-            </div>
-          ))}
-        </div>
 
-        <hr />
+          {/* 댓글내용 */}
+          <div className="flex flex-col justify-center items-center">
+            {savedComment.map((item, idx) => (
+              <div key={idx} className="flex flex-row justify-center items-center w-[85vh]">
+                <div>
+                  <img className="w-[4vh] h-[4vh] mr-2" src={usericon} alt="임시유저이미지" />
+                </div>
+                <div className="flex flex-col h-[6vh] items-center justify-center">
+                  <span className="w-[70vh] h-[2vh] ">{item.nickname}</span>
+                  <span className="w-[70vh] h-[2vh] ">{item.text}</span>
+                </div>
+                <button className="mr-2">답글</button>
+                <button>수정</button>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <PlaylistIcon />
       </div>
