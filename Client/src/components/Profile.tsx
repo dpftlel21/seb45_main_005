@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { UserIntro } from 'src/pages/Mypage';
+import { UserIntro } from '../pages/Mypage';
 // import { useEffect, useState } from 'react';
 import userphoto from '../assets/images/user.png';
 import 'animate.css';

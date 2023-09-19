@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import 'animate.css';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/redux/store';
+import { RootState } from '../redux/store';
 
 import Header from '../components/Header';
 
