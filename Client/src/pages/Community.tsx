@@ -3,12 +3,13 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import playlistimg from '../assets/images/Rectangle 64.png';
+// import playlistimg from '../assets/images/Rectangle 64.png';
 import { setCurrentPage } from '../redux/slice/CommunitySlice';
 import 'animate.css';
 import PlaylistIcon from '../components/Playlist/PlaylistIcon';
 import Wrapper from '../components/Wrapper/Wrapper';
 // import Motherplayer from '../components/Main/Motherplayer';
+import userIcon from '../assets/images/user.png';
 
 interface Post {
   postId: number;
@@ -16,7 +17,7 @@ interface Post {
   voteCount: number;
   viewCount: number;
   text: string;
-  // nickName: string;
+  nickName: string;
   memberId: number;
   likeCount: number;
 }
@@ -82,6 +83,7 @@ const Community = () => {
       )
       .then((res) => {
         setPosts(res.data.data);
+        console.log(res.data.data);
         setTotalPages(res.data.pageInfo.totPages);
         dispatch(setCurrentPage(currentPage));
       })
@@ -185,11 +187,14 @@ const Community = () => {
                       key={item.postId}
                     >
                       <td className="w-[10vh] text-center text-xs">{idx + currentPage * 10 - 9}</td>
-                      <td className="w-[20vh]">
-                        <img src={playlistimg} alt="임시사진" className=" h-[4vh]" />
+                      <td className="w-[20vh] inline-flex justify-start items-center">
+                        <img className="w-[4vh] h-[4vh]" src={userIcon} alt="유저이미지"></img>
+                        <p className="text-xs">
+                          <a href={`../othermypage/${item.memberId}`}>{item.nickName}</a>
+                        </p>
                       </td>
 
-                      <td className="w-[140vh] text-start text-xs ml-10">
+                      <td className="w-[140vh] text-start  ml-10">
                         <a href={`./community/${item.postId}`}>{item.title}</a>
                       </td>
                       <td className="w-[10vh] text-center text-xs">{item.viewCount}</td>
