@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { logout } from '../redux/slice/LoginSlice';
 import { RootState } from '../redux/store';
 import Logo from '../assets/images/logo.png';
@@ -28,6 +29,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(logout());
+    toast.success('로그아웃 되었습니다.');
   };
 
   return (

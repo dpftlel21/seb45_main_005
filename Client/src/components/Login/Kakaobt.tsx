@@ -16,7 +16,7 @@ const Kakaobt = () => {
 
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get('code');
-
+    console.log(code);
     const headers = {
       'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
       'code': code,
@@ -25,9 +25,10 @@ const Kakaobt = () => {
       .get(`${process.env.REACT_APP_BE_API_URL}/oauth/v2/kakao`, { headers })
       .then((res) => {
         if (res.status === 200) {
+          console.log(res.headers.Authorization);
           dispatch(setAccessToken(res.headers.authorization));
-          dispatch(setLoginState(true));
-          window.location.href = '/';
+          dispatch(setLoginState(false));
+          // window.location.href = '/';
         } else {
           console.log('실패');
         }

@@ -6,6 +6,8 @@ import { RouteConst } from './interface/RouteConst';
 import PrivateRoute from './interface/PrivateRoute';
 import { RootState } from './redux/store';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 import MUBTIMain from './pages/MUBTI/MUBTIMain';
 import Survey from './pages/MUBTI/Survey/Survey';
 import SurveyMood from './pages/MUBTI/Survey/SurveyMood';
@@ -53,62 +55,61 @@ const App = () => {
       <Routes>
         <Route
           path={RouteConst.WeatherRecommend}
-          element={<PrivateRoute component={<WeatherRecommend />} authenticated={token} />}
+          element={<PrivateRoute component={WeatherRecommend} authenticated={token} />}
         />
 
         <Route
           path={RouteConst.MyPage}
-          element={<PrivateRoute component={<Mypage />} authenticated={token} />}
+          element={<PrivateRoute component={Mypage} authenticated={token} />}
         />
         <Route
           path={RouteConst.Community}
-          element={<PrivateRoute component={<Community />} authenticated={token} />}
+          element={<PrivateRoute component={Community} authenticated={token} />}
         />
         <Route
           path={RouteConst.Write}
-          element={<PrivateRoute component={<Write />} authenticated={token} />}
+          element={<PrivateRoute component={Write} authenticated={token} />}
         />
         <Route
           path={RouteConst.Detail}
-          element={<PrivateRoute component={<CommunityDetail />} authenticated={token} />}
+          element={<PrivateRoute component={CommunityDetail} authenticated={token} />}
         />
-
 
         <Route
           path={RouteConst.MUBTI}
-          element={<PrivateRoute component={<MUBTIMain />} authenticated={token} />}
+          element={<PrivateRoute component={MUBTIMain} authenticated={token} />}
         />
         <Route
           path={RouteConst.Survey}
-          element={<PrivateRoute component={<Survey />} authenticated={token} />}
+          element={<PrivateRoute component={Survey} authenticated={token} />}
         />
         <Route
           path={RouteConst.Mood}
-          element={<PrivateRoute component={<SurveyMood />} authenticated={token} />}
+          element={<PrivateRoute component={SurveyMood} authenticated={token} />}
         />
         <Route
           path={RouteConst.Situation}
-          element={<PrivateRoute component={<SurveySituation />} authenticated={token} />}
+          element={<PrivateRoute component={SurveySituation} authenticated={token} />}
         />
         <Route
           path={RouteConst.Liking}
-          element={<PrivateRoute component={<SurveyLiking />} authenticated={token} />}
+          element={<PrivateRoute component={SurveyLiking} authenticated={token} />}
         />
         <Route
           path={RouteConst.Loading}
-          element={<PrivateRoute component={<SurveyLoading />} authenticated={token} />}
+          element={<PrivateRoute component={SurveyLoading} authenticated={token} />}
         />
         <Route
           path={RouteConst.Result}
-          element={<PrivateRoute component={<SurveyResult />} authenticated={token} />}
+          element={<PrivateRoute component={SurveyResult} authenticated={token} />}
         />
         <Route
           path={RouteConst.EditProfile}
-          element={<PrivateRoute component={<EditProfile />} authenticated={token} />}
+          element={<PrivateRoute component={EditProfile} authenticated={token} />}
         />
         <Route
           path={RouteConst.Search}
-          element={<PrivateRoute component={<SearchSongs />} authenticated={token} />}
+          element={<PrivateRoute component={SearchSongs} authenticated={token} />}
         />
         <Route path={RouteConst.Main} element={<Main />} />
         <Route path={RouteConst.LoginOn} element={<LoginOn />} />
@@ -126,7 +127,6 @@ const App = () => {
           <Motherplayer />
         </div>
       )}
-
     </>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { RootState } from '../redux/store';
 import { playlistInfo } from '../redux/slice/PlaylistsSlice';
 
@@ -76,6 +77,7 @@ const Write = () => {
       console.log('서버 응답:', response.data);
       console.log('postId', response.data.data.postId);
       console.log('이름', response.data.data.nickName);
+      toast.success('게시글 등록 성공');
 
       // POST 요청 성공 후 필요한 작업 수행
       // 예를 들어, 페이지 이동 또는 메시지 표시 등

@@ -27,9 +27,7 @@ const PwdFind = () => {
   } = useForm<PwdInput>();
 
   const onsubmit = async (data: PwdInput) => {
-
     data.birthdate = data.birthdate.replace(/-/g, '');
-    console.log(data);
     const url = `${process.env.REACT_APP_BE_API_URL}/find/username`;
 
     try {

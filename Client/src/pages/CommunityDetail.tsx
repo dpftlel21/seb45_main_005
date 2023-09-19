@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { RootState } from '../redux/store';
 import Header from '../components/Header';
 import usericon from '../assets/images/user.png';
@@ -116,6 +117,7 @@ const CommunityDetail = () => {
       )
       .then((res) => {
         console.log(res);
+        toast.success('댓글 등록 성공');
         navigate(`../community/${postId}`);
         setCommentPosted(!commentPosted); // 댓글이 등록되었음을 상태에 업데이트
       });
@@ -138,6 +140,7 @@ const CommunityDetail = () => {
         .then((res) => {
           // 삭제 성공 시의 처리
           console.log('삭제가 완료되었습니다.', res.data);
+          toast.error('게시글 삭제 성공');
           navigate('../community');
           // 여기에서 필요한 추가 작업을 수행할 수 있습니다.
         })
