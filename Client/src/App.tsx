@@ -73,7 +73,6 @@ const App = () => {
           element={<PrivateRoute component={<CommunityDetail />} authenticated={token} />}
         />
 
-
         <Route
           path={RouteConst.MUBTI}
           element={<PrivateRoute component={<MUBTIMain />} authenticated={token} />}
@@ -126,7 +125,6 @@ const App = () => {
           <Motherplayer />
         </div>
       )}
-
     </>
   );
 };

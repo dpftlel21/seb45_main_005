@@ -165,6 +165,25 @@ const CommunityDetail = () => {
       });
   }, [posts, commentPosted]);
 
+  const handleCommentDelete = async (a: number) => {
+    console.log(a);
+    await axios
+      .delete(`${process.env.REACT_APP_BE_API_URL}/comments/${a}`, {
+        headers: {
+          'Authorization': accessToken,
+          'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+        },
+      })
+      .then((res) => {
+        setCommentPosted(!commentPosted);
+        console.log(res);
+      })
+      .catch((err) => {
+        alert('본인이 작성한 댓글이 아닙니다.');
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <div className="bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed] h-screen">
@@ -276,7 +295,7 @@ const CommunityDetail = () => {
                   <span className="w-[70vh] h-[2vh] ">{item.text}</span>
                 </div>
                 <button className="mr-2">답글</button>
-                <button>수정</button>
+                <button onClick={() => handleCommentDelete(item.commentId)}>삭제</button>
               </div>
             ))}
           </div>

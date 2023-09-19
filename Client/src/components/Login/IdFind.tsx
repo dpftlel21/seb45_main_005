@@ -38,7 +38,6 @@ const IdFind = () => {
       }
     } catch (error) {
       console.error('오류 발생:', error);
-      console.log(url);
     }
   };
   return (
