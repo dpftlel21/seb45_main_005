@@ -27,6 +27,7 @@ const Write = () => {
 
   const headers = {
     'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+    'Authorization': accessToken,
   };
 
   const dispatch = useDispatch();
@@ -36,11 +37,12 @@ const Write = () => {
   // 플레이리스트 받아오기
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BE_API_URL}/playlist`, {
+      .get(`${process.env.REACT_APP_BE_API_URL}/playlist/my?page=1&size=10`, {
         headers,
       })
       .then((res) => {
         dispatch(playlistInfo(res.data.data));
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -90,10 +92,10 @@ const Write = () => {
   };
   return (
     <>
-      <div className="bg-gradient-to-b from-[#ffffff] to-[#d1d1d1]">
+      <div className="bg-gradient-to-b from-[#ffffff] to-[#d1d1d1] h-screen">
         <Header />
         <div className="flex justify-center mt-10">
-          <div className="w-[745px]">
+          <div className="w-[80vh]">
             <button className="mr-2 underline" onClick={handlePost}>
               등록
             </button>
@@ -101,46 +103,53 @@ const Write = () => {
               취소
             </button>
           </div>
-          <div className="w-[255px]">←</div>
         </div>
+
         <form>
-          <div className="w-full h-[1024px] flex justify-center mt-2">
-            <div className="flex flex-col w-[500px] items-center">
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-[500px] h-[60px] bg-white shadow-lg rounded-md text-gray-700 pl-5"
-                placeholder="제목을 입력하세요."
-              />
+          <div className="flex flex-col justify-center">
+            <div className="w-full h-[40vh] flex justify-center mt-2">
+              <div className="flex flex-col w-[50vh] items-center mr-10">
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-[50vh] h-[6vh] bg-white shadow-lg rounded-md text-gray-700 pl-5"
+                  placeholder="제목을 입력하세요."
+                />
 
-              <textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                className="w-[500px] h-[400px] bg-white shadow-lg rounded-md mt-1 text-gray-700 resize-none py-5 px-5"
-                placeholder="내용을 입력하세요."
-              />
-            </div>
-            <div className="w-[300px]"></div>
-
-            {playlistsInfo && (
-              <div className="flex flex-col w-[300px] h-[462px] items-center shadow-lg rounded-md bg-white ml-50">
-                <div className="flex flex-col w-[300px] items-center">
-                  <img src={plicon} alt="플레이리스트아이콘" className="mt-2" />
-                </div>
-                {playlistsInfo.map((el, idx) => (
-                  <div className="h-[5vh] flex flex-row justify-start w-[290px]" key={idx}>
-                    <input
-                      className="w-[20px] h-[20px] mr-4"
-                      checked={el.playlistId === selectedPly}
-                      type="checkbox"
-                      onChange={() => handleSelectPly(el.playlistId)}
-                    />
-                    <p>{el.title}</p>
-                  </div>
-                ))}
+                <textarea
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  className="w-[50vh] h-[34vh] bg-white shadow-lg rounded-md mt-1 text-gray-700 resize-none py-5 px-5"
+                  placeholder="내용을 입력하세요."
+                />
               </div>
-            )}
+
+              {playlistsInfo && (
+                <div className="flex flex-col w-[30vh] h-[40vh] items-center shadow-lg rounded-md bg-white ml-50 overflow-y-scroll">
+                  <div className="flex flex-col w-[29vh] items-center">
+                    <img src={plicon} alt="플레이리스트아이콘" className="mt-2" />
+                  </div>
+                  {playlistsInfo.map((el, idx) => (
+                    <div className="h-[5vh] flex flex-row justify-start w-[29vh]" key={idx}>
+                      <input
+                        className="w-[2vh] h-[2vh] mr-4"
+                        checked={el.playlistId === selectedPly}
+                        type="checkbox"
+                        onChange={() => handleSelectPly(el.playlistId)}
+                      />
+                      <p>{el.title}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="w-full h-[20vh] flex justify-center mt-10">
+              <p className="w-[80vh] flex-wrap">
+                우측 하단의 Playlist 버튼을 클릭하여 새로운 Playlist를 생성후, SearchSongs 탭에서
+                원하는 음악을 검색, 해당 Playlist에 추가하면 게시글에 등록이 가능합니다.
+              </p>
+            </div>
           </div>
         </form>
         <PlaylistIcon />

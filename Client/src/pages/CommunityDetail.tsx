@@ -95,6 +95,7 @@ const CommunityDetail = () => {
       })
       .then((res) => {
         setPosts(res.data.data);
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -150,6 +151,7 @@ const CommunityDetail = () => {
         .catch((err) => {
           // 삭제 실패 시의 처리
           console.error('삭제 중 오류가 발생했습니다.', err);
+          alert('에러');
           // 여기에서 오류 처리를 할 수 있습니다.
         });
     }
@@ -211,10 +213,14 @@ const CommunityDetail = () => {
                   </div>
                 </div>
                 <div className="w-[120vh] h-[5vh] flex items-center">
-                  <img src={usericon} alt="유저아이콘" className="w-[4vh] h-[4vh]" />
-                  <span className="inline-flex w-[16vh] h-[10vh] items-center justify-center">
-                    {posts.nickName}
-                  </span>
+                  <a href={`../othermypage/${posts.memberId}`}>
+                    <img src={usericon} alt="유저아이콘" className="w-[4vh] h-[4vh]" />
+                  </a>
+                  <a href={`../othermypage/${posts.memberId}`}>
+                    <span className="inline-flex w-[16vh] h-[10vh] items-center justify-center">
+                      {posts.nickName}
+                    </span>
+                  </a>
                   <div className="w-[100vh]"></div>
                   <div className="w-[30vh] h-[5vh] inline-flex items-center justify-end text-xs">
                     <span>{posts.likeCount}</span>
@@ -245,7 +251,7 @@ const CommunityDetail = () => {
                       </div>
                     </div>
 
-                    <div className="flex flex-col flex-wrap h-[40vh]">
+                    <div className="flex flex-col flex-wrap h-[40vh] overflow-x-scroll w-[75vh]">
                       {songs.map((el, idx) => (
                         <li key={idx} className="inline-flex  my-4 w-[25vh] h-[5vh]">
                           <img
@@ -294,10 +300,14 @@ const CommunityDetail = () => {
             {savedComment.map((item, idx) => (
               <div key={idx} className="flex flex-row justify-center items-center w-[85vh]">
                 <div>
-                  <img className="w-[4vh] h-[4vh] mr-2" src={usericon} alt="임시유저이미지" />
+                  <a href={`../othermypage/${item.memberId}`}>
+                    <img className="w-[4vh] h-[4vh] mr-2" src={usericon} alt="임시유저이미지" />
+                  </a>
                 </div>
                 <div className="flex flex-col h-[6vh] items-center justify-center">
-                  <span className="w-[70vh] h-[2vh] ">{item.nickname}</span>
+                  <span className="w-[70vh] h-[2vh] ">
+                    <a href={`../othermypage/${item.memberId}`}>{item.nickname}</a>
+                  </span>
                   <span className="w-[70vh] h-[2vh] ">{item.text}</span>
                 </div>
                 <button className="mr-2">답글</button>
