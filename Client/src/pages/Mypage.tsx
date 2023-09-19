@@ -86,9 +86,7 @@ const Mypage = () => {
     axios
       .get(`${process.env.REACT_APP_BE_API_URL}/members/my_page/post`, { headers })
       .then((res) => {
-        console.log(res.data.post);
         setMyCommunity(res.data.post);
-        // console.log(myCommunity);
       })
       .catch((err) => {
         console.log(err);

@@ -9,7 +9,6 @@ export type InsidePly = {
 };
 
 const MyPlayList = ({ myPlayList }: { myPlayList: InsidePly[] }) => {
-  console.log(myPlayList);
   return (
     <>
       <div className="flex flex-col items-center w-full">

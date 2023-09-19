@@ -11,7 +11,6 @@ const SurveyYoutube = () => {
     axios
       .get(`${process.env.REACT_APP_BE_API_URL}/youtuber?q=5`)
       .then((res) => {
-        console.log(res.data.data);
         setState(res.data.data);
       })
       .catch((err) => {

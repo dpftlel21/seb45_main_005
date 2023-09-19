@@ -24,7 +24,7 @@ const IdFind = () => {
 
   const onsubmit = async (data: IdInput) => {
     data.birthdate = data.birthdate.replace(/-/g, '');
-    console.log(data);
+
     const url = `${process.env.REACT_APP_BE_API_URL}/find/username`;
     try {
       const response = await axios.get(url, {
@@ -33,8 +33,6 @@ const IdFind = () => {
       });
 
       if (response.status === 200) {
-        console.log('아이디 찾기 성공');
-        console.log(response.data);
         alert(`회원님의 아이디는 ${response.data.email} 입니다.`);
         window.location.href = '/login';
       }

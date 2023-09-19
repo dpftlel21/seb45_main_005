@@ -46,14 +46,13 @@ const LoginOn = () => {
         { username, password },
         { headers }
       );
-      console.log(response.headers);
 
       dispatch(setAccessToken(response.headers.authorization));
-      console.log(response.headers.authorization);
+
       dispatch(setRefreshToken(response.headers.refreshtoken));
       dispatch(setMemberID(response.headers.memberid));
       dispatch(setLoginState(true));
-      console.log(response.headers.memberid);
+
       window.location.href = '/';
     } catch (error) {
       console.error('로그인 실패:', error);
@@ -100,8 +99,6 @@ const LoginOn = () => {
   }, [accessToken, refreshToken]);
 
   const onSubmit = async (data: Formvalue) => {
-    console.log(data);
-
     handleLogin(data.username, data.password);
   };
 

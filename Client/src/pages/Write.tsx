@@ -24,9 +24,6 @@ const Write = () => {
   const accessToken = useSelector((state: RootState) => state.login.accessToken);
   const memberId = useSelector((state: RootState) => state.login.memberid);
 
-  console.log(accessToken);
-  console.log(memberId);
-
   const headers = {
     'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
   };
@@ -49,9 +46,8 @@ const Write = () => {
       });
   }, []);
 
-  const handleSelectPly = async (a: number) => {
+  const handleSelectPly = (a: number) => {
     setSelectedPly(a);
-    await console.log(selectedPly);
   };
 
   const handleCancel = () => {

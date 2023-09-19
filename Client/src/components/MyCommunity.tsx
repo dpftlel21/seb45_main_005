@@ -10,7 +10,6 @@ export type InsideCommu = {
   viewCount: number;
 };
 const MyCommunity = ({ myCommunity }: { myCommunity: InsideCommu[] }) => {
-  console.log(myCommunity);
   const [searchQuery, setSearchQuery] = useState('');
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);

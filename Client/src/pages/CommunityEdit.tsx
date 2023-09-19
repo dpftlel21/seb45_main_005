@@ -40,13 +40,12 @@ const CommunityEdit = () => {
   const memberId = useSelector((state: RootState) => state.login.memberid);
   // const refreshToken = useSelector((state: RootState) => state.login.refreshToken);
   // const dispatch = useDispatch();
-  console.log(accessToken);
+
   console.log(memberId);
   const { id } = useParams();
 
   // id 변수를 숫자로 파싱
   const numericId = parseInt(id, 10);
-  console.log(numericId);
 
   const headers = {
     'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
@@ -60,10 +59,7 @@ const CommunityEdit = () => {
         headers,
       })
       .then((res) => {
-        console.log(res);
-        // setPosts(res.data.data);
         setPosts(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -81,9 +77,7 @@ const CommunityEdit = () => {
         headers,
       })
       .then((res) => {
-        // dispatch(songlistInfo(res.data));
         setSongData(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
