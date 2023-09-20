@@ -74,12 +74,12 @@ const PlaylistsDetail = () => {
   return (
     <>
       <div className="fixed bottom-0 flex justify-center bg-opacity-1 ">
-        <div className="w-[600px] h-[670px] mt-12 fixed right-8 bottom-40">
-          <div className="h-[670px] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca]  ">
+        <div className="w-[60vh] h-[60vh] mt-12 fixed right-8 bottom-40">
+          <div className="h-[60vh] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca]  ">
             {/* 플레이리스트 상단 */}
             <div className="w-full flex justify-around items-center mt-4">
               <button onClick={handleCloseSong} className="mr-10 mt-8 ">
-                <img src={backbtn} className="w-[35px]" />
+                <img src={backbtn} className="w-[30px]" />
               </button>
               {/* 검색칸 */}
               <div className="flex mt-8">
@@ -90,7 +90,7 @@ const PlaylistsDetail = () => {
                     onChange={(e) => dispatch(setPlaylistTitle(e.target.value))}
                     value={title}
                     type="text"
-                    className="w-[200px] h-[50px] pl-4 bg-[#444444d0] rounded-3xl border border-gray-500"
+                    className="w-[20vh] h-[5vh] pl-4 bg-[#444444d0] rounded-3xl border border-gray-500"
                   />
                 )}
               </div>
@@ -119,27 +119,27 @@ const PlaylistsDetail = () => {
               </div>
             </div>
             {/* 노래에 대한 디테일 */}
-            <div className="w-full flex justify-start items-center mt-8 bg-[#302f2f] opacity-80 font-['Anton-Regular']">
+            <div className="w-full h-[7vh] flex justify-start items-center mt-8 bg-[#302f2f] opacity-80 font-['Anton-Regular']">
               {selectedPlaylistInfo ? (
                 <>
-                  <img src={selectedPlaylistInfo.imageUrl} className="w-[100px] h-[100px] mx-8" />
-                  <div className="w-full h-[150px] flex flex-col justify-center">
-                    <p className="my-2">Title : {selectedPlaylistInfo.title}</p>
-                    <p className="my-2">Artist : {selectedPlaylistInfo.artistName}</p>
+                  <img src={selectedPlaylistInfo.imageUrl} className="w-[7vh] h-[5vh] mx-8" />
+                  <div className="w-full h-[7vh] flex flex-col justify-center">
+                    <p className="my-1 text-xs">Title : {selectedPlaylistInfo.title}</p>
+                    <p className="my-1 text-xs">Artist : {selectedPlaylistInfo.artistName}</p>
                   </div>
                 </>
               ) : (
                 <>
-                  <img src={AlbumFirst} className="w-[100px] h-[100px] mx-8" />
-                  <div className="w-full h-[150px] flex flex-col justify-center">
-                    <p className="my-2">Title : </p>
-                    <p className="my-2">Artist : </p>
+                  <img src={AlbumFirst} className="w-[7vh] h-[5vh] mx-8" />
+                  <div className="w-full h-[12vh] flex flex-col justify-center">
+                    <p className="my-1 text-xs">Title : </p>
+                    <p className="my-1 text-xs">Artist : </p>
                   </div>
                 </>
               )}
             </div>
             {/* 플리 앨범, 제목, 내용 */}
-            <div className="w-full grid grid-cols-5 text-center my-2 font-['Anton-Regular']">
+            <div className="w-full grid grid-cols-5 text-center my-2 font-['Anton-Regular'] text-xs">
               <h3>No.</h3>
               <h3>Album Image</h3>
               <h3>Title</h3>
@@ -147,21 +147,21 @@ const PlaylistsDetail = () => {
               <h3>Edit</h3>
             </div>
             {/* 플리 노래목록 맵핑 */}
-            <ul className="w-full h-[700px] flex flex-col overflow-x-hidden ">
+            <ul className="w-full h-[70vh] flex flex-col overflow-x-hidden ">
               {filteredSongs.map((selectedSongs, index) => (
                 <li
                   onClick={() => handlePlaylistClick(selectedSongs)}
-                  className="w-full h-[70px]  grid grid-cols-5 items-center text-center border-t-2 border-solid border-gray-200 border-opacity-20 hover:bg-[#47464680]"
+                  className="w-full h-[7vh] grid grid-cols-5 items-center text-center border-t-2 border-solid border-gray-200 border-opacity-20 hover:bg-[#47464680]"
                 >
                   {/* No */}
                   <h3 className="">{index + 1}</h3>
-                  <div className="flex justify-center items-center">
-                    <img src={selectedSongs.imageUrl} className="w-[50px] h-[50px]" />
+                  <div className="flex justify-center items-center h-[7vh]">
+                    <img src={selectedSongs.imageUrl} className="w-[30px] h-[30px]" />
                   </div>
                   {/* Title */}
-                  <p className="text-sm">{selectedSongs.title}</p>
+                  <p className="text-xs">{selectedSongs.title}</p>
                   {/* Artist Name */}
-                  <p className="text-sm">{selectedSongs.artistName}</p>
+                  <p className="text-xs">{selectedSongs.artistName}</p>
                   {isClicked ? <SongDeleteBtn songId={selectedSongs.songId} /> : null}
                 </li>
               ))}

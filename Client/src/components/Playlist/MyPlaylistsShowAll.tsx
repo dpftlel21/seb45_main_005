@@ -31,13 +31,13 @@ const MyPlaylistsShowAll = () => {
 
   return (
     <>
-      <div className="w-[600px] h-[670px] fixed bottom-0 flex justify-center">
-        <div className="w-[600px] h-[670px] mt-12 fixed right-8 bottom-40">
-          <div className="h-[670px] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca]">
+      <div className="fixed bottom-0 flex justify-center">
+        <div className="w-[60vh] h-[60vh] mt-12 fixed right-8 bottom-40">
+          <div className="h-[60vh] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca]">
             {/* 플레이리스트 상단 */}
             <div className="flex justify-around">
               <button onClick={handleCloseModal} className="mr-10 mt-8 ">
-                <img src={xbtn} className="w-[35px]" />
+                <img src={xbtn} className="w-[30px]" />
               </button>
               {/* 검색칸 */}
               <div className="flex items-center">
@@ -49,7 +49,7 @@ const MyPlaylistsShowAll = () => {
               <h1 className="ml-8">My Playlists</h1>
             </div>
             {/* 플리 앨범, 제목, 내용 */}
-            <ul className="w-[550px] h-[450px] flex flex-wrap overflow-y-scroll">
+            <ul className="w-[55vh] h-[45vh] flex flex-wrap overflow-y-scroll">
               {myPlaylistsInfo.map((el) => (
                 <MyPlaylists el={el} />
               ))}

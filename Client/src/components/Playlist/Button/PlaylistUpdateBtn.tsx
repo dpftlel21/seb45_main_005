@@ -76,14 +76,14 @@ const PlaylistUpdateBtn = ({ isPublic, setIsClicked, isClicked }: PublicProp) =>
       {isClicked ? (
         <button
           onClick={handleUpdate}
-          className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
+          className="w-[15vh] h-[5vh] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
         >
           완료
         </button>
       ) : (
         <button
           onClick={() => setIsClicked(true)}
-          className="w-[150px] h-[50px] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
+          className="w-[15vh] h-[5vh] mb-4 mr-4 rounded-2xl border-2 border-purple-400 hover:bg-[#9574b1] hover:text-white"
         >
           수정하기
         </button>

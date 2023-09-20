@@ -61,10 +61,10 @@ const RecommendLists = () => {
           {RecommendResult.map((el) => (
             <div
               onClick={() => handleDetailOpen(el.playlistId, el.title)}
-              className="flex flex-col justify-center w-[150px] bg-[#d8d5d5] bg-opacity-10 shadow-xl rounded-xl backdrop-blur-md mx-4 hover:translate-y-[-15px] transition duration-300 ease-in-out cursor-pointer"
+              className="flex flex-col justify-center items-center w-[16vh] bg-[#d8d5d5] bg-opacity-10 shadow-xl rounded-xl backdrop-blur-md mx-4 hover:translate-y-[-15px] transition duration-300 ease-in-out cursor-pointer"
             >
-              <img src={playlistdisc} className="animate-spin-slow w-[150px] h-[150px] my-4" />
-              <p className="h-[60px] font-bold text-lg text-center">{el.title}</p>
+              <img src={playlistdisc} className="animate-spin-slow w-[10vh] h-[10vh] my-4" />
+              <p className="h-[7vh] font-bold text-lg text-center">{el.title}</p>
             </div>
           ))}
         </div>

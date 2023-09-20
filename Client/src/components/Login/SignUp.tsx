@@ -95,7 +95,7 @@ const SignUp = () => {
                 {...register('password', {
                   pattern: {
                     value: /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/,
-                    message: '비밀번호는 영문 숫자 8자리 이상이여야 합니다.',
+                    message: '비밀번호는 영문 숫자 8자리 이상과 특수문자 1개이상 포함해야 합니다.',
                   },
                 })}
                 className={`w-[330px] h-8 border-2 border-solid border-white shadow-lg ${

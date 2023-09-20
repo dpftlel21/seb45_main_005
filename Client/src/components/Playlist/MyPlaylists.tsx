@@ -95,7 +95,7 @@ const MyPlaylists = ({ el }: PlaylistProps) => {
   return (
     <>
       <li
-        className="w-[100px] h-[150px] ml-4 relative flex flex-col justify-center items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out cursor-pointer"
+        className="w-[12vh] h-[15vh] relative flex flex-col justify-center items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out cursor-pointer"
         onMouseEnter={() => setIsHovered(true)} // 호버 상태에 들어갈 때
         onMouseLeave={() => setIsHovered(false)} // 호버 상태에서 나올 때
       >
@@ -109,8 +109,8 @@ const MyPlaylists = ({ el }: PlaylistProps) => {
           X
         </button>
         {/* 플리 리스트들 */}
-        <div onClick={handleOpenDetail} className="w-[120px] h-[100px]">
-          <img src={playlistdisc} className="w-[100px] h-[100px]  animate-spin-slow" />
+        <div onClick={handleOpenDetail} className="w-[9vh] h-[9vh] flex flex-col items-center">
+          <img src={playlistdisc} className="animate-spin-slow" />
           <h1 className="mt-4 text-xs">{el.title}</h1>
         </div>
       </li>

@@ -58,12 +58,12 @@ const SongLists = () => {
             />
             <h3 className="col-span-1">{index + 1}</h3>
 
-            <p className="text-sm col-span-2">{el.artistName}</p>
+            <p className="text-sm col-span-2 font-bold">{el.artistName}</p>
             <div className="h-[30px] flex flex-col items-center my-4 col-span-2">
               <img src={el.imageUrl} className="w-[50px] h-[30px] " />
             </div>
-            <h3 className="col-span-2">{el.albumName}</h3>
-            <h3 className="col-span-2">{el.title}</h3>
+            <h3 className="col-span-2 text-sm">{el.albumName}</h3>
+            <h3 className="col-span-2 text-sm font-bold">{el.title}</h3>
           </li>
         ))}
       </ul>

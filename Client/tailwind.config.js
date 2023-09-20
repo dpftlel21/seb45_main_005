@@ -2,15 +2,16 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
-      fontFamily: {
+      'fontFamily': {
         'sigmar-one': ['Sigmar One', 'cursive'],
         'spoqa-hansans': ['Spoqa Han Sans Neo', 'sans-serif'],
       },
-      colors: {
+      'colors': {
         'slider-bg': '#C487F4',
         'slider-thumb': '#C487F4',
       },
-      width: {
+      'custom-toast': 'position-absolute top-50px left-50',
+      'width': {
         '1040': '1040px',
         '1200': '1200px',
         '400': '400px',
@@ -19,7 +20,7 @@ module.exports = {
         '700': '700px',
         '900': '900px',
       },
-      backgroundColor: {
+      'backgroundColor': {
         'gray-custom': '#B3B3B3',
         'gray-custom-2': '#332E30',
       },

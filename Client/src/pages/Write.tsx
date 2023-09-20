@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
+
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { RootState } from '../redux/store';
-import { playlistInfo } from '../redux/slice/PlaylistsSlice';
+// import { playlistInfo } from '../redux/slice/PlaylistsSlice';
 
 import Header from '../components/Header';
 import PlaylistIcon from '../components/Playlist/PlaylistIcon';
@@ -30,9 +31,18 @@ const Write = () => {
     'Authorization': accessToken,
   };
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const playlistsInfo: PlaylistInfo[] = useSelector((state: RootState) => state.playlists.value);
+  const [playlistsInfo, setPlaylistsInfo] = useState<PlaylistInfo[]>();
+
+  useEffect(() => {
+    toast.info(
+      '✨우측 하단의 Playlist 버튼을 클릭하여 새로운 Playlist를 생성후, SearchSongs 탭에서 원하는 음악을 검색, 해당 Playlist에 추가하면 게시글에 등록이 가능합니다.',
+      {
+        autoClose: 8000,
+      }
+    );
+  }, []);
 
   // 플레이리스트 받아오기
   useEffect(() => {
@@ -41,8 +51,9 @@ const Write = () => {
         headers,
       })
       .then((res) => {
-        dispatch(playlistInfo(res.data.data));
+        // dispatch(playlistInfo(res.data.data));
         console.log(res.data.data);
+        setPlaylistsInfo(res.data.data);
       })
       .catch((err) => {
         console.log(err);

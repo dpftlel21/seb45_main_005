@@ -87,12 +87,12 @@ const SongAddModal = () => {
 
   return (
     <div className="font-['Anton-Regular']">
-      <div className="w-[300px] h-[250px] flex flex-col  items-center fixed left-8 bottom-0 bg-gradient-to-b from-[#97c7f3] to-[#fafafa7c] shadow-lg rounded-xl animate-fadeIn">
-        <div className="flex mt-4">
-          {userIntro && <p className="text-lg">{userIntro.nickname}님의 플레이리스트</p>}
+      <div className="w-[28vh] h-[24vh] flex flex-col  items-center fixed left-8 bottom-0 bg-gradient-to-b from-[#97c7f3] to-[#fafafa7c] shadow-lg rounded-xl animate-fadeIn">
+        <div className="flex items-center mt-4 ml-4">
+          {userIntro && <p className="text-sm">{userIntro.nickname}님의 플레이리스트</p>}
           <button
             onClick={handleCloseAddSong}
-            className="w-[30px] h-[30px] mb-4 ml-4 inline-flex justify-center items-center rounded-2xl border-2 text-black text-center border-sky-400 bg-white hover:bg-[#85b5db] hover:text-white"
+            className="w-[30px] h-[30px] ml-4 inline-flex justify-center items-center rounded-2xl border-2 text-black text-center border-sky-400 bg-white hover:bg-[#85b5db] hover:text-white"
           >
             X
           </button>
