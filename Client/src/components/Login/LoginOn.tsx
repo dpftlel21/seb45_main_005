@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
+  setNickname,
   setAccessToken,
   setRefreshToken,
   setMemberID,
@@ -42,19 +43,32 @@ const LoginOn = () => {
 
   const handleLogin = async (username: string, password: string) => {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BE_API_URL}/auth/login`,
-        { username, password },
-        { headers }
-      );
+      const response = await axios
+        .post(`${process.env.REACT_APP_BE_API_URL}/auth/login`, { username, password }, { headers })
+        .then((res) => {
+          dispatch(setAccessToken(res.headers.authorization));
+          dispatch(setRefreshToken(res.headers.refreshtoken));
+          dispatch(setMemberID(res.headers.memberid));
+          dispatch(setLoginState(true));
+          console.log(res.headers.authorization);
 
-      dispatch(setAccessToken(response.headers.authorization));
+          axios
+            .get(`${process.env.REACT_APP_BE_API_URL}/members/my_page/intro`, {
+              headers: {
+                'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+                'Authorization': res.headers.authorization,
+              },
+            })
+            .then((resp) => {
+              console.log(resp.data);
+              console.log(resp.data.nickname);
+              dispatch(setNickname(resp.data.nickname));
+            });
+        });
 
-      dispatch(setRefreshToken(response.headers.refreshtoken));
-      dispatch(setMemberID(response.headers.memberid));
-      dispatch(setLoginState(true));
-      window.location.href = '/';
+      console.log(response);
       toast.success('로그인 성공');
+      window.location.href = '/';
     } catch (error) {
       console.error('로그인 실패:', error);
       toast.error('아이디와 비밀번호가 일치하지 않습니다.');
@@ -108,7 +122,7 @@ const LoginOn = () => {
       <main className="bg-[#F2F2F2] h-screen">
         <div className=" flex flex-col justify-center items-center ">
           <Link to="/">
-            <img src={Logo} alt="" className="my-20" />
+            <img src={Logo} alt="" className="my-20 hover:opacity-60" />
           </Link>
           <div className="flex flex-col border-2 border-solid border-none shadow-2xl rounded-2xl">
             <form

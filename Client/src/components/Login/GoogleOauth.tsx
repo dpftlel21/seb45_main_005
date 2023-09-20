@@ -1,36 +1,46 @@
 import React from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import google from '../../assets/images/google.svg';
-import { setAccessToken, setLoginState } from '../../redux/slice/LoginSlice';
+import { setAccessToken, setLoginState, setNickname } from '../../redux/slice/LoginSlice';
 
 const GoogleOauth = () => {
-  const headers = {
-    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
-  };
   const dispatch = useDispatch();
   const login = useGoogleLogin({
     scope: 'email',
     onSuccess: (tokenResponse) => {
       dispatch(setAccessToken(tokenResponse.access_token));
+      console.log(tokenResponse.access_token);
       axios
         .post(
-          `${process.env.REACT_APP_BE_API_URL}/auth/google`,
+          `${process.env.REACT_APP_BE_API_URL}/oauth/google`,
           {},
           {
             headers: {
-              Authorization: tokenResponse.access_token,
-              ...headers,
+              'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+              'Authorization': tokenResponse.access_token,
+              // ...headers,
             },
           }
         )
         .then((res) => {
-          console.log(res);
+          axios
+            .get(`${process.env.REACT_APP_BE_API_URL}/members/my_page/intro`, {
+              headers: {
+                'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+                'Authorization': res.headers.authorization,
+              },
+            })
+            .then((resp) => {
+              dispatch(setNickname(resp.data.nickname));
+              console.log(resp);
+              dispatch(setLoginState(true));
+              toast.success('로그인 성공');
+              window.location.href = '/';
+            });
         });
-
-      window.location.href = '/';
-      dispatch(setLoginState(true));
     },
     onError: () => {
       console.log('Login Failed');

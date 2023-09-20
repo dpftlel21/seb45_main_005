@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { setAccessToken, setLoginState } from '../../redux/slice/LoginSlice';
+import { toast } from 'react-toastify';
+import { setAccessToken, setLoginState, setNickname } from '../../redux/slice/LoginSlice';
 import Klogin from '../../assets/images/kakao.png';
 
 const Kakaobt = () => {
@@ -24,18 +25,26 @@ const Kakaobt = () => {
     axios
       .post(`${process.env.REACT_APP_BE_API_URL}/oauth/v2/kakao`, {}, { headers })
       .then((res) => {
-        if (res.status === 200) {
-          console.log(res.headers.authorization);
-          dispatch(setAccessToken(res.headers.authorization));
-          dispatch(setLoginState(true));
-          window.location.href = '/';
-        } else {
-          console.log('실패');
-        }
+        console.log(res.headers.authorization);
+        dispatch(setAccessToken(res.headers.authorization));
+
+        axios
+          .get(`${process.env.REACT_APP_BE_API_URL}/members/my_page/intro`, {
+            headers: {
+              'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+              'Authorization': res.headers.authorization,
+            },
+          })
+          .then((resp) => {
+            console.log(resp.data);
+            dispatch(setLoginState(true));
+            dispatch(setNickname(resp.data.nickname));
+            toast.success('로그인 성공');
+            window.location.href = '/';
+          });
       })
       .catch((err) => console.log(err));
   }, []);
-
   return (
     <>
       <button onClick={handleLogin}>

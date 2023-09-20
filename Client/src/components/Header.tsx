@@ -10,6 +10,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
   const loginState = useSelector((state: RootState) => state.login.loginState);
+  const nickname = useSelector((state: RootState) => state.login.nickname);
   const currentURL = new URL(window.location.href);
   const pathName = currentURL.pathname;
 
@@ -51,7 +52,7 @@ const Header = () => {
           <h2 className={buttonClasses('/search')}>Search Songs</h2>
         </Link>
       </div>
-      <div className="w-[250px] flex justify-around items-center text-lg ">
+      <div className="w-[300px] flex justify-around items-center text-lg ">
         {loginState ? (
           <>
             <Link to="/mypage">
@@ -61,7 +62,8 @@ const Header = () => {
                   alt="유저이미지"
                   className="mr-4 w-[32px] h-[32px] hover:text-sky-400"
                 />
-                <span className=" hover:text-sky-400">UserInfo</span>
+
+                <span className=" hover:text-sky-400">{nickname}</span>
               </div>
             </Link>
             <button onClick={logoutHandler} className=" rounded-xl w-32 h-10 hover:text-sky-400">
