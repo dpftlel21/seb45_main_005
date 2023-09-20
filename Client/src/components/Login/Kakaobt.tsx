@@ -2,7 +2,12 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { setAccessToken, setLoginState, setNickname } from '../../redux/slice/LoginSlice';
+import {
+  setAccessToken,
+  setLoginState,
+  setNickname,
+  setMemberID,
+} from '../../redux/slice/LoginSlice';
 import Klogin from '../../assets/images/kakao.png';
 
 const Kakaobt = () => {
@@ -39,6 +44,7 @@ const Kakaobt = () => {
             console.log(resp.data);
             dispatch(setLoginState(true));
             dispatch(setNickname(resp.data.nickname));
+            dispatch(setMemberID(res.headers.memberid));
             toast.success('로그인 성공');
             window.location.href = '/';
           });
