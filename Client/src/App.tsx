@@ -32,6 +32,7 @@ import Motherplayer from './components/Main/Motherplayer';
 import CommunityEdit from './pages/CommunityEdit';
 import SurveyYoutube from './pages/MUBTI/Survey/SurveyYoutube';
 import PwdChange from './components/Login/PwdChange';
+import OtherMyPage from './pages/OtherMyPage';
 
 const App = () => {
   const token = useSelector((state: RootState) => state.login.accessToken);
@@ -121,6 +122,7 @@ const App = () => {
         <Route path={RouteConst.PwdChange} element={<PwdChange />} />
         <Route path={RouteConst.IdFind} element={<IdFind />} />
         <Route path={RouteConst.PwdFind} element={<PwdFind />} />
+        <Route path={RouteConst.Othermypage} element={<OtherMyPage />} />
       </Routes>
       {showHeaderFooter() ? null : (
         <div className="w-full fixed bottom-0 flex justify-center">

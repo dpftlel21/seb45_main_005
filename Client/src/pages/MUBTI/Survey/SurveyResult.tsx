@@ -1,10 +1,26 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import playlistdisc from '../../../assets/images/playlistdisc.png';
 import Header from '../../../components/Header';
+import { openModal, openSongLists } from '../../../redux/slice/ModalSlice';
+import { setSelectedPlaylistId, setPlaylistTitle } from '../../../redux/slice/PlaylistsSlice';
+import PlaylistIcon from '../../../components/Playlist/PlaylistIcon';
 
 const SurveyResult = () => {
+  const dispatch = useDispatch();
   const surveyResult = useSelector((state: RootState) => state.mubti.Result);
+  console.log(surveyResult);
+
+  const handleDetailOpen = async (playlistId: number, title: string) => {
+    dispatch(openModal());
+
+    setTimeout(async () => {
+      await dispatch(openSongLists());
+      dispatch(setSelectedPlaylistId(playlistId));
+      dispatch(setPlaylistTitle(title));
+    }, 1500);
+  };
+
   return (
     <div className="h-screen bg-[#35435e]">
       <Header />
@@ -24,7 +40,10 @@ const SurveyResult = () => {
           </h1>
           <div className="flex ">
             {surveyResult.map((el) => (
-              <li className="flex flex-col items-center justify-center mx-8 text-white">
+              <li
+                onClick={() => handleDetailOpen(el.playlistId, el.title)}
+                className="flex flex-col items-center justify-center mx-8 text-white cursor-pointer hover:translate-y-[-15px] transition duration-300 ease-in-out"
+              >
                 <div className="w-[150px] ">
                   <img src={playlistdisc} className="animate-spin-slow w-[150px] h-[150px] my-4" />
                   <p className="h-[50px] text-center ">{el.title}</p>
@@ -34,6 +53,7 @@ const SurveyResult = () => {
           </div>
         </div>
       </div>
+      <PlaylistIcon />
     </div>
   );
 };

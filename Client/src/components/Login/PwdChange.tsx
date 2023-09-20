@@ -24,7 +24,6 @@ const PwdChange = () => {
 
   const onsubmit = async (data: PwchangInput) => {
     data.memberId = memberId;
-    console.log(data);
     const url = `${process.env.REACT_APP_BE_API_URL}/find/pw`;
     try {
       const response = await axios.patch(url, {

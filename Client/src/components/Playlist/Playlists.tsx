@@ -1,6 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { openSongLists } from '../../redux/slice/ModalSlice';
-import { setSelectedMemberId, setSelectedPlaylistId } from '../../redux/slice/PlaylistsSlice';
+import {
+  setSelectedMemberId,
+  setSelectedPlaylistId,
+  setPlaylistTitle,
+} from '../../redux/slice/PlaylistsSlice';
 import playlistdisc from '../../assets/images/playlistdisc.png';
 import { PlaylistInfo } from './PlaylistsShowAll';
 
@@ -17,6 +21,7 @@ const Playlists = ({ el }: PlaylistProps) => {
     dispatch(openSongLists());
     dispatch(setSelectedPlaylistId(el.playlistId));
     dispatch(setSelectedMemberId(el.memberId));
+    dispatch(setPlaylistTitle(el.title));
   };
 
   return (
