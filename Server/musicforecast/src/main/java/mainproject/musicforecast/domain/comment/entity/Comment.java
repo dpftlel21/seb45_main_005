@@ -32,11 +32,11 @@ public class Comment extends Auditable {
     @Column
     private String nickname;
 
-    public long getMemberId() {
+    public Long getMemberId() {
         return member.getMemberId();
     }
 
-    public long getPostId() {
+    public Long getPostId() {
         return post.getPostId();
     }
 }
