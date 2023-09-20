@@ -18,7 +18,7 @@ public class PlaylistSongService {
     }
 
     public void addToPlaylistSong(PlaylistSong playlistSong, Member member) {
-        if (member.getMemberId() != playlistSong.getPlaylist().getMember().getMemberId()) {
+        if (playlistSong.getPlaylist().getMember().getMemberId().equals(member.getMemberId())) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
         }
         playlistSongRepository.save(playlistSong);
@@ -31,7 +31,7 @@ public class PlaylistSongService {
     public void deleteFromPlaylistSong(long playlistId, long songId, Member member) {
         PlaylistSong playlistSong = playlistSongRepository.findByPlaylistIdAndSongId(playlistId, songId);
 
-        if (member.getMemberId() != playlistSong.getPlaylist().getMember().getMemberId()) {
+        if (playlistSong.getPlaylist().getMember().getMemberId().equals(member.getMemberId())) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
         }
         playlistSongRepository.deleteById(playlistSong.getPlaylistSongId());
