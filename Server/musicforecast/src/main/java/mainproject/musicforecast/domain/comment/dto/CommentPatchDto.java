@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
 public class CommentPatchDto {
-    private long commentId;
+    private Long commentId;
     @NotBlank(message = "글을 작성해주세요.")
     private String text;
 

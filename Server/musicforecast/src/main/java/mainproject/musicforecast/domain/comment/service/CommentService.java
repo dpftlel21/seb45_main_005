@@ -40,7 +40,7 @@ public class CommentService {
         // 존재하는 답변인지 찾은 후 업데이트
         Comment findComment = findVerifiedComment(comment.getCommentId());
         // 답변을 작성한 사람과 수정하려는 사람이 일치하는지 확인
-        if(member.getMemberId() != findComment.getMember().getMemberId()){
+        if(!findComment.getMember().getMemberId().equals(member.getMemberId())){
             throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
         }
 
@@ -50,7 +50,7 @@ public class CommentService {
         return commentRepository.save(findComment);
     }
     // 답변 조회 service
-    public Comment findComment(long commentId) {
+    public Comment findComment(Long commentId) {
 
         return findVerifiedComment(commentId);
     }
@@ -59,10 +59,10 @@ public class CommentService {
         return commentRepository.findAll();
     }
     // 답변 삭제 service
-    public void deleteComment(long commentId, Member member) {
+    public void deleteComment(Long commentId, Member member) {
         Comment comment = findVerifiedComment(commentId);
 
-        if(member.getMemberId() != comment.getMember().getMemberId()){
+        if(!comment.getMember().getMemberId().equals(member.getMemberId())){
             throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
         }
 
@@ -70,7 +70,7 @@ public class CommentService {
     }
 
     //존재하는 답변인지 확인
-    public Comment findVerifiedComment(long commentId) {
+    public Comment findVerifiedComment(Long commentId) {
         Optional<Comment> optionalComment =
                 commentRepository.findById(commentId);
         Comment findComment =
