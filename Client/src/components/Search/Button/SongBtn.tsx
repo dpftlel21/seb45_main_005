@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { RootState } from '../../../redux/store';
 import SongAddModal from '../../Modal/SongAddModal';
 import { openSongAddModal } from '../../../redux/slice/ModalSlice';
@@ -18,6 +19,10 @@ const SongBtn = () => {
 
   const handleAddSong = () => {
     dispatch(openSongAddModal());
+    toast.info('🎤노래 추가를 원하시면 넣으실 해당 플레이리스트를 클릭해주세요!', {
+      position: 'bottom-left',
+      // className:
+    });
   };
 
   const getPlaylists = (): void => {
@@ -45,7 +50,7 @@ const SongBtn = () => {
       <div className="flex justify-center">
         <button
           onClick={() => handleAddSong()}
-          className="w-[150px] h-[5vh] my-4 mr-4 rounded-2xl border-2 border-sky-400 bg-white hover:bg-[#85b5db] hover:text-white"
+          className="w-[15vh] h-[5vh] my-6 mr-4 rounded-2xl border-2 border-sky-400 bg-white hover:bg-[#85b5db] hover:text-white"
         >
           추가
         </button>

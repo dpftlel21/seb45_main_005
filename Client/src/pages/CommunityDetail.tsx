@@ -3,12 +3,14 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+
 import { RootState } from '../redux/store';
 import Header from '../components/Header';
 import usericon from '../assets/images/user.png';
 // import musicicon from '../assets/images/Rectangle(1).png';
 import PlaylistIcon from '../components/Playlist/PlaylistIcon';
-import playlistdisc from '../assets/images/playlistdisc.png';
+import playlistdisc from '../assets/images/turndisk.png';
+import turntable from '../assets/images/turntable.png';
 
 interface Comment {
   commentId: number;
@@ -144,7 +146,7 @@ const CommunityDetail = () => {
         .then((res) => {
           // 삭제 성공 시의 처리
           console.log('삭제가 완료되었습니다.', res.data);
-          toast.error('게시글 삭제 성공');
+          toast.success('게시글 삭제 성공');
           navigate('../community');
           // 여기에서 필요한 추가 작업을 수행할 수 있습니다.
         })
@@ -221,8 +223,12 @@ const CommunityDetail = () => {
                       {posts.nickName}
                     </span>
                   </a>
-                  <div className="w-[100vh]"></div>
-                  <div className="w-[30vh] h-[5vh] inline-flex items-center justify-end text-xs">
+                  <div className="w-[110vh] flex justify-end">
+                    <div className="flex items-center text-center text-xs  w-[30vh] h-[5vh]">
+                      PlayList's Name: {posts.playlistTitle}
+                    </div>
+                  </div>
+                  <div className="w-[20vh] h-[5vh] inline-flex items-center justify-end text-xs">
                     <span>{posts.likeCount}</span>
                     <button className="text-xl ml-2" onClick={handleLikeClick}>
                       {isLiked ? '❤️' : '🤍'}
@@ -234,24 +240,26 @@ const CommunityDetail = () => {
               </div>
               {/* 플레이리스트 */}
               <div className="flex flex-col w-[120vh] h-[44vh] ">
-                <div className="w-[120vh] h-[4vh] flex justify-end">
+                {/* <div className="w-[120vh] h-[4vh] flex justify-end">
                   <button className="text-xs">내 플레이리스트에 추가 ⎋</button>
-                </div>
+                </div> */}
 
                 <div className="flex  items-center w-[120vh] h-[40vh] justify-center  flex-wrap">
                   <ul className="playlist-buttons   flex flex-row w-[120vh] h-[40vh] flex-wrap">
-                    <div className="mr-4 w-[40vh] h-[30vh] flex flex-col justify-center backdrop-blur-md bg-opacity-10 shadow-xl rounded-xl bg-[#d8d5d5]">
-                      <div className="text-center text-2xl">{posts.playlistTitle}</div>
-                      <div className="flex justify-center">
+                    <div className="mr-4 w-[30vh] h-[30vh] flex flex-col justify-center ">
+                      <div
+                        className="flex justify-center h-[23vh] rounded-xl relative"
+                        style={{ backgroundImage: `url('${turntable}')`, backgroundSize: 'cover' }}
+                      >
                         <img
-                          className="w-[20vh] h-[20vh] animate-spin-slow"
+                          className="w-[20vh] h-[20vh] animate-spin-slow absolute top-[1.5vh] left-[2.8vh]"
                           src={playlistdisc}
                           alt=""
                         />
                       </div>
                     </div>
 
-                    <div className="flex flex-col flex-wrap h-[40vh] overflow-x-scroll w-[75vh]">
+                    <ul className="flex flex-row flex-wrap justify-start items-start h-[40vh] overflow-y-scroll w-[87vh] mt-4">
                       {songs.map((el, idx) => (
                         <li key={idx} className="inline-flex  my-4 w-[25vh] h-[5vh]">
                           <img
@@ -265,7 +273,7 @@ const CommunityDetail = () => {
                           </div>
                         </li>
                       ))}
-                    </div>
+                    </ul>
                   </ul>
                 </div>
               </div>
@@ -276,18 +284,19 @@ const CommunityDetail = () => {
             </div>
           </div>
 
-          <div className="flex flex-col justify-center items-center">
+          <div className="w-full flex flex-col justify-center items-center my-6">
             <form>
               <input
+                maxLength={250}
                 type="text"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                placeholder="댓글을 작성해 보세요!"
+                placeholder="댓글을 작성해 보세요! 댓글은 250자 미만으로 작성 가능합니다"
                 id="answer"
-                className="rounded-md w-[80vh] h-[6vh] mt-4 mb-4 p-[4px]"
+                className="rounded-md w-[108vh] h-[10vh] mt-4 mb-4 p-[4px] pl-10"
               />
               <button
-                className="rounded-md w-[10vh] h-[6vh] ml-4 bg-[#ffffff]"
+                className="rounded-md w-[10vh] h-[10vh] ml-4 bg-[#ffffff]"
                 onClick={(e) => handleComment(e)}
               >
                 등록
@@ -296,21 +305,24 @@ const CommunityDetail = () => {
           </div>
 
           {/* 댓글내용 */}
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col justify-start items-center h-[80vh] ">
             {savedComment.map((item, idx) => (
-              <div key={idx} className="flex flex-row justify-center items-center w-[85vh]">
-                <div>
+              <div
+                key={idx}
+                className="flex flex-row justify-center items-center w-[120vh] bg-[#e4e4e4] bg-opacity-10 shadow-xl rounded-xl backdrop-blur-xl my-2"
+              >
+                <div className="h-[6vh] w-[4vh] flex items-center justify-center">
                   <a href={`../othermypage/${item.memberId}`}>
                     <img className="w-[4vh] h-[4vh] mr-2" src={usericon} alt="임시유저이미지" />
                   </a>
                 </div>
-                <div className="flex flex-col h-[6vh] items-center justify-center">
-                  <span className="w-[70vh] h-[2vh] ">
+                <div className="flex flex-row h-[6vh] items-center justify-center">
+                  <span className="w-[10vh] h-[4vh] text-center inline-flex items-center">
                     <a href={`../othermypage/${item.memberId}`}>{item.nickname}</a>
                   </span>
-                  <span className="w-[70vh] h-[2vh] ">{item.text}</span>
+                  <span className="w-[100vh] h-[6vh] inline-flex items-center">{item.text}</span>
                 </div>
-                <button className="mr-2">답글</button>
+
                 <button onClick={() => handleCommentDelete(item.commentId)}>삭제</button>
               </div>
             ))}

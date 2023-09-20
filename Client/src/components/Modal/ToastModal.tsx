@@ -60,14 +60,14 @@ const ToastModal = () => {
 
   return (
     <div className="fixed bottom-72 right-48 flex flex-col justify-center items-center font-['Anton-Regular'] bg-[#4a4b4a42] text-[#838282]">
-      <div className="w-[300px] flex flex-col justify-center items-center bg-[#414052] border-2 border-gray-500 border-solid animate-fadeIn">
+      <div className="w-[30vh] flex flex-col justify-center items-center bg-[#414052] border-2 border-gray-500 border-solid animate-fadeIn">
         <div className="my-8 text-[#ffff]">
           <p className="mb-4">플리 제목</p>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             type="text"
-            className="w-[250px] pl-2 rounded-2xl bg-[#6b6767]"
+            className="w-[25vh] pl-2 rounded-2xl bg-[#6b6767]"
           ></input>
         </div>
         <div className="w-full flex justify-start ml-12 mb-4">

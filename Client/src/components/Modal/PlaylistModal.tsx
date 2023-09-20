@@ -19,7 +19,7 @@ import PlaylistsShowAll from '../Playlist/PlaylistsShowAll';
 import PlaylistsDetail from '../Playlist/PlayListsDetail';
 import MyPlaylistsShowAll from '../Playlist/MyPlaylistsShowAll';
 import playlistdisc from '../../assets/images/playlistdisc.png';
-import SearchPlaylists from '../Playlist/PlaylistsSearch';
+import PlaylistsSearch from '../Playlist/PlaylistsSearch';
 import SearchedPlaylists from '../Playlist/SearchedPlaylists';
 
 export type PlaylistInfo = {
@@ -120,34 +120,33 @@ const PlaylistModal = () => {
   return (
     <>
       <div className="fixed bottom-0 flex justify-center bg-opacity-1">
-        <div className="w-[600px] h-[670px] mt-12 animate-fadeInBottomRight-fast fixed right-8 bottom-40">
-          <div className="h-[670px] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca] animate-scale-anim  ">
+        <div className="w-[60vh] h-[60vh] mt-12 animate-fadeInBottomRight-fast fixed right-8 bottom-40">
+          <div className="h-[60vh] flex flex-col justify-center items-center rounded-2xl bg-gradient-to-b from-[#000000f3] to-[#1d2435] shadow-xl text-[#b3b4ca] animate-scale-anim  ">
             {/* 플레이리스트 상단 */}
-            <div className="flex justify-around">
-              <button onClick={handleCloseModal} className="mr-10 mt-8 ">
-                <img src={xbtn} className="w-[35px]" />
+            <div className="flex justify-around mt-9">
+              <button onClick={handleCloseModal} className="mr-10">
+                <img src={xbtn} className="w-[30px] mt-9" />
               </button>
               {/* 검색칸 */}
-              <SearchPlaylists />
-              <button className="mt-8"></button>
+              <PlaylistsSearch />
             </div>
             {/* 플레이리스트 */}
             <div className="w-full h-[50px] flex justify-between items-center mt-8 font-['Anton-Regular']">
-              <h1 className="ml-8">My Playlists</h1>
+              <h1 className="ml-6">My Playlists</h1>
               <button onClick={handleMyShowAll} className="mr-12">
                 더보기
               </button>
             </div>
             {/* 플리 앨범, 제목, 내용 */}
-            <ul className="w-[550px] mt-6 flex">
+            <ul className="w-[55vh] mt-6 flex">
               {myPlaylistsInfo.map((myEl, index) => {
                 if (index <= 4) {
                   return (
                     <li
                       onClick={() => handleOpenListDetail(myEl.playlistId, myEl.title)}
-                      className="h-[150px] w-[150px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
+                      className="h-[15vh] w-[12vh] mb-2 flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
                     >
-                      <div className=" cursor-pointer w-[100px] h-[100px]">
+                      <div className=" cursor-pointer w-[9vh] h-[9vh] ">
                         <img src={playlistdisc} className="animate-spin-slow" />
                         <h1 className="mt-4 text-xs">{myEl.title}</h1>
                       </div>
@@ -159,21 +158,21 @@ const PlaylistModal = () => {
             </ul>
             {/* 마이 플레이리스트 */}
             <div className="w-full h-[50px] flex justify-between items-center mt-12 font-['Anton-Regular']">
-              <h1 className="ml-8">Recommend</h1>
+              <h1 className="ml-6">Recommend</h1>
               <button onClick={handleOpenDetail} className="mr-12">
                 더보기
               </button>
             </div>
             {/* 플리 앨범, 제목, 내용 */}
-            <ul className="w-[550px] mt-2 flex justify-center">
+            <ul className="w-[55vh] mt-2 flex justify-center">
               {playlistsInfo.map((el, index) => {
                 if (index <= 4) {
                   return (
                     <li
                       onClick={() => handleOpenListDetail(el.playlistId, el.title)}
-                      className="h-[150px] w-[150px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
+                      className="h-[15vh] w-[12vh] mb-4 flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out"
                     >
-                      <div className=" cursor-pointer w-[100px] h-[100px]">
+                      <div className=" cursor-pointer w-[9vh] h-[9vh]">
                         <img src={playlistdisc} className="animate-spin-slow" />
                         <h1 className="mt-4 text-xs">{el.title}</h1>
                       </div>

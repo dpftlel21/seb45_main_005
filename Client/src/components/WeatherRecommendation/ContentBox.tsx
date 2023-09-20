@@ -36,7 +36,7 @@ const ContentBox = () => {
 
   return (
     <div
-      className="w-[1230px] h-[70vh] bg-[#3c84d633] bg-opacity-5 border-1 shadow-xl rounded-xl"
+      className="w-[1230px] h-[70vh] bg-[#3c84d633] bg-opacity-5 shadow-2xl rounded-xl"
       style={{
         backgroundImage: `url(${backgroundImage})`, // 변경된 이미지 경로를 설정
         backgroundPosition: 'center',
@@ -49,7 +49,7 @@ const ContentBox = () => {
         <Weather />
       </div>
       <div className="flex justify-center items-center">
-        <img src={Today} alt="TodayMusic" className="w-[300px] h-[150px] mt-12" />
+        <img src={Today} alt="TodayMusic" className="w-[33vh] h-[13vh] mt-12" />
       </div>
       <RecommendLists />
     </div>

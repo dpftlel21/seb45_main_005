@@ -35,7 +35,7 @@ const PlaylistsSearch = () => {
           onChange={(e) => setKeyword(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="   플레이리스트 이름을 입력해주세요"
-          className="w-[400px] h-[50px] bg-[#444444d0] rounded-3xl border border-gray-500"
+          className="w-[40vh] h-[5vh] bg-[#444444d0] rounded-3xl border border-gray-500"
         ></input>
       </div>
     </>
