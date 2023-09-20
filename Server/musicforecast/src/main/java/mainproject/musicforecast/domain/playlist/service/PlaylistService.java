@@ -81,7 +81,7 @@ public class PlaylistService {
     public Playlist updatePlaylistWithTags(PlaylistDto.PatchTag playlistPatchDto, Member member) {
         Playlist playlist = playlistRepository.findById(playlistPatchDto.getPlaylistId()).orElse(null);
 
-        if (playlist.getMember().getMemberId().equals(member.getMemberId())) {
+        if (!playlist.getMember().getMemberId().equals(member.getMemberId())) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
         }
 
@@ -132,7 +132,7 @@ public class PlaylistService {
     public void deletePlaylist(long playlistId, Member member) {
         Playlist playlist = findVerifiedPlaylist(playlistId);
 
-        if (playlist.getMember().getMemberId().equals(member.getMemberId())) {
+        if (!playlist.getMember().getMemberId().equals(member.getMemberId())) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
         }
 
