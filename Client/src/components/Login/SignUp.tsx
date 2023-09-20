@@ -55,7 +55,7 @@ const SignUp = () => {
       <main className="bg-[#F2F2F2] h-screen">
         <div className=" flex flex-col justify-center items-center ">
           <Link to="/">
-            <img src={Logo} alt="" className="my-14" />
+            <img src={Logo} alt="" className="my-14 hover:opacity-60" />
           </Link>
           <div className="flex flex-col border-2 border-solid border-none shadow-2xl rounded-2xl">
             <div className="text-center font-spoqa-han-san-neo ">
