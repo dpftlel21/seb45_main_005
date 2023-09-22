@@ -15,7 +15,7 @@ import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
-
+//JWT를 생성하고 JWT를 검증해 주는 것
 @Component
 public class JwtTokenizer {
     @Getter

@@ -2,6 +2,11 @@ package mainproject.musicforecast.domain.recommend.weather;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import mainproject.musicforecast.domain.playlist.Utils;
+import mainproject.musicforecast.domain.playlist.entity.Playlist;
+import mainproject.musicforecast.domain.playlist.mapper.PlaylistMapper;
+import mainproject.musicforecast.domain.playlistTag.repository.PlaylistTagRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,67 +22,22 @@ import java.util.List;
 public class WeatherController {
 
     private final WeatherService weatherService;
+    private final PlaylistMapper mapper;
 
-    public WeatherController(WeatherService weatherService) {
+    public WeatherController(WeatherService weatherService, PlaylistMapper mapper) {
         this.weatherService = weatherService;
+        this.mapper = mapper;
     }
 
     @GetMapping("/result")
-    public ResponseEntity recommendSong(@RequestParam("q") String weather) {
-        String genre = "";
-        
-        switch (weather) {
-            case "Thunderstorm":
-                genre = "신나는";
-                break;
-            case "Drizzle":
-                genre = "신나는";
-                break;
-            case "Rain":
-                genre = "신나는";
-                break;
-            case "Snow":
-                genre = "신나는";
-                break;
-            case "Mist":
-                genre = "신나는";
-                break;
-            case "Smoke":
-                genre = "신나는";
-                break;
-            case "Haze":
-                genre = "신나는";
-                break;
-            case "Dust":
-                genre = "신나는";
-                break;
-            case "Fog":
-                genre = "신나는";
-                break;
-            case "Sand":
-                genre = "신나는";
-                break;
-            case "Ash":
-                genre = "신나는";
-                break;
-            case "Squall":
-                genre = "신나는";
-                break;
-            case "Tornado":
-                genre = "신나는";
-                break;
-            case "Clear":
-                genre = "신나는";
-                break;
-            case "Clouds":
-                genre = "신나는";
-                break;
-            default:
-                break;
-
-        }
-
-        return null;
+    public ResponseEntity recommendPlaylist(@RequestParam(required = false, defaultValue = "1") int page,
+                                            @RequestParam(required = false, defaultValue = "10") int size,
+                                            @RequestParam("q") String weather) {
+        Page<Playlist> playlistPage = weatherService.findBySearchTags(page - 1, size, weather);
+        List<Playlist> playlists = playlistPage.getContent();
+        return new ResponseEntity<>(
+                new Utils.MultiResponseDto<>(mapper.playlistToPlaylistResponseDtos(playlists), playlistPage), HttpStatus.OK
+        );
     }
 
 

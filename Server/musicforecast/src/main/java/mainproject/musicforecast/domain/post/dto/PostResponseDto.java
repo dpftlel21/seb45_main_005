@@ -17,10 +17,24 @@ public class PostResponseDto {
 
     private Long memberId;
     private String nickName;
-    private int voteCount;
+    //private int voteCount;
+    private int likeCount;
     private int commentCount;
     private int viewCount;
     private LocalDateTime createdAt;
+
+    private Long playlistId;
+    private String playlistTitle;
+
+    private boolean hasLiked;
+
+    public boolean isHasLiked(){
+        return hasLiked;
+    }
+
+    public void setHasLiked(boolean hasLiked){
+        this.hasLiked = hasLiked;
+    }
 
     public void setMember(MemberResponseDto memberToMemberResponseDto) {
         this.nickName = memberToMemberResponseDto.getNickname();

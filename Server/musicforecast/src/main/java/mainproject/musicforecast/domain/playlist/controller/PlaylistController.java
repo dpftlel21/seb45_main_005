@@ -39,8 +39,9 @@ public class PlaylistController {
     }
 
     @PostMapping
-    public ResponseEntity postPlaylist(@Valid @RequestBody PlaylistDto.Post playlistPostDto) {
-        Playlist playlist = playlistService.createPlaylist(mapper.playlistPostDtoToPlaylist(playlistPostDto));
+    public ResponseEntity postPlaylist(@Valid @RequestBody PlaylistDto.Post playlistPostDto,
+                                       @AuthenticationPrincipal Member member) {
+        Playlist playlist = playlistService.createPlaylist(mapper.playlistPostDtoToPlaylist(playlistPostDto, member));
         URI location = Utils.createUri("/playlist", playlist.getPlaylistId());
         return ResponseEntity.created(location).build();
     }
@@ -109,9 +110,19 @@ public class PlaylistController {
 
     @PatchMapping("/{playlist-id}/like")
     public ResponseEntity likePlaylist(@PathVariable("playlist-id") long playlistId,
-                                       @RequestBody PlaylistDto.Like playlistLikeDto,
                                        @AuthenticationPrincipal Member member) {
-        playlistLikeService.likePlaylist(playlistLikeDto.getMemberId(), playlistId, PlaylistLike.LikeType.Like, member);
+        playlistLikeService.likePlaylist(playlistId, PlaylistLike.LikeType.Like, member);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity searchPlaylist(@RequestParam(required = false, defaultValue = "1") int page,
+                                         @RequestParam(required = false, defaultValue = "10") int size,
+                                         @RequestParam String keyword) {
+        Page<Playlist> playlistPage = playlistService.searchPlaylist(page - 1, size, keyword);
+        List<Playlist> playlists = playlistPage.getContent();
+        return new ResponseEntity<>(
+                new Utils.MultiResponseDto<>(mapper.playlistToPlaylistResponseDtos(playlists), playlistPage), HttpStatus.OK
+        );
     }
 }

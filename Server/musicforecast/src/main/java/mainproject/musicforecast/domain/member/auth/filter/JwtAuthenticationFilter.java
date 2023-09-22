@@ -3,6 +3,7 @@ package mainproject.musicforecast.domain.member.auth.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import mainproject.musicforecast.domain.member.auth.jwt.JwtTokenizer;
+import mainproject.musicforecast.domain.member.auth.utils.CustomAuthorityUtils;
 import mainproject.musicforecast.domain.member.dto.LoginDto;
 import mainproject.musicforecast.domain.member.entity.Member;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,12 +47,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication authResult) throws ServletException, IOException {
         Member member = (Member) authResult.getPrincipal();
+        String memberId = Long.toString(member.getMemberId());
+        String nickname = member.getNickname();
 
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
+        response.addHeader("memberId", memberId);
+        response.addHeader("nickname", nickname);
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
@@ -59,6 +64,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("memberId", member.getMemberId());
+        claims.put("nickname", member.getNickname());
         claims.put("roles", member.getRoles());
 
         String subject = member.getEmail();

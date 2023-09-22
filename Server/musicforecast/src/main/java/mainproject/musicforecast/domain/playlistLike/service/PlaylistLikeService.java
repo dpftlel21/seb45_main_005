@@ -25,15 +25,11 @@ public class PlaylistLikeService {
         this.memberRepository = memberRepository;
     }
 
-    public void likePlaylist(long memberId, long playlistId, PlaylistLike.LikeType likeType, Member user) {
-        Member member = memberRepository.findById(memberId)
+    public void likePlaylist(long playlistId, PlaylistLike.LikeType likeType, Member user) {
+        Member member = memberRepository.findById(user.getMemberId())
                 .orElseThrow(() -> new NullPointerException());
         Playlist playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new NullPointerException());
-
-        if (user.getMemberId() != playlist.getMember().getMemberId()) {
-            throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
-        }
 
         PlaylistLike existPlaylistLike = playlistLikeRepository.findByMemberAndPlaylist(member, playlist);
 

@@ -10,4 +10,5 @@ public class MemberPatchDto {
     private long memberId;
     private String intro;
     private String nickname;
+    private String image;
 }

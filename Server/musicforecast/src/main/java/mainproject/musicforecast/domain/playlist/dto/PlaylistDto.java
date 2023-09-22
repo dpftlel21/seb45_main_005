@@ -14,7 +14,6 @@ public class PlaylistDto {
     @Getter
     @Setter
     public static class Post {
-        private long memberId;
         private String title;
         private boolean isPublic;
     }
@@ -40,9 +39,10 @@ public class PlaylistDto {
     /*
     * 좋아요 누를 때 보내는 값
     */
+    @Builder
     @Getter
     public static class Like {
-        private long memberId;
+        private boolean like;
     }
     
     /*
@@ -66,6 +66,7 @@ public class PlaylistDto {
         private String title;
         private boolean isPublic;
         private int view;
+        private int like;
         private long memberId;
         private List<PlaylistTagResponse> playlistTags;
         private List<PlaylistSongResponse> playlistSongs;
@@ -77,6 +78,7 @@ public class PlaylistDto {
         private long playlistTagId;
         private long playlistId;
         private long tagId;
+        private String tagName;
     }
 
     @Builder
@@ -84,6 +86,11 @@ public class PlaylistDto {
     public static class PlaylistSongResponse {
         private long playlistSongId;
         private long songId;
+        private String title;
+        private String albumName;
+        private String artistName;
+        private String imageUrl;
+        private String youtubeUrl;
     }
 
 }

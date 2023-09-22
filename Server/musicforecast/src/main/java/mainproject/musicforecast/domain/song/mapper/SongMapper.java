@@ -21,4 +21,14 @@ public interface SongMapper {
         keyword.setSongKeyword(keywordResponse.getKeyword());
         return keyword;
     }
+
+    default SongDto.SpotifyAddResponseDto toSpotifyAddResponseDto(long songId, String artistName, String title, String albumName, String imageUrl) {
+        return SongDto.SpotifyAddResponseDto.builder()
+                .songId(songId)
+                .artistName(artistName)
+                .title(title)
+                .albumName(albumName)
+                .imageUrl(imageUrl)
+                .build();
+    }
 }

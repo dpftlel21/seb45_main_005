@@ -20,8 +20,10 @@ import org.apache.hc.core5.http.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Column;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +53,9 @@ public class SongController {
     }
 
     @GetMapping("/search")
-    public List<SpotifySearchResponseDto> search(@RequestParam(value = "keyword", required = false) String keyword,
-                                                 @RequestParam(required = false, defaultValue = "10") int song) {
-        List<SpotifySearchResponseDto> searchResponseDtoList = new ArrayList<>();
+    public List<SongDto.SpotifyAddResponseDto> search(@RequestParam(value = "keyword", required = false) String keyword,
+                                                      @RequestParam(required = false, defaultValue = "10") int song) {
+        List<SongDto.SpotifyAddResponseDto> addResponseDtoList = new ArrayList<>();
 
         try {
             SearchTracksRequest searchTracksRequest = spotifyService.setSpotifyApi().searchTracks(keyword)
@@ -82,11 +84,14 @@ public class SongController {
 
                 SpotifySearchResponseDto spotifySearchResultDto = mapper.toSpotifySearchDto(artistName, title, albumName, imageUrl);
 
-                searchResponseDtoList.add(spotifySearchResultDto);
-                if (!keywordService.findKeyword(keyword)) { // 중복된 키워드가 아닐때
-                    songService.findAndDeleteDuplicatedSong(title, albumName, artistName);
+                if (!songService.findDuplicatedSong(title, artistName, albumName)) { // 이미 존재하는 노래가 아닐 때
+//                    songService.findAndDeleteDuplicatedSong(title, albumName, artistName);
                     songService.createSong(songMapper.spotifySearchResponseDtoToSong(spotifySearchResultDto));
                 }
+                long songId = songService.findSongId(title, artistName, albumName).getSongId();
+                System.out.println("song Id : " + songId);
+                SongDto.SpotifyAddResponseDto spotifyAddResponseDto = songMapper.toSpotifyAddResponseDto(songId, artistName, title, albumName, imageUrl);
+                addResponseDtoList.add(spotifyAddResponseDto);
             }
             if (!keywordService.findKeyword(keyword)) { // 중복된 키워드가 아닐때
                 SongDto.KeywordResponse keywordResponse = SongDto.KeywordResponse.builder()
@@ -96,7 +101,7 @@ public class SongController {
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("ERROR: " + e.getMessage());
         }
-        return searchResponseDtoList;
+        return addResponseDtoList;
     }
 
     @PostMapping("/{song-id}/{playlist-id}/add")
@@ -110,6 +115,13 @@ public class SongController {
 
         playlistSong.setSong(findSong);
         playlistSong.setPlaylist(findPlaylist);
+        playlistSong.setSongTitle(findSong.getTitle());
+        playlistSong.setArtistName(findSong.getArtistName());
+        playlistSong.setAlbumName(findSong.getAlbumName());
+        playlistSong.setImageUrl(findSong.getImageUrl());
+
+        if (songService.checkExistSong(findSong.getSongId(), findPlaylist.getPlaylistId())) return null;
+        System.out.println("check SONG : " + playlistSong);
 
         playlistSongService.addToPlaylistSong(playlistSong, member);
 

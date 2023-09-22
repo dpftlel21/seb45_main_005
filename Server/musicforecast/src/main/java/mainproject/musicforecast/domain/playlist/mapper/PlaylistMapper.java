@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 //@Service //PlaylistController에서 Could not autowire.
 public interface PlaylistMapper {
 
-    default Playlist playlistPostDtoToPlaylist(PlaylistDto.Post playlistPostDto) {
+    default Playlist playlistPostDtoToPlaylist(PlaylistDto.Post playlistPostDto, Member user) {
         Member member = new Member();
 
-        member.setMemberId(playlistPostDto.getMemberId());
+        member.setMemberId(user.getMemberId());
 
         Playlist playlist = new Playlist();
 
@@ -53,6 +53,7 @@ public interface PlaylistMapper {
                 .title(playlist.getTitle())
                 .isPublic(playlist.isPublic())
                 .view(playlist.getView())
+                .like(playlist.getLikeCount())
                 .memberId(playlist.getMember().getMemberId())
                 .build();
 
@@ -63,13 +64,21 @@ public interface PlaylistMapper {
                         .map(playlistTag -> PlaylistDto.PlaylistTagResponse.builder()
                                 .playlistTagId(playlistTag.getPlaylistTagId())
                                 .playlistId(playlistTag.getPlaylist().getPlaylistId())
-                                .tagId(playlistTag.getTag().getTagId()).build())
+                                .tagId(playlistTag.getTag().getTagId())
+                                .tagName(playlistTag.getTag().getTagName())
+                                .build())
                                 .collect(Collectors.toList());
 
         List<PlaylistDto.PlaylistSongResponse> playlistSongResponses = playlistSongs.stream()
                         .map(playlistSong -> PlaylistDto.PlaylistSongResponse.builder()
                                 .playlistSongId(playlistSong.getPlaylistSongId())
-                                .songId(playlistSong.getSong().getSongId()).build())
+                                .songId(playlistSong.getSong().getSongId())
+                                .title(playlistSong.getSongTitle())
+                                .albumName(playlistSong.getAlbumName())
+                                .artistName(playlistSong.getArtistName())
+                                .imageUrl(playlistSong.getImageUrl())
+                                .youtubeUrl(playlistSong.getYoutubeUrl())
+                                .build())
                                 .collect(Collectors.toList());
 
         response.setPlaylistTags(playlistTagResponses);

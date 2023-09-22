@@ -15,11 +15,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.swing.text.html.Option;
-import java.net.URI;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -81,7 +81,7 @@ public class PlaylistService {
     public Playlist updatePlaylistWithTags(PlaylistDto.PatchTag playlistPatchDto, Member member) {
         Playlist playlist = playlistRepository.findById(playlistPatchDto.getPlaylistId()).orElse(null);
 
-        if (member.getMemberId() != playlist.getMember().getMemberId()) {
+        if (!playlist.getMember().getMemberId().equals(member.getMemberId())) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
         }
 
@@ -93,18 +93,38 @@ public class PlaylistService {
             playlistTagService.clearPlaylistTag(playlist);
             playlist.getPlaylistTags().clear();
 
-            List<PlaylistTag> newTags = new ArrayList<>();
-            for (String tags : playlistPatchDto.getTag()) {
-                Tag tag = tagRepository.findByTagName(tags).orElse(null);
+//            List<PlaylistTag> newTags = new ArrayList<>();
+//            for (String tags : playlistPatchDto.getTag()) {
+//                Tag tag = tagRepository.findByTagName(tags).orElse(null);
+//                if (tag != null) {
+//                    PlaylistTag playlistTag = new PlaylistTag();
+//                    playlistTag.setPlaylist(playlist);
+//                    playlistTag.setTag(tag);
+//                    playlistTag.setTagName(tag.getTagName());
+//                    newTags.add(playlistTag);
+//                }
+//            }
+//            playlist.updateTags(newTags);
+
+            PlaylistTag[] newTags = new PlaylistTag[3];
+            int count = 0;
+            List<String> tags = playlistPatchDto.getTag();
+            int minNum = 3 < tags.size() ? 3 : tags.size();
+            for (int i = 0; i < minNum; i++) {
+                Tag tag = tagRepository.findByTagName(tags.get(i)).orElse(null);
                 if (tag != null) {
                     PlaylistTag playlistTag = new PlaylistTag();
                     playlistTag.setPlaylist(playlist);
                     playlistTag.setTag(tag);
-                    newTags.add(playlistTag);
+                    playlistTag.setTagName(tag.getTagName());
+                    newTags[i] = playlistTag;
                 }
             }
-
-            playlist.updateTags(newTags);
+            List<PlaylistTag> newTagList = new ArrayList<>();
+            for (PlaylistTag tag : newTags) {
+                if (tag != null) newTagList.add(tag);
+            }
+            playlist.updateTags(newTagList);
         }
         return playlistRepository.save(playlist);
     }
@@ -112,7 +132,7 @@ public class PlaylistService {
     public void deletePlaylist(long playlistId, Member member) {
         Playlist playlist = findVerifiedPlaylist(playlistId);
 
-        if (member.getMemberId() != playlist.getMember().getMemberId()) {
+        if (!playlist.getMember().getMemberId().equals(member.getMemberId())) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_PERMISSION_DENIED);
         }
 
@@ -121,5 +141,11 @@ public class PlaylistService {
 
     public Optional<Playlist> findPlaylistById(long playlistId) {
         return playlistRepository.findById(playlistId);
+    }
+
+    public Page<Playlist> searchPlaylist(int page, int size, String keyword) {
+        return playlistRepository.findByKeyword(
+                PageRequest.of(page, size, Sort.by("playlistId").descending()), keyword
+        );
     }
 }
