@@ -2,10 +2,16 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
-      fontFamily: {
+      'fontFamily': {
         'sigmar-one': ['Sigmar One', 'cursive'],
+        'spoqa-hansans': ['Spoqa Han Sans Neo', 'sans-serif'],
       },
-      width: {
+      'colors': {
+        'slider-bg': '#C487F4',
+        'slider-thumb': '#C487F4',
+      },
+      'custom-toast': 'position-absolute top-50px left-50',
+      'width': {
         '1040': '1040px',
         '1200': '1200px',
         '400': '400px',
@@ -14,7 +20,7 @@ module.exports = {
         '700': '700px',
         '900': '900px',
       },
-      backgroundColor: {
+      'backgroundColor': {
         'gray-custom': '#B3B3B3',
         'gray-custom-2': '#332E30',
       },
@@ -44,16 +50,33 @@ module.exports = {
         '0%': { transform: 'scale(0)' },
         '100%': { transform: 'scale(1)' },
       },
+      'slider': {
+        '0%': {
+          transform: 'translateX(-100%)',
+        },
+        '100%': {
+          transform: 'translateX(0%)',
+        },
+      },
+      'slider2': {
+        '0%': {
+          transform: 'translateX(-50%)',
+        },
+        '100%': {
+          transform: 'translateX(50%)',
+        },
+      },
     },
     animation: {
       'spin-slow': 'spin-slow 5s linear infinite',
-      'scale-anim': 'scale-anim 2s ease-in-out',
+      'scale-anim': 'scale-anim 1s ease-in-out',
       'fadeIn': 'fadeIn 1s linear',
       'slideOutUp-fast': 'slideOutUp 1s',
-      'fadeInBottomRight-fast':
-        'fadeInBottomRight 2s cubic-bezier(0.42, 0, 0.02, 0.96)',
+      'fadeInBottomRight-fast': 'fadeInBottomRight 1s cubic-bezier(0.42, 0, 0.02, 0.96)',
       'bounceIn': 'bounceIn 1s linear',
       'pulse': 'pulse 1s ease-in-out infinite',
+      'slider': 'slider 10s linear infinite ',
+      'slider2': 'slider2 18s linear infinite ',
     },
   },
   plugins: [],

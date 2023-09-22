@@ -4,18 +4,23 @@ import SongBtn from '../components/Search/Button/SongBtn';
 import SongInfo from '../components/Search/SongInfo';
 import SearchInput from '../components/Search/SearchInput';
 import PlaylistIcon from '../components/Playlist/PlaylistIcon';
+import Wrapper from '../components/Wrapper/Wrapper';
 
 const SearchSongs = () => {
   return (
     <>
-      <div className="w-full h-full flex flex-col justify-center items-center bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed]">
+      <div className="w-screen h-screen bg-gradient-to-b from-[#D5E5F0] to-[#87c4ed]">
         <Header />
-        <SearchInput />
-        <div className="w-[1100px] bg-gradient-to-b from-[#c5ccec] to-[#b6d4e7] shadow-md">
-          <SongInfo />
-          <SongLists />
-          <SongBtn />
-        </div>
+        <Wrapper>
+          <SearchInput />
+          <div className="w-full flex justify-center">
+            <div className="w-[100vh] h-[60vh] mt-8 bg-gradient-to-b from-[#97c7f3] to-[#fafafa7c] shadow-xl rounded-2xl">
+              <SongInfo />
+              <SongLists />
+              <SongBtn />
+            </div>
+          </div>
+        </Wrapper>
       </div>
       <PlaylistIcon />
     </>

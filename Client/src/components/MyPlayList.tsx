@@ -2,7 +2,13 @@ import playlistdisc from '../assets/images/playlistdisc.png';
 import playlistimg from '../assets/images/Rectangle 64.png';
 import 'animate.css';
 
-const MyPlayList = () => {
+export type InsidePly = {
+  title: string;
+  memberId: number;
+  playlistId: number;
+};
+
+const MyPlayList = ({ myPlayList }: { myPlayList: InsidePly[] }) => {
   return (
     <>
       <div className="flex flex-col items-center w-full">
@@ -24,36 +30,18 @@ const MyPlayList = () => {
           </div>
           <div>
             <table className="flex flex-col w-[875px] items-center justify-center">
-              <tr className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#bdc2f8] justify-center">
-                <td className="w-[50px] text-center text-xs">1</td>
-                <td className="w-[100px]">
-                  <img src={playlistimg} alt="임시사진" />
-                </td>
-                <td className="w-[100px] text-center text-xs">리스트1제목</td>
-                <td className="w-[500px] text-center text-xs">컨텐츠내용</td>
-                <td className="w-[50px] text-center text-xs">89</td>
-                <td className="w-[50px] text-center text-xs">190</td>
-              </tr>
-              <tr className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#bdc2f8] justify-center">
-                <td className="w-[50px] text-center text-xs">2</td>
-                <td className="w-[100px]">
-                  <img src={playlistimg} alt="임시사진" />
-                </td>
-                <td className="w-[100px] text-center text-xs">리스트2제목</td>
-                <td className="w-[500px] text-center text-xs">컨텐츠내용</td>
-                <td className="w-[50px] text-center text-xs">89</td>
-                <td className="w-[50px] text-center text-xs">190</td>
-              </tr>
-              <tr className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#bdc2f8] justify-center">
-                <td className="w-[50px] text-center text-xs">3</td>
-                <td className="w-[100px]">
-                  <img src={playlistimg} alt="임시사진" />
-                </td>
-                <td className="w-[100px] text-center text-xs">리스트3제목</td>
-                <td className="w-[500px] text-center text-xs">컨텐츠내용</td>
-                <td className="w-[50px] text-center text-xs">89</td>
-                <td className="w-[50px] text-center text-xs">190</td>
-              </tr>
+              {myPlayList.map((el, idx) => (
+                <tr className="flex w-[875px] h-[67px] items-center border-b-[1px] border-solid border-[#bdc2f8] justify-center">
+                  <td className="w-[50px] text-center text-xs">{idx + 1}</td>
+                  <td className="w-[100px]">
+                    <img src={playlistimg} alt="임시사진" />
+                  </td>
+                  <td className="w-[100px] text-center text-xs">{el.title}</td>
+                  <td className="w-[500px] text-center text-xs">컨텐츠내용</td>
+                  <td className="w-[50px] text-center text-xs">89</td>
+                  <td className="w-[50px] text-center text-xs">190</td>
+                </tr>
+              ))}
             </table>
           </div>
         </div>

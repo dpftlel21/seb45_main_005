@@ -5,9 +5,13 @@ const ModalSlice = createSlice({
   initialState: {
     isOpen: false,
     isDetailOpen: false,
+    isMyShowAll: false,
     isToastOpen: false,
     isAlbumDetailOpen: false,
     isSongOpen: false,
+    isSongAddOpen: false,
+    isSearchedOpen: false,
+    isRecommendOpen: false,
   },
   reducers: {
     openModal: (state) => {
@@ -21,6 +25,12 @@ const ModalSlice = createSlice({
     },
     closeDetailModal: (state) => {
       state.isDetailOpen = false;
+    },
+    openMyShowAll: (state) => {
+      state.isMyShowAll = true;
+    },
+    closeShowAll: (state) => {
+      state.isMyShowAll = false;
     },
     openToastModal: (state) => {
       state.isToastOpen = true;
@@ -40,6 +50,24 @@ const ModalSlice = createSlice({
     closeSongLists: (state) => {
       state.isSongOpen = false;
     },
+    openSongAddModal: (state) => {
+      state.isSongAddOpen = true;
+    },
+    closeSongAddModal: (state) => {
+      state.isSongAddOpen = false;
+    },
+    openSearchedModal: (state) => {
+      state.isSearchedOpen = true;
+    },
+    closeSearchedModal: (state) => {
+      state.isSearchedOpen = false;
+    },
+    openRecommendModal: (state) => {
+      state.isRecommendOpen = true;
+    },
+    closeRecommendModal: (state) => {
+      state.isRecommendOpen = false;
+    },
   },
 });
 
@@ -50,10 +78,18 @@ export const {
   closeModal,
   openDetailModal,
   closeDetailModal,
+  openMyShowAll,
+  closeShowAll,
   openToastModal,
   closeToastModal,
   openAlbumDetailModal,
   closeAlbumDetailModal,
   openSongLists,
   closeSongLists,
+  openSongAddModal,
+  closeSongAddModal,
+  openSearchedModal,
+  closeSearchedModal,
+  openRecommendModal,
+  closeRecommendModal,
 } = ModalSlice.actions;

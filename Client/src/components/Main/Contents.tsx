@@ -1,88 +1,34 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Music from '../../assets/images/music.jpg';
-import List from '../../assets/images/list.jpg';
-import Mubti from '../../assets/images/mubti.png';
-import Mainbg from '../../assets/images/main.jpeg';
-import Vector from '../../assets/images/vector.svg';
-import MainHead from './MainHead';
+import React from 'react';
+import Headers from '../Header';
 
 const Contents = () => {
-  const [bton, setBton] = useState<boolean>(false);
-  const [imageFlipped, setImageFlipped] = useState<boolean>(false);
-
-  const handleButton = (): void => {
-    setBton(!bton);
-    setImageFlipped(!imageFlipped);
-    console.log(bton);
-  };
-
   return (
     <>
-      <MainHead />
-      <header
-        className="bg-cover bg-center h-screen "
-        style={{ backgroundImage: `url(${Mainbg})` }}
-      >
-        <div className="w-full h-full bg-black bg-opacity-70">
-          <div className="w-full text-white flex flex-col justify-center items-center ">
-            <h2 className="text-6xl h-40 font-sigmar-one mt-20">Welcome to “MUSIC FORECAST” !!</h2>
-            <span className="text-2xl font">
-              날씨와 더불어 유저가 처한 상황 (운동, 기분)에 따라 음악 추천을 해주고, 유저들끼리
-              자신의 플레이리스트, 애청곡을 공유하는 웹 사이트 입니다.
-            </span>
-          </div>
-
-          <div className="flex flex-row justify-start  mx-60 mt-6 hover:opacity-90">
-            <button onClick={handleButton} className="flex flex-row ">
-              <img
-                src={Vector}
-                className={`mr-6 ${imageFlipped ? 'transform scale-y-[-1]' : ''}`}
-              ></img>
-              <span className="text-white">{bton ? '컨텐츠 닫힘' : '컨텐츠 열림'}</span>
-            </button>
-          </div>
-
-          {/* 컨텐츠 */}
-          {!bton && (
-            <div>
-              <div className="flex flex-row justify-between mx-60 mr-12 mt-12">
-                <div>
-                  <img src={Music} alt="" />
-                  <div className="text-white mt-12">
-                    <span className="text-2xl">노래 차트</span>
-                    <p className="text-lg">
-                      비, 눈, 맑음, 흐림에따라 날씨별 노래 추천이 다르게 나타납니다.
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <Link to="/mubti">
-                    <img src={Mubti} alt="" />
-                    <div className="text-white mt-12">
-                      <span className="text-2xl">MUBTI</span>
-                      <p className="text-lg">
-                        비, 눈, 맑음, 흐림에따라 날씨별 노래 추천이 다르게 나타납니다.
-                      </p>
-                    </div>
-                  </Link>
-                </div>
-                <div>
-                  <Link to="/weatherRecommend">
-                    <img src={List} alt="" />
-                    <div className="text-white mt-12">
-                      <span className="text-2xl">날씨에 따른 음악 추천</span>
-                      <p className="text-lg">
-                        자신의 플레이리스트, 애청곡 등을 자유롭게 공유해 봅시다 !!
-                      </p>
-                    </div>
-                  </Link>
-                </div>
-              </div>
+      <div className=" bg-gradient-to-b h-screen from-[#d8e6ef] to-[#87c4ed]  ">
+        <Headers />
+        <header className="w-[1140] bg-center flex ">
+          <img
+            src="https://cdn.discordapp.com/attachments/1123861236124229664/1151401600435372032/Weather_Forecast_Mobile_App_Concept-removebg-preview.png"
+            alt=""
+            className="w-[750px] h-[600px] mt-20 ml-30 transform transition-transform hover:scale-x-[-1] hover:transition-delay-2000 "
+          />
+          <div className="w-[1140]  flex flex-col justify-center ml-32 ">
+            <h2 className="text-7xl h-40 font-['Anton-Regular'] mt-30 ">🎶 MUSIC FORECAST </h2>
+            <div className="flex flex-col text-4xl font-bold font-spoqa-hansans w-[750px]">
+              <p className="text-2xl mt-4">
+                {' '}
+                Music Forecast는 날씨 예보와 음악을 접목시켜 여러분의 일상에 더 많은 즐거움을
+                더해주는 웹 사이트입니다.{' '}
+              </p>
+              <p className="text-2xl mt-4">
+                날씨, 운동, 기분 및 사용자의 취향에 맞게 최적의 음악을 추천하고, 사용자들끼리 음악을
+                공유하며 연결하는 웹 사이트를 기획하고, 제작했습니다.{' '}
+                <p className="text-4xl font-bold mt-4">지금 MUSIC FORECAST와 함께하세요 !</p>{' '}
+              </p>
             </div>
-          )}
-        </div>
-      </header>
+          </div>
+        </header>
+      </div>
     </>
   );
 };

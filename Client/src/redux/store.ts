@@ -6,6 +6,8 @@ import PlaylistsSlice from './slice/PlaylistsSlice';
 import LoginReducer from './slice/LoginSlice';
 import PlaylistCRUDSlice from './slice/PlaylistCRUDSlice';
 import SongListsSlice from './slice/SonglistsSlice';
+import WeatherSlice from './slice/WeatherSlice';
+import MUBTISlice from './slice/MUBTISlice';
 
 const rootreducer = combineReducers({
   modal: ModalSlice.reducer,
@@ -13,6 +15,8 @@ const rootreducer = combineReducers({
   playlistCRUD: PlaylistCRUDSlice.reducer,
   login: LoginReducer,
   songlists: SongListsSlice.reducer,
+  weather: WeatherSlice.reducer,
+  mubti: MUBTISlice.reducer,
 });
 
 // config 작성

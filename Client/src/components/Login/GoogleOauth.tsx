@@ -1,18 +1,52 @@
 import React from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import google from '../../assets/images/google.svg';
-import { setAccessToken, setLoginState } from '../../redux/slice/LoginSlice';
+import {
+  setAccessToken,
+  setLoginState,
+  setNickname,
+  setMemberID,
+} from '../../redux/slice/LoginSlice';
 
 const GoogleOauth = () => {
   const dispatch = useDispatch();
   const login = useGoogleLogin({
+    scope: 'email',
     onSuccess: (tokenResponse) => {
-      console.log(tokenResponse);
-      dispatch(setAccessToken(tokenResponse.access_token));
-      console.log('Login Success:', tokenResponse.access_token);
-      window.location.href = '/';
-      dispatch(setLoginState(true));
+      console.log(tokenResponse.access_token);
+      axios
+        .post(
+          `${process.env.REACT_APP_BE_API_URL}/oauth/google`,
+          {},
+          {
+            headers: {
+              'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+              'Authorization': tokenResponse.access_token,
+              // ...headers,
+            },
+          }
+        )
+        .then((res) => {
+          dispatch(setMemberID(res.headers.memberid));
+          dispatch(setAccessToken(res.headers.authorization));
+          axios
+            .get(`${process.env.REACT_APP_BE_API_URL}/members/my_page/intro`, {
+              headers: {
+                'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+                'Authorization': res.headers.authorization,
+              },
+            })
+            .then((resp) => {
+              dispatch(setNickname(resp.data.nickname));
+              console.log(resp);
+              dispatch(setLoginState(true));
+              toast.success('로그인 성공');
+              window.location.href = '/';
+            });
+        });
     },
     onError: () => {
       console.log('Login Failed');

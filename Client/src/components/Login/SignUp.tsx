@@ -1,8 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 import Logo from '../../assets/images/logo.png';
 import Email from '../../assets/images/email.svg';
 import Lock from '../../assets/images/lock.svg';
@@ -10,15 +9,16 @@ import Person from '../../assets/images/person.svg';
 import Calendar from '../../assets/images/calendar.svg';
 
 const SignUp = () => {
-  const generateID = () => {
-    return uuidv4();
+  const headers = {
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
   };
+
   interface IFormInput {
-    id: string;
     email: string;
     password: string;
     nickname: string;
     birthdate: string;
+    questionNumber: string;
     auth_answer: string;
   }
 
@@ -32,20 +32,21 @@ const SignUp = () => {
   const onSubmit = async (data: IFormInput) => {
     data.birthdate = data.birthdate.replace(/-/g, '');
 
-    data.id = generateID();
-    console.log(data);
-
     try {
-      const response = await axios.post('/members/signup', data);
+      const response = await axios.post(
+        `${process.env.REACT_APP_BE_API_URL}/members/signup`,
+        data,
+        { headers }
+      );
 
-      if (response.status === 200) {
-        console.log('회원가입 성공');
+      if (response.status === 201) {
         history('/login');
       } else {
         console.error('회원가입 실패');
       }
     } catch (error) {
       console.error('오류 발생:', error);
+      alert('회원가입에 실패했습니다.');
     }
   };
 
@@ -53,8 +54,13 @@ const SignUp = () => {
     <>
       <main className="bg-[#F2F2F2] h-screen">
         <div className=" flex flex-col justify-center items-center ">
-          <img src={Logo} alt="" className="my-14" />
+          <Link to="/">
+            <img src={Logo} alt="" className="my-14 hover:opacity-60" />
+          </Link>
           <div className="flex flex-col border-2 border-solid border-none shadow-2xl rounded-2xl">
+            <div className="text-center font-spoqa-han-san-neo ">
+              Music Forecast에 오신걸 환영합니다!
+            </div>
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col w-[550px] h-[700px] ml-48 mt-6"
@@ -89,7 +95,7 @@ const SignUp = () => {
                 {...register('password', {
                   pattern: {
                     value: /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/,
-                    message: '비밀번호는 영문 숫자 8자리 이상이여야 합니다.',
+                    message: '비밀번호는 영문 숫자 8자리 이상과 특수문자 1개이상 포함해야 합니다.',
                   },
                 })}
                 className={`w-[330px] h-8 border-2 border-solid border-white shadow-lg ${
@@ -120,19 +126,37 @@ const SignUp = () => {
                 {...register('birthdate', { required: '생년월일은 필수 입니다.' })}
               />
               {errors.birthdate && <span className="text-red-500">{errors.birthdate.message}</span>}
+
               <div className="flex flex-col items-baseline mt-8">
                 <div className="text-xl">비밀번호 찾기 질문</div>
+                <select
+                  {...register('questionNumber', { required: true })}
+                  className="w-[330px] h-8"
+                >
+                  <option value=""></option>
+                  <option value="1">가장 좋아하는 음식이 무엇인가요?</option>
+                  <option value="2">가장 좋아하는 노래는?</option>
+                  <option value="3">가장 여행하고 싶은 나라는?</option>
+                </select>
+                {errors.questionNumber && <span className="text-red-500">필수 항목입니다.</span>}
+              </div>
+
+              <div className="flex flex-col items-baseline mt-8">
+                <div className="text-xl">비밀번호 찾기 입력</div>
                 <input
                   type="text"
                   id="auth_answer"
-                  {...register('auth_answer')}
-                  className="w-[330px] h-8"
+                  {...register('auth_answer', { required: '비밀번호 찾기 입력은 필수 입니다.' })}
+                  className={`w-[330px] h-8 ${errors.birthdate ? 'border-red-500' : ''}`}
                 ></input>
+                {errors.auth_answer && (
+                  <span className="text-red-500">{errors.auth_answer.message}</span>
+                )}
               </div>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="ml-16 mt-12 bg-[#C487F4] w-[270px] h-10 rounded-xl hover:bg-opacity-90 hover:bg-[#C487F4]"
+                className="ml-10 mt-12 bg-[#C487F4] w-[250px] h-10 rounded-xl hover:bg-opacity-90 hover:bg-[#C487F4]"
               >
                 회원가입
               </button>

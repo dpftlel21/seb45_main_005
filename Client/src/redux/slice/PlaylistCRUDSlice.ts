@@ -2,12 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const PlaylistCRUDSlice = createSlice({
   name: 'playlistCRUD',
-  initialState: {
-    value: { title: '', public: true },
-  },
+  initialState: [],
   reducers: {
     createPlaylist: (state, action) => {
-      state.value = action.payload;
+      state.push(action.payload);
     },
   },
 });

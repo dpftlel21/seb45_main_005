@@ -1,63 +1,36 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import { openSongLists } from '../../redux/slice/ModalSlice';
-import { setSelectedMemberId, setSelectedPlaylistId } from '../../redux/slice/PlaylistsSlice';
-import Album from '../../assets/images/Album.png';
+import {
+  setSelectedMemberId,
+  setSelectedPlaylistId,
+  setPlaylistTitle,
+} from '../../redux/slice/PlaylistsSlice';
+import playlistdisc from '../../assets/images/playlistdisc.png';
 import { PlaylistInfo } from './PlaylistsShowAll';
-import { RootState } from '../../redux/store';
 
 type PlaylistProps = {
   el: PlaylistInfo;
   playlistId: number;
   memberId: number;
-  setReRendering: any;
 };
 
-const Playlists = ({ el, setReRendering }: PlaylistProps) => {
+const Playlists = ({ el }: PlaylistProps) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const token = useSelector((state: RootState) => state.login.accessToken);
 
   const handleOpenDetail = () => {
     dispatch(openSongLists());
     dispatch(setSelectedPlaylistId(el.playlistId));
     dispatch(setSelectedMemberId(el.memberId));
-  };
-
-  const handleListDelete = () => {
-    const shouldDelete = window.confirm('정말 삭제하시겠습니까?');
-
-    if (shouldDelete) {
-      return axios
-        .delete(`/playlist/${el.playlistId}`, {
-          headers: {
-            Authorization: token,
-          },
-        })
-        .then((res) => {
-          setReRendering(el.playlistId);
-          console.log(res);
-        })
-        .catch((err) => {
-          if (err.response.status === 500) {
-            navigate('/login');
-          }
-          console.log(err);
-        });
-    }
-    return <></>;
+    dispatch(setPlaylistTitle(el.title));
   };
 
   return (
     <>
-      <li className="h-[230px] flex justify-start items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out ">
-        <button onClick={handleListDelete}>x</button>
+      <li className="w-[12vh] h-[15vh] mb-2 relative flex flex-col justify-center items-center text-center hover:translate-y-[-15px] transition duration-300 ease-in-out cursor-pointer">
         {/* 플리 리스트들 */}
-        <div onClick={handleOpenDetail} className="ml-2">
-          <img src={Album} />
-          <h1 className="mt-4">{el.title}</h1>
+        <div onClick={handleOpenDetail} className="w-[9vh] h-[9vh]">
+          <img src={playlistdisc} className="animate-spin-slow" />
+          <h1 className="mt-4 text-xs">{el.title}</h1>
         </div>
       </li>
     </>

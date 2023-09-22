@@ -5,15 +5,19 @@ import { songlistInfo } from '../../redux/slice/SonglistsSlice';
 import search from '../../assets/images/search.png';
 
 const SearchInput = () => {
+  const headers = {
+    'Access-Control-Allow-Origin': `${process.env.REACT_APP_FE_HEADER_URL}`,
+  };
   const [keyword, setKeyword] = useState('');
   const dispatch = useDispatch();
 
   const handleSearch = () => {
     axios
-      .get(`/song/search?keyword=${keyword}&song=10`)
+      .get(`${process.env.REACT_APP_BE_API_URL}/song/search?keyword=${keyword}&song=10`, {
+        headers,
+      })
       .then((res) => {
         dispatch(songlistInfo(res.data));
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -27,12 +31,12 @@ const SearchInput = () => {
   };
 
   return (
-    <div className="flex justify-around my-4">
+    <div className="flex justify-around my-6">
       {/* 검색칸 */}
-      <div className="w-[528px] h-[50px] flex items-center bg-[#faf7f7e8] rounded-3xl  mt-8">
+      <div className="w-[528px] h-[50px] flex items-center bg-[#faf7f7e8] rounded-3xl  ">
         <input
           type="text"
-          placeholder="노래 제목을 입력해주세요"
+          placeholder="노래 제목을 입력, 영어로 검색시 정확도가 높아요!"
           className="w-[468px] h-[50px] pl-4 bg-[#faf7f7e8] rounded-3xl border border-gray-500"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
