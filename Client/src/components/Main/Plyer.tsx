@@ -128,9 +128,7 @@ const Plyer: React.FC<CustomAudioPlayerProps> = ({
         <div className="custom-audio-player w-[115vh] h-[10vh] bg-[#444] bg-opacity-10 shadow-xl rounded-xl backdrop-blur-xl">
           <div className="player-controls w-[115vh] flex justify-center items-center">
             <div className="h-[10vh] w-[15vh] flex flex-col justify-center items-center">
-              <p className="text-xl md:text-lg lg:text-2xs  font-['Anton-Regular']">
-                {data[currentIdx].title}
-              </p>
+              <p className="text-sm  font-['Anton-Regular']">{data[currentIdx].title}</p>
               <p className="mt-2 md:text-lg lg:text-2xs ">{data[currentIdx].ArtistName}</p>
             </div>
 

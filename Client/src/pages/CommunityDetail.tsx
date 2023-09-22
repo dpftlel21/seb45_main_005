@@ -34,6 +34,10 @@ interface Post {
 }
 
 const CommunityDetail = () => {
+  const myId = useSelector((state: RootState) => state.login.memberid);
+  console.log(typeof myId);
+  const myIdNum = Number(myId);
+
   const [commentPosted, setCommentPosted] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [posts, setPosts] = useState<Post>({
@@ -205,14 +209,16 @@ const CommunityDetail = () => {
               <div className="w-[120vh] h-[10vh] border-b-[1px] border-solid border-black">
                 <div className="w-[120vh] h-[5vh] flex justify-between">
                   <span className="text-xl">{posts.title}</span>
-                  <div className="w-[30vh] flex justify-end">
-                    <button onClick={handleEdit} className="mr-5 text-xs">
-                      수정
-                    </button>
-                    <button className="text-xs" onClick={handleDelete}>
-                      삭제
-                    </button>
-                  </div>
+                  {myIdNum === posts.memberId && (
+                    <div className="w-[30vh] flex justify-end">
+                      <button onClick={handleEdit} className="mr-5 text-xs">
+                        수정
+                      </button>
+                      <button className="text-xs" onClick={handleDelete}>
+                        삭제
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <div className="w-[120vh] h-[5vh] flex items-center">
                   <a href={`../othermypage/${posts.memberId}`}>

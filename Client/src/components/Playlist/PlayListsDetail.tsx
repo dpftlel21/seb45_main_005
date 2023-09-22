@@ -9,6 +9,7 @@ import PlaylistUpdateBtn from './Button/PlaylistUpdateBtn';
 import SongDeleteBtn from './Button/SongDeleteBtn';
 import AlbumFirst from '../../assets/images/AlbumFirst.png';
 import PlaylistLikeBtn from './Button/PlaylistLiketBtn';
+import MyPliAddSongbtn from './Button/MyPliAddSongbtn';
 
 export type SongData = {
   title: string;
@@ -34,9 +35,9 @@ const PlaylistsDetail = () => {
   const dispatch = useDispatch();
 
   const playlistId = useSelector((state: RootState) => state.playlists.selectedPlaylistId);
-  const addedSongs: SongData[] = useSelector((state: RootState) => state.playlists.detailInfo);
   const deletedSongs: number[] = useSelector((state: RootState) => state.songlists.deletedSongs);
   const detailData: PlaylistDetail = useSelector((state: RootState) => state.playlists.detailData);
+  const addedSongs: SongData[] = useSelector((state: RootState) => state.playlists.detailInfo);
   const filteredSongs = addedSongs.filter((song) => !deletedSongs.includes(song.songId));
   const title = useSelector((state: RootState) => state.playlists.playlistTitle);
   const memberId = useSelector((state: RootState) => state.login.memberid);
@@ -174,7 +175,9 @@ const PlaylistsDetail = () => {
                     isClicked={isClicked}
                     setIsClicked={setIsClicked}
                   />
-                ) : null}
+                ) : (
+                  <MyPliAddSongbtn />
+                )}
               </div>
             )}
           </div>

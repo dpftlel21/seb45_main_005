@@ -14,10 +14,10 @@ const SurveyLiking = () => {
 
   const handleRecommendAdmin = () => {
     axios
-      .get(`${process.env.REACT_APP_BE_API_URL}/admin-suggest?q=1`)
+      .get(`${process.env.REACT_APP_BE_API_URL}/admin-suggest?q=12`)
       .then((res) => {
         console.log(res.data);
-        navigate('../mubti/result');
+        navigate('../mubti/adminRecommend');
       })
       .catch((err) => {
         console.log(err);
