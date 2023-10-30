@@ -33,6 +33,7 @@ import CommunityEdit from './pages/CommunityEdit';
 import SurveyYoutube from './pages/MUBTI/Survey/SurveyYoutube';
 import PwdChange from './components/Login/PwdChange';
 import OtherMyPage from './pages/OtherMyPage';
+import SurveyAdmin from './pages/MUBTI/Survey/SurveyAdmin';
 
 const App = () => {
   const token = useSelector((state: RootState) => state.login.accessToken);
@@ -119,6 +120,7 @@ const App = () => {
         <Route path={RouteConst.PwdFind} element={<PwdFind />} />
         <Route path={RouteConst.Edit} element={<CommunityEdit />} />
         <Route path={RouteConst.Youtube} element={<SurveyYoutube />} />
+        <Route path={RouteConst.AdminRecommend} element={<SurveyAdmin />} />
         <Route path={RouteConst.PwdChange} element={<PwdChange />} />
         <Route path={RouteConst.IdFind} element={<IdFind />} />
         <Route path={RouteConst.PwdFind} element={<PwdFind />} />

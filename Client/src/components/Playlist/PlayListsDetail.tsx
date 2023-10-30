@@ -9,6 +9,7 @@ import PlaylistUpdateBtn from './Button/PlaylistUpdateBtn';
 import SongDeleteBtn from './Button/SongDeleteBtn';
 import AlbumFirst from '../../assets/images/AlbumFirst.png';
 import PlaylistLikeBtn from './Button/PlaylistLiketBtn';
+import MyPliAddSongbtn from './Button/MyPliAddSongbtn';
 
 export type SongData = {
   title: string;
@@ -61,6 +62,7 @@ const PlaylistsDetail = () => {
         dispatch(playlistDetail(res.data.data.playlistSongs));
         dispatch(playlistData(res.data.data));
         setIsPublic(res.data.data.public);
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -174,7 +176,9 @@ const PlaylistsDetail = () => {
                     isClicked={isClicked}
                     setIsClicked={setIsClicked}
                   />
-                ) : null}
+                ) : (
+                  <MyPliAddSongbtn />
+                )}
               </div>
             )}
           </div>
