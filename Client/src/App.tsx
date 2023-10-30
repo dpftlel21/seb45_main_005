@@ -34,6 +34,7 @@ import CommunityEdit from './pages/CommunityEdit';
 import SurveyYoutube from './pages/MUBTI/Survey/SurveyYoutube';
 import PwdChange from './components/Login/PwdChange';
 import OtherMyPage from './pages/OtherMyPage';
+import SurveyAdmin from './pages/MUBTI/Survey/SurveyAdmin';
 
 const App = () => {
   const token = useSelector((state: RootState) => state.login.accessToken);

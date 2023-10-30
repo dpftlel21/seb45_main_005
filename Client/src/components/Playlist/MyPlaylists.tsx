@@ -59,6 +59,7 @@ const MyPlaylists = ({ el }: PlaylistProps) => {
       .then((res) => {
         getPlaylists();
         dispatch(playlistInfo(res.data.data));
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
