@@ -62,6 +62,7 @@ const PlaylistsDetail = () => {
         dispatch(playlistDetail(res.data.data.playlistSongs));
         dispatch(playlistData(res.data.data));
         setIsPublic(res.data.data.public);
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
