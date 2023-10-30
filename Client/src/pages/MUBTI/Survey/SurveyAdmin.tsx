@@ -17,9 +17,9 @@ const SurveyAdmin = () => {
   }, []);
 
   return (
-    <div className="h-screen bg-[#35435e]">
+    <div className="w-screen h-screen bg-[#35435e]">
       <Header />
-      <div className="flex flex-col justify-center items-center mt-40">
+      <div className="w-full flex flex-col justify-center items-center mt-20">
         <div className="flex flex-row justify-between items-center w-[250px] ">
           <button className="w-[20px] h-[20px] bg-[#d9d9d9] rounded-full"></button>
           <button className="w-[20px] h-[20px] bg-[#d9d9d9] rounded-full "></button>
@@ -29,27 +29,46 @@ const SurveyAdmin = () => {
         <h1 className="flex my-8 font-['Anton-Regular'] text-[#d9d9d9] text-2xl font-semibold">
           두구두구둑두구,,,, 담당자가 뽑은 노래입니다 !! 마음에 드시면 좋겠네요 ㅎㅎ ~!
         </h1>
-        <div>
+        <div className="w-[70%] flex flex-col items-center">
           <h1 className="w-full flex justify-start my-8 ml-6 font-['Anton-Regular'] text-2xl text-[#d9d9d9] ">
             Recommend
           </h1>
           {state && (
-            <div className="w-50vh justify-center flex flex-wrap">
-              {state.map((el) => (
-                <a
-                  href={`${el.youtubeLink}`}
-                  className="flex flex-col items-center justify-center mx-8 text-white"
-                >
-                  <div className="w-[150px] ">
-                    <img src={el.thumbnailLink} className="w-[150px] h-[150px] my-4" />
-                    <p className="h-[50px] text-center ">{el.artist}</p>
-                    <p className="h-[50px] text-center ">{el.title}</p>
-                  </div>
-                </a>
-              ))}
+            <div className="w-[100vh] justify-center flex overflow-x-hidden overflow-y-hidden">
+              <div className="w-[280vh] flex flex-nowrap animate-slider2 relative right-200">
+                {state.map((el) => (
+                  <a
+                    href={`${el.youtubeLink}`}
+                    className="flex flex-col items-center justify-center mx-8 my-2 text-white hover:translate-y-[15px] transition duration-300 ease-in-out"
+                  >
+                    <div className="w-[15vh] flex flex-col items-center">
+                      <img src={el.thumbnailLink} className="w-[15vh] h-[10vh] my-4" />
+                      <p className="h-[50px] text-center ">{el.artist}</p>
+                      <p className="h-[50px] text-center  text-sm">{el.title}</p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+              <div className="w-[280vh] flex flex-nowrap animate-slider2 relative right-300">
+                {state.map((el) => (
+                  <a
+                    href={`${el.youtubeLink}`}
+                    className="flex flex-col items-center justify-center mx-8 my-2 text-white hover:translate-y-[15px] transition duration-300 ease-in-out"
+                  >
+                    <div className="w-[15vh] flex flex-col items-center">
+                      <img src={el.thumbnailLink} className="w-[15vh] h-[10vh] my-4" />
+                      <p className="h-[50px] text-center ">{el.artist}</p>
+                      <p className="h-[50px] text-center text-sm">{el.title}</p>
+                    </div>
+                  </a>
+                ))}
+              </div>
             </div>
           )}
         </div>
+        <h1 className="mt-8 font-['Anton-Regular'] text-2xl text-[#d9d9d9] ">
+          담당자가 추천 해준 노래는 아래 플레이어에 담겨있습니다 !! 한 번 들어보세요 !!
+        </h1>
       </div>
     </div>
   );

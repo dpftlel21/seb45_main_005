@@ -58,6 +58,14 @@ module.exports = {
           transform: 'translateX(0%)',
         },
       },
+      'slider2': {
+        '0%': {
+          transform: 'translateX(-50%)',
+        },
+        '100%': {
+          transform: 'translateX(50%)',
+        },
+      },
     },
     animation: {
       'spin-slow': 'spin-slow 5s linear infinite',
@@ -68,6 +76,7 @@ module.exports = {
       'bounceIn': 'bounceIn 1s linear',
       'pulse': 'pulse 1s ease-in-out infinite',
       'slider': 'slider 10s linear infinite ',
+      'slider2': 'slider2 18s linear infinite ',
     },
   },
   plugins: [],

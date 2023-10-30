@@ -21,6 +21,7 @@ import WeatherRecommend from './pages/WeatherRecommend';
 import SurveyResult from './pages/MUBTI/Survey/SurveyResult';
 import SurveyLoading from './pages/MUBTI/Survey/SurveyLoading';
 import SearchSongs from './pages/SearchSongs';
+import SurveyAdmin from './pages/MUBTI/Survey/SurveyAdmin';
 
 import SignUp from './components/Login/SignUp';
 import LoginOn from './components/Login/LoginOn';

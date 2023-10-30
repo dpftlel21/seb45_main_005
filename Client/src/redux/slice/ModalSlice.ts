@@ -11,6 +11,7 @@ const ModalSlice = createSlice({
     isSongOpen: false,
     isSongAddOpen: false,
     isSearchedOpen: false,
+    isRecommendOpen: false,
   },
   reducers: {
     openModal: (state) => {
@@ -61,6 +62,12 @@ const ModalSlice = createSlice({
     closeSearchedModal: (state) => {
       state.isSearchedOpen = false;
     },
+    openRecommendModal: (state) => {
+      state.isRecommendOpen = true;
+    },
+    closeRecommendModal: (state) => {
+      state.isRecommendOpen = false;
+    },
   },
 });
 
@@ -83,4 +90,6 @@ export const {
   closeSongAddModal,
   openSearchedModal,
   closeSearchedModal,
+  openRecommendModal,
+  closeRecommendModal,
 } = ModalSlice.actions;

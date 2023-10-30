@@ -4,14 +4,18 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import google from '../../assets/images/google.svg';
-import { setAccessToken, setLoginState, setNickname } from '../../redux/slice/LoginSlice';
+import {
+  setAccessToken,
+  setLoginState,
+  setNickname,
+  setMemberID,
+} from '../../redux/slice/LoginSlice';
 
 const GoogleOauth = () => {
   const dispatch = useDispatch();
   const login = useGoogleLogin({
     scope: 'email',
     onSuccess: (tokenResponse) => {
-      dispatch(setAccessToken(tokenResponse.access_token));
       console.log(tokenResponse.access_token);
       axios
         .post(
@@ -26,6 +30,8 @@ const GoogleOauth = () => {
           }
         )
         .then((res) => {
+          dispatch(setMemberID(res.headers.memberid));
+          dispatch(setAccessToken(res.headers.authorization));
           axios
             .get(`${process.env.REACT_APP_BE_API_URL}/members/my_page/intro`, {
               headers: {
